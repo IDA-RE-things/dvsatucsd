@@ -1,0 +1,204 @@
+                EyeDx(TM) Digital Vision Screening System
+                          (Patent Pending)
+
+Note: If using Notepad to view this file, turn on Word Wrap in the Edit menu.
+
+
+Revision History 
+
+This document describes the changes made to each version of the EyeDx software.
+
+1.5.2 - Fixed a bug that would cause the program to crash if a session were ended with no subjects run.
+
+1.5.1 - Fixed a bug that prevented the Report Format preference from being saved and restored properly. Enabled editing of the "User Must Enter" checkbox for EyeDx-supplied variables in the Edit Variable dialog. This allows users to require EyeDx variables that were previously optional to be entered. The Report Name label in various windows has been changed to "Report Name or ID Number" so that it is more obvious that the name entered doesn't have to be the subject's name.
+
+1.5 Final - The Run From Card or Disk, and Run From Camera Manual windows indicate the proper orientation for the Side image with a label next to the image display. If there are a large number of report files in a session, a progress dialog is displayed as the reports are processed for the Session Summary Report. 
+
+1.5 Alpha 8 - The Session Summary Report has been modified to give a better indication of reports that may represent retakes. If the report generator detects two or more report names that start with the same text, it will list them as possibly representing retakes. This will help to reconcile the counts given for Subjects Measured, Retakes, Refers, and Passes to the reports listed for the session.
+
+1.5 Alpha 7 - Reanalysis of images during retakes in Auto mode should take less time. The EyeDx Installer will create a backup copy of any older versions of the application program when a new version is installed, as is a copy of the current EyeDx Properties file. A folder called Backup is created in the EyeDx Folder for this purpose. You should periodically clean out the folder once you no longer need access to older versions of the software.
+
+1.5 Alpha 6 - The camera focus position was not being saved correctly, which caused the algorithm that checks for properly dilated pupils to use default values.
+
+1.5 Alpha 5 - Fixed a bug that caused the order in which database fields were exported to be randomly changed.
+
+1.5 Alpha 4 - Report formats have been simplified. The non-annotated eye images are no longer displayed in the reports. The input images are now significantly larger in the custom report format. A new algorithm has been implemented that detects whether the subject is looking at the camera should result in Retake being recommended in marginal cases. Another new algorithm performs a check on pupil size to make sure the subject's eyes are dilated sufficiently for correct analysis.
+
+1.5 Alpha 1 - Alpha 3 - Not officially released.
+
+1.4.1 - Fixed a bug that prevented Manual Camera mode from working if the camera is used without a memory card.
+
+1.4 - No changes.
+
+1.4 Alpha 7 - Fixed bug that prevented Auto Camera mode from functioning when the memory card or internal camera memory was empty.
+
+1.4 Alpha 6 - You can now select a variable for editing in the Properties window variables list by clicking anywhere in the row that contains the variable. 
+
+Added support for a new Property that will cause the program to automatically start Auto Camera Mode when the program starts. Turn this option on in the Properties General window.
+
+When you end a session, you will be asked if you want to view the session summary report. If you answer yes, the report file will be displayed in the program you have selected to view text files (usually Notepad).
+
+Added additional images to the Advanced Features Guide folder.
+
+Fixed a bug in handling of camera images in Auto Camera Mode. On rare occasions, if the camera memory filled up between taking the Up and Side images, the wrong image could be loaded for the Up image.
+
+Cancelling variable entry prompts in Auto Camera Mode just cancels the current subject, rather than cancelling the Auto Camera Mode.
+
+Fixed a bug which could cause a crash if Auto Camera mode was cancelled before images were processed.
+
+Images stored on the card in the camera take precedence over images stored in the internal camera memory when selecting images for display.
+
+1.4 Alpha 5 - Added several new variables that document information about the time the images were taken, and the start and end times for the session. The Session Summary report text has been modified to use the session start and end variables. Important: If you are updating from a prior version of the software that had support for the Session Summary text block, you should edit it in the Properties window and press the "Set to EyeDx Default Button". 
+
+Made extensive changes to the Properties and Custom Reporting Options features. All of these functions are now in a single Properties window. The window uses tabs across the top to select the category. The window is resizable, meaning that you can see more of the scrolling lists and text editing areas. The Variables list can now be sorted. Click on the titles above the first four columns to sort by that category. Made various smaller cosmetic changes in the Edit Variables window. Note: you must click on the name of the variable in the list to select it.
+
+Also fixed a problem setting the camera's clock involving daylight savings time.
+
+1.4 Alpha 3 and 4 - Not released.
+
+1.4 Alpha 2 - The default folders for reports and Pimage selection is now the like-named folders in the current session folder. This restores a default configuration that mimics the defaults in EyeDx versions before Sessions were implemented. 
+
+IMPORTANT: Sessions are now optional. If you have used a version of EyeDx software previously that used sessions, you must re-enable sessions by using the "Use Sessions to Manage Subjects" checkbox in the Properties window the first time you start the 1.4 Alpha 2 program.
+
+Users may customize the startup sequence by placing a picture or sound file in the EyeDx Folder. The program will display a JPEG or BMP file named "StartupPicture.jpg" or "StartupPicture.bmp" if it is located in the EyeDx Folder. A dialog will appear containing this picture scaled to fit the screen. The user will dismiss it by clicking the mouse or pressing a key.
+
+If a sound file called "StartupSound.wav" is located in the EyeDx Folder, it will be played when the dialog is displayed. Note that the program plays the sound only if the Startup Picture file exists. You may record your own sound file and save it with the name above in the EyeDx Folder. If the sound file exists, the dialog will automatically exit when the sound finishes playing.
+
+1.4 Alpha 1 - Zoom buttons have been added to various windows that allow you to see larger versions of the camera or disk images. This will help you determine whether the subject is fixating properly, for example. In camera windows, the zoom window initially shows a blown-up version of the thumbnail image provided by the camera. You may then download the full image, if necessary. Once downloaded in this window, the image is saved and will not be downloaded again for analysis.
+
+1.3 Beta 1 - No changes.
+
+1.3 Alpha 14 - Report and Session names cannot consist of all blank characters. Added Export Reports for Emailing, which allows for easy attachment of report and image files to email messages.
+
+1.3 Alpha 13 - Support for sessions added. The installer has moved the existing reports and associated image files to a folder called "NonSession". If you choose not to use sessions to organize your measurements, all reports will be stored in the NonSession folder. When opening reports for viewing, or selecting images for analysis in Run From Disk or Card mode, the first folder shown will be the folder containing all of the sessions. You must choose the appropriate session folder, open it, and then open the reports or Pimages folder to select the report file or image file.
+
+Use the Start Session button available in the main window to begin a session. Sessions are named with the same character restrictions as for report names. Once you have started a session, all subsequent reports are stored in the folder for the active session. You may also start a session in the Automatic Camera mode in the Report Name dialog.
+
+Once you have finished all measurements for a session, use the End Session button in the main window (or in selected Auto Camera dialogs) to end the session. You will be asked to confirm ending the session. When ended, a Session Summary Report is written to the Session folder. The contents of this file is defined in the Custom Reporting Options window. Choose the "Session Summary Report" option from the "Define text for" menu. By default, the report contains the session name, the date, the number of subjects run during the session, and the number of passes, refers, and recommended retakes. It also includes an alphabetized list of the report names that were created during the session. 
+
+You may define additional prompted variables that can be added to the session summary report, such as Operator Name, Site Name, etc. Use the "Prompt At Start of Each New Session" when defining the variable. 
+
+The software will allow you to save a session when exiting the software and resume it when starting the software at a later time. It will remember the session name and the subject, pass, refer, and retake counts.
+
+The variable list in the Custom Reporting Options window now shows more information about each variable.
+
+The variable prompts now indicate the type of variables the user is being prompted for. Values of variables are saved between invocations of the program. 
+
+1.3 Alpha 12 - Not released.
+
+1.3 Alpha 11 - When editing a variable, if its data type is changed its prompt is not reset. Added support for Alternate Text Output in custom text block. Non-breaking spaces (option-space) can be used in custom report text to force specific text spacing. Fixed some HTML character conversion bugs. The program now performs additional memory check, giving the user the opportunity to exit other applications if memory is tight. Software is now distributed with an Advanced Features Guide in the Documentation folder, which explains the user of variables, custom reports, and database export files.
+
+1.3 Alpha 10 - Minor internal bug fixes.
+
+1.3 Alpha 9 - Added support for EyeDx and User-defined variables, which can be used in the custom reports. Also added support for database output file. The Preferences window now allows the user to select a connection rate to support slower systems and slower USB/Serial converters.
+
+1.3 Alpha 6 through 8 - Not released.
+
+1.3 Alpha 5 - Added testing for correct system date when installing licenses. Code that sets the camera date will skip setting it if the date is before January 1, 1994. A warning message will be displayed, telling you that the system clock's date is wrong.
+
+1.3 Alpha 4 - The text displayed in the Report Layout window now uses font characteristics similar to those used in the final report. Special characters entered in the custom text blocks are translated properly into HTML escape codes for cross-platform compatibility. Fixed small cosmetic problems in the Report Layout window. Eliminated message box that appeared when no user text blocks were defined. Added diagnostic information to the error message box when the software cannot set the camera's clock.
+
+1.3 Alpha 3 - Supports customizable reports via the Properties window.
+
+1.3 Alpha 1 through 2 - Not released.
+
+1.2.4 - Added diagnostic information to the error message box when the software cannot set the camera's clock. Added testing for correct system date when installing licenses. Code that sets the camera date will skip setting it if the date is before January 1, 1994. A warning message will be displayed, telling you that the system clock's date is wrong. 
+
+Output image file name convention has changed (no user impacts). Changed terminology when subject is not looking at camera - now uses phrase "not fixating properly". Report entry fields now restrict report names to 20 or 22 characters, depending on whether the "Display Results in Report Name Option" is set. Name entry fields in the Run From Camera and Run From Card or Disk windows now scroll when longer strings are entered. 
+
+1.2.3 - Errors when setting the camera's clock do not cause program to cancel Run from Camera mode.
+
+1.2.2 - Not released.
+
+1.2.1 - Most keys on keyboard will now cause picture to be taken in the Automatic Camera mode. Cancelling the Automatic mode performs additional cleanup and asks you if you'd like to run another subject. The Summary Window, when run in Automatic mode, allows you to retake one or both of the images, even if the software thinks that the result is ok. Fixed a problem where the Side image results were not being properly displayed in the Summary Window.
+
+1.2 Release - No changes.
+
+1.2 Beta 1 - The High Speed Connection Rate in the Properties window is now 230400 bps. Turning this option off sets the rate to 57600 bps. When cancel is pressed in the Take Picture or Verify Picture windows during the Auto mode, the image(s) will be deleted from the camera.
+
+1.2 Alpha 12 - Added warning dialog while deleting camera images that warns the user not to power off or unplug the camera. Space Bar now is the equivalent of pressing Return or clicking on the Take Picture button in the Take Picture dialog. Each time the camera is opened, its clock is resynchronized with the computer clock. 
+
+1.2 Alpha 11 - Added option to automatically run the camera from the software (see Release Notes). The port that the camera is connected to is remembered to speed connections if the user always plugs the camera in to the same port. Fixed a rare bug that sometimes caused an "exception" window to appear during analysis.
+
+1.2 Alpha 3 through Alpha 10 - Not released.
+
+1.2 Alpha 2 Rev B - Fixed a compilation problem.
+
+1.2 Alpha 2 - Added support for a Summary Window that can be displayed in place of the browser report. Options are available in the Properties window.
+
+1.2 Alpha 1 - The software now uses a license which contains a number of analysis runs and an expiration date. When the software is first executed you will be asked to enter your User ID, a License Code, and your Zip or Postal Code. This information should be supplied by EyeDx when you receive your system. The File menu includes new options to install or update a license, and to display your current license status.
+
+The analysis run count is decremented only when a successful analysis is performed. You are not penalized for reruns due to bad images. The Run windows show the remaining analysis run count and expiration date. Be sure to renew your license before the expiration date. Your remaining analysis runs are preserved, so when you obtain and install a new license, your remaining count is added to the amount of runs in the new license.
+
+1.1 Alpha 13 - Fixed a bug that occurred when windows first appeared. Sometimes would cause an Access Violation.
+
+1.1 Alpha 12 - Fixed a bug in handling display of reports in folders other than the normal "reports' folder.
+
+1.1 Alpha 11 - The View Stored Reports button now uses the standard Windows file chooser dialog box for selecting the report to view. This is more intuitive than the Windows Explorer window that was previously used.
+
+The reports and other subfolders are automatically recreated on each run or when reports functions are accessed if the folders do not exist. This allows you to rename the reports folder, for example, to collect all of the reports for a certain day or patient group together. A new reports folder will be created when necessary.
+
+1.1 Alpha 10 - The report header uses a smaller sized font so that reports will usually fit on a single pagewhen printed.
+
+1.1 Alpha 9 - The name of the "Run From Disk" button and window was changed to "Run From Card or Disk" so that it is clear that images on FlashCards mounted in the computer can be accessed via this feature.
+
+This version implements a keyboard mode for most user interface features. The standard Windows conventions for tabbing between window controls is supported, as are letter-shortcuts for the controls.
+
+As an example, you can use the keyboard to operate the run from disk mode as follows:
+
+1. Run the EyeDx software.
+2. Press "D" for Run From Card or Disk.
+3. Press "U" to Select Up Image.
+4. Press shift-Tab to make the directory menu 
+	the focus item.
+5. Hit the down arrow to display the menu and 
+	select the appropriate drive (for the 
+	Flash Card, for example) by hitting return.
+6. Press Tab to move to the file name list.
+7. Use the arrow keys to select the file.
+8. Press Return to select.
+9. Select the Side image by pressing the "S" key
+10. Press Shift-Tab to move to the file name list 
+	(this assumes that the Side image is in
+	the same directory as the Up image).
+11. Use the arrow keys to select the file.
+12. Press Return to select.
+13. Press "A" to toggle animation.
+14. Tab to the Report Name field and enter the 
+	name.
+15. Tab to the Ok button and hit return or the 
+	space bar to start.
+
+Other changes include: The report name field in the Run windows is now blank by default. A bug in the handling of the images folder was fixed.
+
+1.1 Alpha 8 - Added option to add a referral result prefix to the report name. Prefixes are:
+
+    "P_" for a Pass (No Referral)
+    "R_" for a Referral
+    "S_" for a condition that requires both 
+	 images to be valid (i.e. "Second 
+	 image required")
+    "U_" for Unclear images
+
+If the option is enabled, the user is warned if an existing report with the name and any of the prefixes exist. 
+
+"Run From Camera Options" in Properties window was renamed to be "Run Options", as the saving input images option is now valid for both Run From Camera and Run From Disk modes. If running from disk and the source file is not chosen from the Pimages folder, and if the option is enabled, the source file will be copied to the Pimages folder. In both the Run modes the user is prompted to confirm overwriting an existing image of the same name. Previews of JPEG files show "JPEG: No quality information" caption in the open file dialog.
+
+1.1 Alpha 7 - Fixed memory initialization problem. Added support animation. Filename caption is set and cleared properly.
+
+1.1 Alpha 6 - Run From Camera now uses a dialog box to select the Up and Side Images. Single click on an image name to see the preview, and then press Select to select the image. Double clicking on an image name automatically selects the image and closes the dialog box. Up Arrow and Down Arrow scroll through the list, downloading each image's preview. Home, Page Up, Page, Down, and End scroll the list without changing the selection, as does moving the scroll bar.
+
+Added Export Reports feature in the File Menu. Additional progress status is shown in the Analysis Window when images require extra analysis processing.
+
+Run From Disk is now available. Images stored in KDC file format are supported. Downloaded camera images maybe as KDC files by selecting an option in the Preferences window.Camera quality setting in downloaded camera and file imagesare checked, and warnings appear if the setting isn't "Best". 
+
+Image names in Run and Analysis windows appear without ".kdc" or ".jpg" extensions. Added picture quality icons next to the image names in the Run windows. Green means the image was taken with the EyeDx recommended settings. Yellow means that the image was not taken with the recommended settings, and EyeDx recommends the image not be used for analysis. Red means that the image is invalid.
+
+The Preferences window now includes an option that prevents the program from starting the browser after analysis is complete. This is useful on systems with less memory, sothat the browser can be started manually after you exit the EyeDx software.
+
+1.0 - Initial Release
+
+
+7 February 2000
+
+mfm
