@@ -30,6 +30,8 @@ class CDVTDlg : public CDialog
 public:
 	CDVTDlg(CWnd* pParent = NULL);	// standard constructor
 
+	CStatic *RosterName;
+
 // Dialog Data
 	//{{AFX_DATA(CDVTDlg)
 	enum { IDD = IDD_DVT_DIALOG };
