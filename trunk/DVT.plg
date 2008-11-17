@@ -6,13 +6,37 @@
 --------------------Configuration: DVT - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP11F.tmp" with contents
+Creating command line "rc.exe /l 0x409 /fo"Debug/DVT.res" /d "_DEBUG" /d "_AFXDLL" "C:\Documents and Settings\slaplante\My Documents\dvsatucsd\DVT.rc"" 
+Creating temporary file "C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP8F.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/DVT.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /EHsc /c 
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\DVTDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\AddPropertyDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\CameraConnect.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\DVT.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\DVTDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\MYSTREAM.CPP"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\Pics.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\PictureClass\Picture.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\PictureWizardDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\Progress.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\Result.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\Roster.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\RosterDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\StartScreenDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\Student.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\StudentDlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\StudentProperty.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\YESNODlg.cpp"
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\PictureEx.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP11F.tmp" 
-Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP120.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP8F.tmp" 
+Creating temporary file "C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP90.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/DVT.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /EHsc /c 
+"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP90.tmp" 
+Creating temporary file "C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP91.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/DVT.pdb" /debug /machine:I386 /out:"Debug/DVT.exe" /pdbtype:sept 
 ".\Debug\AddPropertyDlg.obj"
@@ -35,13 +59,49 @@ Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP120.tmp" with conten
 ".\Debug\YESNODlg.obj"
 ".\Debug\DVT.res"
 ".\CDSDK\lib\CDSDK.lib"
+".\Debug\PictureEx.obj"
 ]
-Creating command line "link.exe @C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP120.tmp"
+Creating command line "link.exe @C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP91.tmp"
 <h3>Output Window</h3>
+Compiling resources...
 Compiling...
+StdAfx.cpp
+Compiling...
+AddPropertyDlg.cpp
+CameraConnect.cpp
+DVT.cpp
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
 DVTDlg.cpp
 push, _CD_TYPE_H_PACK_, 1
 pop, _CD_TYPE_H_PACK_
+MYSTREAM.CPP
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
+Pics.cpp
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
+Picture.cpp
+PictureWizardDlg.cpp
+Progress.cpp
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
+Result.cpp
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
+Roster.cpp
+RosterDlg.cpp
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
+StartScreenDlg.cpp
+Student.cpp
+push, _CD_TYPE_H_PACK_, 1
+pop, _CD_TYPE_H_PACK_
+StudentDlg.cpp
+StudentProperty.cpp
+YESNODlg.cpp
+PictureEx.cpp
+Generating Code...
 Linking...
 
 
