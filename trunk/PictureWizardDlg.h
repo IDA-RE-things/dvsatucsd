@@ -68,6 +68,8 @@ private:
 	Student * my_student;
 	void* my_theCamera;
 	CString cur_path;
+	CString fileNameLeft;
+	CString fileNameRight; 
 };
 
 //{{AFX_INSERT_LOCATION}}

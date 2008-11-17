@@ -31,6 +31,10 @@ public:
 	void PictureDoneSignal(BOOL done);
 	BOOL SetPathName( CString NewPathName );
 	BOOL SetFileName( BOOL horizontal );
+	void setH(BOOL h);
+	void setV(BOOL v);
+	BOOL getHSelect();
+	BOOL getVSelect();
 
 	char * GetLastVerticalFile ();
 	char * GetLastHorizontalFile();
@@ -76,6 +80,9 @@ private:
 
 	int hcount;
 	int vcount;
+
+	BOOL hselect;
+	BOOL vselect; 
 
 	CString str_hcount;
 	CString str_vcount;
