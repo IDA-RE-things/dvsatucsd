@@ -64,8 +64,12 @@
 #define IDC_BUTTON4                     1034
 #define IDC_StudentName                 1035
 #define IDC_BUTTON5                     1036
+#define IDC_BUTTON6                     1037
+#define IDC_BUTTON7                     1038
 #define IDC_PROGRESS                    1039
 #define IDC_ViewFinder                  1041
+#define IDC_PICTURE_LEFT                1042
+#define IDC_PICTURE_RIGHT               1043
 #define ID_FILE_OPENROSTER              32771
 #define ID_FILE_SAVEROSTER              32772
 #define ID_FILE_CAMERASETTINGS          32773
@@ -82,7 +86,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        151
 #define _APS_NEXT_COMMAND_VALUE         32781
-#define _APS_NEXT_CONTROL_VALUE         1042
+#define _APS_NEXT_CONTROL_VALUE         1044
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

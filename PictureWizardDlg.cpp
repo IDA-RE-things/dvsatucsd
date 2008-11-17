@@ -9,8 +9,11 @@
 #include "DVT.h"
 #include "PictureWizardDlg.h"
 #include "CameraConnect.h"
+#include "PictureEx.h"
 
 #define EYEWIND "EyeDx Automated Digital Vision Screener"
+#define PICTURE_WINDOW_WIDTH 145
+#define PICTURE_WINDOW_HEIGHT 130
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,6 +51,8 @@ void CPictureWizardDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPictureWizardDlg)
+	DDX_Control(pDX, IDC_PICTURE_RIGHT, m_jpgRight);
+	DDX_Control(pDX, IDC_PICTURE_LEFT, m_jpgLeft);
 	DDX_Control(pDX, IDC_ViewFinder, m_ViewFinder);
 	DDX_Control(pDX, IDC_StudentName, m_StudentLabel);
 	//}}AFX_DATA_MAP
@@ -62,6 +67,8 @@ BEGIN_MESSAGE_MAP(CPictureWizardDlg, CDialog)
 	ON_WM_LBUTTONUP()
 	ON_BN_CLICKED(IDC_BUTTON3, OnButton3)
 	ON_BN_CLICKED(IDC_BUTTON5, OnEyeDx)
+	ON_BN_CLICKED(IDC_BUTTON6, OnButton6)
+	ON_BN_CLICKED(IDC_BUTTON7, OnButton7)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -589,4 +596,42 @@ void CPictureWizardDlg::OnEyeDx()
 
 	
 }
+
+
+
+void CPictureWizardDlg::OnButton6() 
+{
+
+	CString fileNameLeft; 
+	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
+	if (dlg.DoModal() == IDOK)
+	{
+     fileNameLeft = dlg.GetFileName();
+	}
+
+   	if (m_jpgLeft.Load(_T(fileNameLeft)))
+	{	
+		m_jpgLeft.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT);
+		m_jpgLeft.Draw();
+	}
+	  
+}	
+
+
+void CPictureWizardDlg::OnButton7() 
+{
+	CString fileNameRight; 
+	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
+	if (dlg.DoModal() == IDOK)
+	{
+     fileNameRight = dlg.GetFileName();
+	}
+
+
+	if (m_jpgRight.Load(_T(fileNameRight)))
+	{	
+		m_jpgRight.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT); 
+		m_jpgRight.Draw();
+	}	
+}	
 

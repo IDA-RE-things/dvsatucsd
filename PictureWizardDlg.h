@@ -10,6 +10,7 @@
 #include "Roster.h"
 #include "Student.h"
 #include "resource.h"
+#include "PictureEx.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // CPictureWizardDlg dialog
@@ -27,6 +28,8 @@ public:
 // Dialog Data
 	//{{AFX_DATA(CPictureWizardDlg)
 	enum { IDD = IDD_PictureWizard };
+	CPictureEx	m_jpgLeft;
+	CPictureEx	m_jpgRight;
 	CStatic	m_ViewFinder;
 	CStatic	m_StudentLabel;
 	//}}AFX_DATA
@@ -54,10 +57,9 @@ protected:
 	afx_msg void OnButton3();
 	afx_msg void OnEyeDx();
 	afx_msg void LoadPictureFile(LPCTSTR szFile);
-	afx_msg void WinMain(HINSTANCE hInstance,
-                     HINSTANCE hPrevInstance,
-                     LPSTR     lpCmdLine,
-                     int       nCmdShow);
+	afx_msg void WinMain(HINSTANCE hInstance,  HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
+	afx_msg void OnButton6();
+	afx_msg void OnButton7();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 

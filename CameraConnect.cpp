@@ -27,6 +27,8 @@ static char THIS_FILE[]=__FILE__;
 #define		VIEWFINDER_WIDTH		320
 #define		VIEWFINDER_HEIGHT		240
 
+#define		PICTURE_WINDOW_WIDTH 145
+#define		PICTURE_WINDOW_HEIGHT 130
 
 
 #define		GETERRORID( x )		(cdERROR_ERRORID_MASK&x)
@@ -1066,12 +1068,21 @@ BOOL CCameraConnect::WindowProc(UINT message, WPARAM wParam, LPARAM lParam, char
 			
 			SetFileName(true);
 			fRes = CProg.GetReleaseData( m_hSource, NumData, FileName, this );
+			if (pCPictureWizardDlg->m_jpgLeft.Load(_T(FileName)))
+			{	
+				pCPictureWizardDlg->m_jpgLeft.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT); 
+				pCPictureWizardDlg->m_jpgLeft.Draw();
+			}
 		}
 		else // right picture
 		{
 			SetFileName(false);
 			fRes = CProg.GetReleaseData( m_hSource, NumData, FileName, this );
-		 
+			if (pCPictureWizardDlg->m_jpgRight.Load(_T(FileName)))
+			{	
+				pCPictureWizardDlg->m_jpgRight.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT); 
+				pCPictureWizardDlg->m_jpgRight.Draw();
+			}		 
 		}
 
 		if( !fRes )

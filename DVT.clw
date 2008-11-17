@@ -13,13 +13,13 @@ Class2=CDVTDlg
 Class3=CAboutDlg
 
 ResourceCount=12
-Resource1=IDD_YESNO
+Resource1=IDD_PictureWizard
 Resource2=IDR_MAINFRAME
 Resource3=IDD_ABOUTBOX
 Resource4=IDD_StartScreen
 Resource5=IDD_DVT_DIALOG
 Class4=RosterDlg
-Resource6=IDD_PROGRESS
+Resource6=IDD_AddProperty
 Class5=StudentDlg
 Resource7=IDD_DISPLAYPIC
 Class6=AddPropertyDlg
@@ -28,9 +28,9 @@ Class7=YESNODlg
 Class8=StartScreenDlg
 Resource9=IDD_StudentDlg
 Class9=CPictureDlg
-Resource10=IDD_PictureWizard
+Resource10=IDD_YESNO
 Class10=CPictureWizardDlg
-Resource11=IDD_AddProperty
+Resource11=IDD_PROGRESS
 Resource12=MainMenu
 
 [CLS:CDVTApp]
@@ -215,10 +215,10 @@ LastObject=CPictureWizardDlg
 [DLG:IDD_PictureWizard]
 Type=1
 Class=CPictureWizardDlg
-ControlCount=12
+ControlCount=14
 Control1=IDCANCEL,button,1342242816
-Control2=IDC_STATIC,static,1342177287
-Control3=IDC_STATIC,static,1342177287
+Control2=IDC_PICTURE_RIGHT,static,1342177287
+Control3=IDC_PICTURE_LEFT,static,1342177287
 Control4=IDC_LIST1,listbox,1352728833
 Control5=IDC_LIST2,listbox,1352728833
 Control6=IDC_BUTTON1,button,1342242816
@@ -228,6 +228,8 @@ Control9=IDC_BUTTON4,button,1342242816
 Control10=IDC_StudentName,static,1342308876
 Control11=IDC_ViewFinder,static,1342177287
 Control12=IDC_BUTTON5,button,1342242816
+Control13=IDC_BUTTON6,button,1342242816
+Control14=IDC_BUTTON7,button,1342242816
 
 [DLG:IDD_DISPLAYPIC]
 Type=1
