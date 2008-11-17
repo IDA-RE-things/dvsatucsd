@@ -130,6 +130,10 @@ SOURCE=.\PictureClass\Picture.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\PictureEx.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\PictureWizardDlg.cpp
 # End Source File
 # Begin Source File
@@ -200,6 +204,10 @@ SOURCE=.\DVTDlg.h
 # Begin Source File
 
 SOURCE=.\MYSTREAM.H
+# End Source File
+# Begin Source File
+
+SOURCE=.\PictureEx.h
 # End Source File
 # Begin Source File
 

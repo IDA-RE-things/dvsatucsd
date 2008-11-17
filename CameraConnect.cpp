@@ -1065,7 +1065,7 @@ BOOL CCameraConnect::WindowProc(UINT message, WPARAM wParam, LPARAM lParam, char
 		if (pCPictureWizardDlg->horizontal) // left picture
 		{
 			pCPictureWizardDlg->horizontal = false;
-			
+			setH(false);
 			SetFileName(true);
 			fRes = CProg.GetReleaseData( m_hSource, NumData, FileName, this );
 			if (pCPictureWizardDlg->m_jpgLeft.Load(_T(FileName)))
@@ -1075,7 +1075,8 @@ BOOL CCameraConnect::WindowProc(UINT message, WPARAM wParam, LPARAM lParam, char
 			}
 		}
 		else // right picture
-		{
+		{	
+			setV(false);
 			SetFileName(false);
 			fRes = CProg.GetReleaseData( m_hSource, NumData, FileName, this );
 			if (pCPictureWizardDlg->m_jpgRight.Load(_T(FileName)))
@@ -1453,7 +1454,28 @@ char* CCameraConnect::GetLastVerticalFile ()
 {
 	return FileNameVertical;
 }
+
 char * CCameraConnect::GetLastHorizontalFile()
 {
 	return FileNameHorizontal;
+}
+
+void CCameraConnect::setH(BOOL h)
+{
+	hselect = h; 
+}
+
+void CCameraConnect::setV(BOOL v)
+{
+	vselect = v; 
+}
+
+BOOL CCameraConnect::getHSelect()
+{
+	return hselect; 
+}
+
+BOOL CCameraConnect::getVSelect() 
+{
+	return vselect; 
 }

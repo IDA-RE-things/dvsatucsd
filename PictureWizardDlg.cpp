@@ -44,6 +44,7 @@ CPictureWizardDlg::CPictureWizardDlg(CWnd* pParent /*=NULL*/, Roster *roster, St
 	my_theCamera = theCamera;
 	cur_path = curpath;
 	horizontal = true;
+
 }
 
 
@@ -205,7 +206,7 @@ void CPictureWizardDlg::OnButton2()
 	horizontal = true;
 	MessageBox("Please Take the Horizontal Picture Now");
 	
-
+	//the following was done in camera connect
 	//failed attempt to draw. have fun with this next quarter!
 	/*PAINTSTRUCT paintstruct;
 
@@ -437,15 +438,27 @@ byte * inputs = genKeystrokes(my_student->GetPropertyValue("Name"), length);
 int i;
 
 // copy pictures
-
-CString VerticalFile(((CCameraConnect*) my_theCamera)->GetLastVerticalFile());
-CString HorizontalFile(((CCameraConnect*) my_theCamera)->GetLastHorizontalFile());
-
-CopyFile(HorizontalFile,
+if (((CCameraConnect*) my_theCamera)->getHSelect()) CopyFile(fileNameRight,
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
+else
+{
 
-CopyFile(VerticalFile,
-		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg",false);
+	CString HorizontalFile(((CCameraConnect*) my_theCamera)->GetLastHorizontalFile());
+
+	CopyFile(HorizontalFile,cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
+}
+
+if (((CCameraConnect*) my_theCamera)->getVSelect()) CopyFile(fileNameLeft,
+		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
+else
+{
+
+	CString VerticalFile(((CCameraConnect*) my_theCamera)->GetLastVerticalFile());
+
+	CopyFile(VerticalFile,cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg",false);
+}
+
+
 /*
 CopyFile(cur_path+"\\"+my_student->GetPropertyValue("Name")+"H1left.jpg",
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
@@ -453,6 +466,7 @@ CopyFile(cur_path+"\\"+my_student->GetPropertyValue("Name")+"H1left.jpg",
 CopyFile(cur_path+"\\"+my_student->GetPropertyValue("Name")+"H1right.jpg",
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg",false);
 */
+
 MessageBox(cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg");
 MessageBox(cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg");
 
@@ -601,8 +615,9 @@ void CPictureWizardDlg::OnEyeDx()
 
 void CPictureWizardDlg::OnButton6() 
 {
-
-	CString fileNameLeft; 
+//    hselect = false; 
+//	CString fileNameLeft; 
+	((CCameraConnect*) my_theCamera)->setH(true);
 	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
 	if (dlg.DoModal() == IDOK)
 	{
@@ -620,7 +635,10 @@ void CPictureWizardDlg::OnButton6()
 
 void CPictureWizardDlg::OnButton7() 
 {
-	CString fileNameRight; 
+		
+//	vselect = true; 
+//	CString fileNameRight; 
+	((CCameraConnect*) my_theCamera)->setV(true); 
 	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
 	if (dlg.DoModal() == IDOK)
 	{
