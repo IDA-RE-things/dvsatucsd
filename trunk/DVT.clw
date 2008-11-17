@@ -13,24 +13,58 @@ Class2=CDVTDlg
 Class3=CAboutDlg
 
 ResourceCount=12
+<<<<<<< .mine
+Resource1=IDD_RosterSettings
+=======
 Resource1=IDD_DVT_DIALOG
+>>>>>>> .r12
 Resource2=IDR_MAINFRAME
+<<<<<<< .mine
+Resource3=IDD_PictureWizard
+Resource4=IDD_AddProperty
+Resource5=IDD_DISPLAYPIC
+=======
 Resource3=IDD_AddProperty
 Resource4=IDD_PictureWizard
 Resource5=IDD_YESNO
+>>>>>>> .r12
 Class4=RosterDlg
+<<<<<<< .mine
+Resource6=IDD_StartScreen
+=======
 Resource6=IDD_StudentDlg
+>>>>>>> .r12
 Class5=StudentDlg
+<<<<<<< .mine
+Resource7=IDD_PROGRESS
+=======
 Resource7=IDD_RosterSettings
+>>>>>>> .r12
 Class6=AddPropertyDlg
+<<<<<<< .mine
+Resource8=IDD_ABOUTBOX
+=======
 Resource8=IDD_StartScreen
+>>>>>>> .r12
 Class7=YESNODlg
 Class8=StartScreenDlg
+<<<<<<< .mine
+Resource9=IDD_YESNO
+=======
 Resource9=IDD_DISPLAYPIC
+>>>>>>> .r12
 Class9=CPictureDlg
+<<<<<<< .mine
+Resource10=IDD_StudentDlg
+=======
 Resource10=IDD_PROGRESS
+>>>>>>> .r12
 Class10=CPictureWizardDlg
+<<<<<<< .mine
+Resource11=IDD_DVT_DIALOG
+=======
 Resource11=IDD_ABOUTBOX
+>>>>>>> .r12
 Resource12=MainMenu
 
 [CLS:CDVTApp]
