@@ -31,13 +31,11 @@ public:
 	void PictureDoneSignal(BOOL done);
 	BOOL SetPathName( CString NewPathName );
 	BOOL SetFileName( BOOL horizontal );
-	void setH(BOOL h);
-	void setV(BOOL v);
-	BOOL getHSelect();
-	BOOL getVSelect();
 
 	char * GetLastVerticalFile ();
 	char * GetLastHorizontalFile();
+	void SetLastVerticalFile(char*);
+	void SetLastHorizontalFile(char*);
 	//BOOL SetPathAndFileName(char *PicNameLeft, char *PicNameRight);
 	BOOL bPictDone;
 	BOOL PictureDoneWait();
@@ -54,6 +52,9 @@ public:
 	//CCameraConnect(CStatic *m_cViewImage);
 	CCameraConnect();
 	virtual ~CCameraConnect();
+
+	LPPICTURE ImageLoad(CString s);
+	void ImageRender(HDC hdc, LPPICTURE hjpg, int x, int y);
 
 private:
 	/* call back function */
@@ -80,9 +81,6 @@ private:
 
 	int hcount;
 	int vcount;
-
-	BOOL hselect;
-	BOOL vselect; 
 
 	CString str_hcount;
 	CString str_vcount;

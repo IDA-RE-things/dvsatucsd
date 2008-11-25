@@ -288,3 +288,10 @@ void RosterDlg::OnEditchangeCDefaultValue()
 
 	m_CDefaultValue.SetEditSel(curlen,-1);
 }
+
+void RosterDlg::OnCancel() 
+{
+	// TODO: Add extra cleanup here
+	
+	CDialog::OnCancel();
+}

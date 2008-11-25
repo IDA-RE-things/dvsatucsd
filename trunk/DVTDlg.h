@@ -30,14 +30,14 @@ class CDVTDlg : public CDialog
 public:
 	CDVTDlg(CWnd* pParent = NULL);	// standard constructor
 
-	CStatic *RosterName;
+	CStatic * RosterName;
 
 // Dialog Data
 	//{{AFX_DATA(CDVTDlg)
 	enum { IDD = IDD_DVT_DIALOG };
 	CListBox	m_studentview;
 	CListBox	m_studentlist;
-	BOOL	m_SortResultChecked;
+	BOOL		m_SortResultChecked;
 	//}}AFX_DATA
 
 	// ClassWizard generated virtual function overrides

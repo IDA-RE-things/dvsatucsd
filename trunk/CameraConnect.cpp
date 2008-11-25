@@ -22,13 +22,13 @@ static char THIS_FILE[]=__FILE__;
 #define		CAMERAEVENTMESSAGESTRING_RELEASE_COMP	"Camera Event ReleaseComplete"
 #define		CAMERAEVENTMESSAGESTRING_ABORT_PC_EVF	"Camera Event Abort PC EVF"
 #define		CAMERAEVENTMESSAGESTRING_CHANGE_BY_UI	"Camera Event Change By UI"
+#define		PICTURE_WINDOW_WIDTH 145
+#define		PICTURE_WINDOW_HEIGHT 130
 
 
 #define		VIEWFINDER_WIDTH		320
 #define		VIEWFINDER_HEIGHT		240
 
-#define		PICTURE_WINDOW_WIDTH 145
-#define		PICTURE_WINDOW_HEIGHT 130
 
 
 #define		GETERRORID( x )		(cdERROR_ERRORID_MASK&x)
@@ -1064,26 +1064,33 @@ BOOL CCameraConnect::WindowProc(UINT message, WPARAM wParam, LPARAM lParam, char
 		// Determine if we should take the left picture or the right 
 		if (pCPictureWizardDlg->horizontal) // left picture
 		{
+			//to indicate that horizontal picture is taken
 			pCPictureWizardDlg->horizontal = false;
-			setH(false);
+			
+			//set the file name for the horizontal(true) picture 
 			SetFileName(true);
 			fRes = CProg.GetReleaseData( m_hSource, NumData, FileName, this );
+
+			//display horizonal picture in left box
 			if (pCPictureWizardDlg->m_jpgLeft.Load(_T(FileName)))
 			{	
-				pCPictureWizardDlg->m_jpgLeft.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT); 
+				pCPictureWizardDlg->m_jpgLeft.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT);
 				pCPictureWizardDlg->m_jpgLeft.Draw();
 			}
 		}
 		else // right picture
-		{	
-			setV(false);
+		{
+			//set the file name for the vertical (false) picture
 			SetFileName(false);
 			fRes = CProg.GetReleaseData( m_hSource, NumData, FileName, this );
+
+			//diplay vertical picture in right box
 			if (pCPictureWizardDlg->m_jpgRight.Load(_T(FileName)))
 			{	
-				pCPictureWizardDlg->m_jpgRight.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT); 
+				pCPictureWizardDlg->m_jpgRight.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT);
 				pCPictureWizardDlg->m_jpgRight.Draw();
-			}		 
+			}
+		 
 		}
 
 		if( !fRes )
@@ -1454,28 +1461,17 @@ char* CCameraConnect::GetLastVerticalFile ()
 {
 	return FileNameVertical;
 }
-
 char * CCameraConnect::GetLastHorizontalFile()
 {
 	return FileNameHorizontal;
 }
 
-void CCameraConnect::setH(BOOL h)
+void CCameraConnect::SetLastVerticalFile(char* lastVerticalFile)
 {
-	hselect = h; 
+	strcpy(FileNameVertical, lastVerticalFile);
 }
 
-void CCameraConnect::setV(BOOL v)
+void CCameraConnect::SetLastHorizontalFile(char* lastHorizontalFile)
 {
-	vselect = v; 
-}
-
-BOOL CCameraConnect::getHSelect()
-{
-	return hselect; 
-}
-
-BOOL CCameraConnect::getVSelect() 
-{
-	return vselect; 
+	strcpy(FileNameHorizontal, lastHorizontalFile);
 }
