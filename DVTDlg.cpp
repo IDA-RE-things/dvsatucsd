@@ -83,7 +83,6 @@ CDVTDlg::CDVTDlg(CWnd* pParent /*=NULL*/)
 	// Note that LoadIcon does not require a subsequent DestroyIcon in Win32
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
-
 	char tempstr[32768];
 	getcwd(tempstr, 32768);
 	cur_path = tempstr;
@@ -100,7 +99,6 @@ void CDVTDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_StudentView, m_studentview);
 	DDX_Control(pDX, IDC_StudentList, m_studentlist);
 	DDX_Check(pDX, IDC_SortResult, m_SortResultChecked);
-
 	//}}AFX_DATA_MAP
 }
 
@@ -155,21 +153,23 @@ BOOL CDVTDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// Set big icon
 	SetIcon(m_hIcon, FALSE);		// Set small icon
 	
+	while(roster.GetLabel() == "Unnamed Roster")
+	{
+		//Display the opening menu
+		CString result;
+		StartScreenDlg startscreen(NULL, &result);
+		startscreen.DoModal();
 
-	//Display the opening menu
-	CString result;
-	StartScreenDlg startscreen(NULL, &result);
-	startscreen.DoModal();
-
-	//Check for which menu option was chosen and perform the selected action.
-	if (result=="New") CDVTDlg::OnUpdateFileRostersettings(NULL);
-	if (result=="Open") CDVTDlg::OnInitOpenroster();
-
+		//Check for which menu option was chosen and perform the selected action.
+	
+		if (result=="New") CDVTDlg::OnUpdateFileRostersettings(NULL);
+		if (result=="Open") CDVTDlg::OnInitOpenroster();
+	}
+	
 	RosterName = new CStatic();
-	RosterName->Create("I'm a static control too", WS_CHILD | WS_VISIBLE,
-	          CRect(10, 10, 400, 60), this, 90210);
+	RosterName->Create("Roster Name", WS_CHILD | WS_VISIBLE,
+		CRect(10,10,400,60), this,90210);
 	RosterName->SetWindowText(roster.GetLabel());
-
 		
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }

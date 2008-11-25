@@ -18,7 +18,7 @@ static char THIS_FILE[]=__FILE__;
 
 Student::Student()
 {
-
+	numTimesAnalyzed = 0;
 }
 
 Student::~Student()
@@ -94,6 +94,13 @@ void Student::AddHorizPicture(CString path, CString timestamp)
 	CString nowstring = now.Format( "%m_%d_%Y_%H_%M_%S" );*/
 	Pics newpicture(path, timestamp);
 	my_horizpicture.push_back(newpicture);
+}
+
+int Student::GetNumberOfTimesAnalyzed(){
+	return numTimesAnalyzed;
+}
+void Student::IncrementNumberOfTimesAnalyzed(){
+	numTimesAnalyzed++;
 }
 
 

@@ -24,7 +24,7 @@ static char THIS_FILE[] = __FILE__;
 
 
 
-byte * genKeystrokes(CString name, int & length);
+byte * genKeystrokes(CString name, int & length, bool genExtraKeystroke);
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -44,7 +44,6 @@ CPictureWizardDlg::CPictureWizardDlg(CWnd* pParent /*=NULL*/, Roster *roster, St
 	my_theCamera = theCamera;
 	cur_path = curpath;
 	horizontal = true;
-
 }
 
 
@@ -52,8 +51,8 @@ void CPictureWizardDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(CPictureWizardDlg)
-	DDX_Control(pDX, IDC_PICTURE_RIGHT, m_jpgRight);
 	DDX_Control(pDX, IDC_PICTURE_LEFT, m_jpgLeft);
+	DDX_Control(pDX, IDC_PICTURE_RIGHT, m_jpgRight);
 	DDX_Control(pDX, IDC_ViewFinder, m_ViewFinder);
 	DDX_Control(pDX, IDC_StudentName, m_StudentLabel);
 	//}}AFX_DATA_MAP
@@ -206,7 +205,7 @@ void CPictureWizardDlg::OnButton2()
 	horizontal = true;
 	MessageBox("Please Take the Horizontal Picture Now");
 	
-	//the following was done in camera connect
+
 	//failed attempt to draw. have fun with this next quarter!
 	/*PAINTSTRUCT paintstruct;
 
@@ -239,113 +238,20 @@ void CPictureWizardDlg::OnButton4()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#define MAX_LOADSTRING	100
-#define HIMETRIC_INCH	2540
-#define MAP_LOGHIM_TO_PIX(x,ppli)   ( ((ppli)*(x) + HIMETRIC_INCH/2) / HIMETRIC_INCH )
-
-// Global Variables:
-HINSTANCE hInst;								// current instance
-TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
-TCHAR szWindowClass[MAX_LOADSTRING];			// The title bar text
-LPPICTURE gpPicture;
-HWND ghWnd;
-
-// Foward declarations of functions included in this code module:
-ATOM				MyRegisterClass(HINSTANCE hInstance);
-BOOL				InitInstance(HINSTANCE, int);
-LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);
-
-void CPictureWizardDlg::LoadPictureFile(LPCTSTR szFile)
-{
-	OutputDebugString("\nsizefile's values is: ");
-	OutputDebugString(szFile);
-	
-	// open file
-	HANDLE hFile = CreateFile(szFile, GENERIC_READ, 0, NULL, OPEN_EXISTING, 0, NULL);
-	_ASSERTE(INVALID_HANDLE_VALUE != hFile);
-
-
-	// get file size
-	DWORD dwFileSize = GetFileSize(hFile, NULL);
-	_ASSERTE(-1 != dwFileSize);
-
-	LPVOID pvData = NULL;
-	// alloc memory based on file size
-	HGLOBAL hGlobal = GlobalAlloc(GMEM_MOVEABLE, dwFileSize);
-	_ASSERTE(NULL != hGlobal);
-
-	pvData = GlobalLock(hGlobal);
-	_ASSERTE(NULL != pvData);
-
-	DWORD dwBytesRead = 0;
-	// read file and store in global memory
-	BOOL bRead = ReadFile(hFile, pvData, dwFileSize, &dwBytesRead, NULL);
-	_ASSERTE(FALSE != bRead);
-	GlobalUnlock(hGlobal);
-	CloseHandle(hFile);
-
-	LPSTREAM pstm = NULL;
-	// create IStream* from global memory
-	HRESULT hr = CreateStreamOnHGlobal(hGlobal, TRUE, &pstm);
-	_ASSERTE(SUCCEEDED(hr) && pstm);
-
-	// Create IPicture from image file
-	if (gpPicture)
-		gpPicture->Release();
-	hr = ::OleLoadPicture(pstm, dwFileSize, FALSE, IID_IPicture, (LPVOID *)&gpPicture);
-	_ASSERTE(SUCCEEDED(hr) && gpPicture);	
-	pstm->Release();
-
-	//InvalidateRect(ghWnd, NULL, TRUE);
-	
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void CPictureWizardDlg::OnButton1() 
 {
 	// TODO: Add your control notification handler code here
 
+
+	bool genExtraKeystroke = false;
+
+	if (my_student->GetNumberOfTimesAnalyzed() > 0){
+		genExtraKeystroke = true;
+	}
+
+	my_student->IncrementNumberOfTimesAnalyzed();
+
+	MessageBox("analyzed: " + my_student->GetNumberOfTimesAnalyzed());
 	// Calling Eyedx
 SHELLEXECUTEINFO sei;
 sei.cbSize = sizeof(SHELLEXECUTEINFO);
@@ -354,7 +260,7 @@ sei.hwnd = NULL;
 sei.lpVerb = "open";
 //sei.lpFile = "C:\\Program Files\\EyeDx1.5.2\\eyedx.exe";
 //sei.lpFile = "C:\\WINDOWS\\system32\\calc.exe";
-sei.lpFile = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT\\Debug\\EyeDx1.5.2\\eyedx.EXE";
+sei.lpFile = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_F08\\Debug\\EyeDx1.5.2\\eyedx.EXE";
 sei.lpParameters= NULL;
 sei.nShow = SW_SHOWNORMAL;
 sei.hInstApp = NULL;
@@ -364,10 +270,8 @@ sei.hkeyClass = NULL;
 sei.dwHotKey = NULL;
 sei.hIcon = NULL;
 sei.hProcess = NULL;
-sei.lpDirectory = ".\\EyeDx1.5.2\\";
+sei.lpDirectory = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_F08\\EyeDx1.5.2\\";
 int ReturnCode = ::ShellExecuteEx(&sei);
-
-
 
 
 //sei.hProcess->SetFocus();
@@ -413,7 +317,7 @@ input[1].ki.dwExtraInfo = 0;
 
 SendInput(2,input,sizeof(INPUT));
 
-// define keystrokes
+// defined keystrokes
 const int totalkeys = 30;
 /*byte inputs[totalkeys] = {0x44,0x55,0x55,0x50,0xBE,
 					0x4A,0x50,0x47,0x0D,0x59,
@@ -434,44 +338,19 @@ byte inputs[totalkeys] = {'D','U','U','P','.',
 					0x09,0x09,'T','M','P',
 					'0',0x09,0x4f,0x0d,0x0d};*/
 int length;
-byte * inputs = genKeystrokes(my_student->GetPropertyValue("Name"), length);
+byte * inputs = genKeystrokes(my_student->GetPropertyValue("Name"), length, genExtraKeystroke);
 int i;
 
 // copy pictures
-if (((CCameraConnect*) my_theCamera)->getHSelect()) CopyFile(fileNameRight,
-		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
-else
-{
 
-	CString HorizontalFile(((CCameraConnect*) my_theCamera)->GetLastHorizontalFile());
+CString VerticalFile(((CCameraConnect*) my_theCamera)->GetLastVerticalFile());
+CString HorizontalFile(((CCameraConnect*) my_theCamera)->GetLastHorizontalFile());
 
-	CopyFile(HorizontalFile,cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
-}
-
-if (((CCameraConnect*) my_theCamera)->getVSelect()) CopyFile(fileNameLeft,
-		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
-else
-{
-
-	CString VerticalFile(((CCameraConnect*) my_theCamera)->GetLastVerticalFile());
-
-	CopyFile(VerticalFile,cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg",false);
-}
-
-
-/*
-CopyFile(cur_path+"\\"+my_student->GetPropertyValue("Name")+"H1left.jpg",
+CopyFile(HorizontalFile,
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
 
-CopyFile(cur_path+"\\"+my_student->GetPropertyValue("Name")+"H1right.jpg",
+CopyFile(VerticalFile,
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg",false);
-*/
-
-MessageBox(cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg");
-MessageBox(cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg");
-
-LoadPictureFile(cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg");
-LoadPictureFile(cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg");
 
 /*
 ghWnd = hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -514,7 +393,7 @@ void CPictureWizardDlg::OnCancel()
 	CDialog::OnCancel();
 }
 
-byte * genKeystrokes(CString name, int & length)
+byte * genKeystrokes(CString name, int & length, bool genExtraKeystroke )
 {
 
 	int caps = GetKeyState(VK_CAPITAL);
@@ -525,13 +404,26 @@ byte * genKeystrokes(CString name, int & length)
 	}
 	byte * inputs = new byte[length];
 		
-	
+	int j = 0;
+	if (genExtraKeystroke){
+		j=1;
+	}
 		
+	
 	byte staticContent[26]	= {0x44,0x55,0x55,0x50,0xBE,
 					0x4A,0x50,0x47,0x0D,0x59,
 					0x53,0x53,0x49,0xBE,0x4A,
 					0x50,0x47,0x0D,0x59,0x09,
 					0x09,0x09,0x09,0x4f,0x0d,0x0d};
+
+	if (genExtraKeystroke){
+		byte staticContent[27]	= {0x44,0x55,0x55,0x50,0xBE,
+						0x4A,0x50,0x47,0x0D,0x59,
+						0x53,0x53,0x49,0xBE,0x4A,
+						0x50,0x47,0x0D,0x59,0x09,
+						0x09,0x09,0x09,0x4f,0x0d,0x0d, 0x0d};
+	}
+	
 
 	byte * temp;
 /*	if(caps & 1)
@@ -613,43 +505,40 @@ void CPictureWizardDlg::OnEyeDx()
 
 
 
-void CPictureWizardDlg::OnButton6() 
+void CPictureWizardDlg::OnButton6()
 {
-//    hselect = false; 
-//	CString fileNameLeft; 
-	((CCameraConnect*) my_theCamera)->setH(true);
+	CString fileNameHorizontal; 
 	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
 	if (dlg.DoModal() == IDOK)
 	{
-     fileNameLeft = dlg.GetFileName();
+     fileNameHorizontal = dlg.GetPathName();
 	}
 
-   	if (m_jpgLeft.Load(_T(fileNameLeft)))
+   	if (m_jpgLeft.Load(_T(fileNameHorizontal)))
 	{	
 		m_jpgLeft.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT);
 		m_jpgLeft.Draw();
 	}
-	  
-}	
+	((CCameraConnect*) my_theCamera)->SetLastHorizontalFile((char*)(LPCTSTR) fileNameHorizontal);
+}
 
-
-void CPictureWizardDlg::OnButton7() 
+void CPictureWizardDlg::OnButton7()
 {
-		
-//	vselect = true; 
-//	CString fileNameRight; 
-	((CCameraConnect*) my_theCamera)->setV(true); 
+	CString fileNameVertical; 
 	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
 	if (dlg.DoModal() == IDOK)
 	{
-     fileNameRight = dlg.GetFileName();
+     fileNameVertical = dlg.GetPathName();
 	}
 
 
-	if (m_jpgRight.Load(_T(fileNameRight)))
+	if (m_jpgRight.Load(_T(fileNameVertical)))
 	{	
 		m_jpgRight.Scale(PICTURE_WINDOW_WIDTH, PICTURE_WINDOW_HEIGHT); 
 		m_jpgRight.Draw();
 	}	
-}	
 
+
+	((CCameraConnect*) my_theCamera)->SetLastVerticalFile((char*)(LPCTSTR)fileNameVertical);
+	
+}	

@@ -119,15 +119,12 @@ void StartScreenDlg::OnQuick()
 						// don't want.
 }
 */
+
+
+//on pressing X, exits from program completely
 void StartScreenDlg::OnClose() 
 {
-	// TODO: Add your message handler code here and/or call default
-	//*BOOL result;
-
-	//if (theCamera) // camera might have not been created yet
-	//	result = ((CCameraConnect*) theCamera)->EndCamera();
-
-	//CDialog::OnOK();
-	return;
-	//CDialog::OnClose();*/
+	CDialog::OnOK();
+	CDialog::OnClose();
+	exit(0);
 }

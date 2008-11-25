@@ -57,9 +57,12 @@ protected:
 	afx_msg void OnButton3();
 	afx_msg void OnEyeDx();
 	afx_msg void LoadPictureFile(LPCTSTR szFile);
-	afx_msg void WinMain(HINSTANCE hInstance,  HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
-	afx_msg void OnButton6();
+	afx_msg void WinMain(HINSTANCE hInstance,
+                     HINSTANCE hPrevInstance,
+                     LPSTR     lpCmdLine,
+                     int       nCmdShow);
 	afx_msg void OnButton7();
+	afx_msg void OnButton6();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 
@@ -68,8 +71,6 @@ private:
 	Student * my_student;
 	void* my_theCamera;
 	CString cur_path;
-	CString fileNameLeft;
-	CString fileNameRight; 
 };
 
 //{{AFX_INSERT_LOCATION}}

@@ -6,49 +6,13 @@
 --------------------Configuration: DVT - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-<<<<<<< .mine
-Creating command line "rc.exe /l 0x409 /fo"Debug/DVT.res" /d "_DEBUG" /d "_AFXDLL" "D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\DVT.rc"" 
-Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP10.tmp" with contents
-=======
-Creating temporary file "C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP6.tmp" with contents
->>>>>>> .r12
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA8.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/DVT.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /EHsc /c 
-<<<<<<< .mine
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\AddPropertyDlg.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\CameraConnect.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\DVT.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\DVTDlg.cpp"
-=======
-"C:\Documents and Settings\slaplante\My Documents\dvsatucsd\PictureEx.cpp"
->>>>>>> .r12
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\MYSTREAM.CPP"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\Pics.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\PictureClass\Picture.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\PictureWizardDlg.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\Progress.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\Result.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\Roster.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\RosterDlg.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\StartScreenDlg.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\Student.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\StudentDlg.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\StudentProperty.cpp"
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\YESNODlg.cpp"
+"C:\Documents and Settings\Administrator\Desktop\DVT_F08\Student.cpp"
 ]
-<<<<<<< .mine
-Creating command line "cl.exe @C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP10.tmp" 
-Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP11.tmp" with contents
-=======
-Creating command line "cl.exe @C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP6.tmp" 
-Creating temporary file "C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP7.tmp" with contents
->>>>>>> .r12
-[
-/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/DVT.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /EHsc /c 
-"D:\Documents\School 08-09\Fall Quarter\ENG 100L\dvsatucsd\StdAfx.cpp"
-]
-Creating command line "cl.exe @C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP11.tmp" 
-Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP12.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA8.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA9.tmp" with contents
 [
 /nologo /subsystem:windows /incremental:yes /pdb:"Debug/DVT.pdb" /debug /machine:I386 /out:"Debug/DVT.exe" /pdbtype:sept 
 ".\Debug\AddPropertyDlg.obj"
@@ -58,6 +22,7 @@ Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP12.tmp" with content
 ".\Debug\MYSTREAM.OBJ"
 ".\Debug\Pics.obj"
 ".\Debug\Picture.obj"
+".\Debug\PictureEx.obj"
 ".\Debug\PictureWizardDlg.obj"
 ".\Debug\Progress.obj"
 ".\Debug\Result.obj"
@@ -71,63 +36,19 @@ Creating temporary file "C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP12.tmp" with content
 ".\Debug\YESNODlg.obj"
 ".\Debug\DVT.res"
 ".\CDSDK\lib\CDSDK.lib"
-".\Debug\PictureEx.obj"
 ]
-<<<<<<< .mine
-Creating command line "link.exe @C:\DOCUME~1\Rishi\LOCALS~1\Temp\RSP12.tmp"
-=======
-Creating command line "link.exe @C:\DOCUME~1\SLAPLA~1\LOCALS~1\Temp\RSP7.tmp"
->>>>>>> .r12
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSPA9.tmp"
 <h3>Output Window</h3>
-Compiling resources...
 Compiling...
-<<<<<<< .mine
-StdAfx.cpp
-Compiling...
-AddPropertyDlg.cpp
-CameraConnect.cpp
-DVT.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-DVTDlg.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-=======
-PictureEx.cpp
->>>>>>> .r12
-MYSTREAM.CPP
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-Pics.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-Picture.cpp
-PictureWizardDlg.cpp
-Progress.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-Result.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-Roster.cpp
-RosterDlg.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-StartScreenDlg.cpp
 Student.cpp
-push, _CD_TYPE_H_PACK_, 1
-pop, _CD_TYPE_H_PACK_
-StudentDlg.cpp
-StudentProperty.cpp
-YESNODlg.cpp
-Generating Code...
 Linking...
-LINK : LNK6004: Debug/DVT.exe not found or not built by the last incremental link; performing full link
+LINK : fatal error LNK1168: cannot open Debug/DVT.exe for writing
+Error executing link.exe.
 
 
 
 <h3>Results</h3>
-DVT.exe - 0 error(s), 0 warning(s)
+DVT.exe - 1 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

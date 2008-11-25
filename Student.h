@@ -34,9 +34,12 @@ public:
 
 	void Student::AddVertPicture(CString path, CString timestamp);
 	void Student::AddHorizPicture(CString path, CString timestamp);
+	int Student::GetNumberOfTimesAnalyzed();
+	void Student:: IncrementNumberOfTimesAnalyzed();
 
 private:
 
+	int numTimesAnalyzed;
 	std::vector<StudentProperty> my_property;
 	std::vector<Pics> my_vertpicture;
 	std::vector<Pics> my_horizpicture;

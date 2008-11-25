@@ -54,6 +54,7 @@ protected:
 	afx_msg void OnSelchangePropList();
 	afx_msg void OnNext();
 	afx_msg void OnEditchangeCDefaultValue();
+	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
