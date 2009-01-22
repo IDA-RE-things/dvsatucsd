@@ -305,6 +305,7 @@ void CDVTDlg::OnFileOpenroster()
 	Roster newroster(cur_path, path);
 	roster = newroster;
 
+	RosterName->SetWindowText(roster.GetLabel());
 	RefreshStudentList();
 }
 

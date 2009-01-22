@@ -62,7 +62,7 @@ BOOL RosterDlg::OnInitDialog()
 	curselection = -1;
 	prevtext = "-This string will never be typed.";
 	
-	//Poplate roster properties
+	//Populate roster properties
 	m_rosterlabel.SetWindowText(roster->GetLabel());
 
 	//Populate student property list
