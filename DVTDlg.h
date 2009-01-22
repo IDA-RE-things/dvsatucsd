@@ -15,7 +15,7 @@
 #include "cdAPI.h"
 #include "Roster.h"
 
-#define CONNECTERROR "Camera Error!  Please verify that the camera is turned on or that it is pluged in."
+#define CONNECTERROR "Camera Error!  Please verify that the camera is turned on or that it is plugged in."
 #define SELECTERROR "You must have a student selected to take pictures."
 #define CREATEERROR "Error Creating a Student."
 #define SELECTEDITERROR "You must have a student selected to edit."
