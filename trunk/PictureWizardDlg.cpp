@@ -24,9 +24,6 @@ static char THIS_FILE[] = __FILE__;
 
 
 
-byte * genKeystrokes(CString name, int & length, bool genExtraKeystroke);
-
-
 /////////////////////////////////////////////////////////////////////////////
 // CPictureWizardDlg dialog
 
@@ -203,7 +200,7 @@ BOOL CPictureWizardDlg::OnCamera()
 void CPictureWizardDlg::OnButton2() 
 {
 	horizontal = true;
-	MessageBox("Please Take the Horizontal Picture Now");
+	MessageBox("Please Take the Horizontal Picture Now",NULL,MB_OK);
 	
 
 	//failed attempt to draw. have fun with this next quarter!
@@ -245,13 +242,17 @@ void CPictureWizardDlg::OnButton1()
 
 	bool genExtraKeystroke = false;
 
+	//extra keystrokes after first time
 	if (my_student->GetNumberOfTimesAnalyzed() > 0){
 		genExtraKeystroke = true;
 	}
 
 	my_student->IncrementNumberOfTimesAnalyzed();
 
-	MessageBox("analyzed: " + my_student->GetNumberOfTimesAnalyzed());
+	//debug: print out number of times analyzed
+	CString str ;
+	str.Format("%d", my_student->GetNumberOfTimesAnalyzed());
+	
 	// Calling Eyedx
 SHELLEXECUTEINFO sei;
 sei.cbSize = sizeof(SHELLEXECUTEINFO);
@@ -260,7 +261,7 @@ sei.hwnd = NULL;
 sei.lpVerb = "open";
 //sei.lpFile = "C:\\Program Files\\EyeDx1.5.2\\eyedx.exe";
 //sei.lpFile = "C:\\WINDOWS\\system32\\calc.exe";
-sei.lpFile = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_F08\\Debug\\EyeDx1.5.2\\eyedx.EXE";
+sei.lpFile = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_WI09\\EyeDx1.5.2\\eyedx.EXE";
 sei.lpParameters= NULL;
 sei.nShow = SW_SHOWNORMAL;
 sei.hInstApp = NULL;
@@ -270,7 +271,8 @@ sei.hkeyClass = NULL;
 sei.dwHotKey = NULL;
 sei.hIcon = NULL;
 sei.hProcess = NULL;
-sei.lpDirectory = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_F08\\EyeDx1.5.2\\";
+sei.lpDirectory = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_WI09\\EyeDx1.5.2\\";
+//sei.lpDirectory = ".\\EyeDx1.5.2\\";
 int ReturnCode = ::ShellExecuteEx(&sei);
 
 
@@ -365,7 +367,7 @@ ghWnd = hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
    UpdateWindow(hWnd);
 */
 // send keystrokes here
-fprintf(stderr, "%d length", &length);
+//fprintf(stderr, "%d length", &length);
 for(i=0;i<length;i++) {
 	input[0].ki.wVk = input[1].ki.wVk = inputs[i];
 	SendInput(2,input,sizeof(INPUT));
@@ -393,14 +395,24 @@ void CPictureWizardDlg::OnCancel()
 	CDialog::OnCancel();
 }
 
-byte * genKeystrokes(CString name, int & length, bool genExtraKeystroke )
+byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtraKeystroke )
 {
 
-	int caps = GetKeyState(VK_CAPITAL);
-	length = 25 + name.GetLength();
-	if(caps & 1)
+	//int caps = GetKeyState(VK_CAPITAL);
+
+	//determine length of name portion
+	int nameLength = name.GetLength();
+
+	length = 25 + nameLength;
+	
+	/*if(caps & 1)
 	{
 		length += 2;
+	}*/
+
+	if(genExtraKeystroke)
+	{
+		length++;
 	}
 	byte * inputs = new byte[length];
 		
@@ -417,7 +429,7 @@ byte * genKeystrokes(CString name, int & length, bool genExtraKeystroke )
 					0x09,0x09,0x09,0x4f,0x0d,0x0d};
 
 	if (genExtraKeystroke){
-		byte staticContent[27]	= {0x44,0x55,0x55,0x50,0xBE,
+		byte staticContent[28]	= {0x44,0x55,0x55,0x50,0xBE,
 						0x4A,0x50,0x47,0x0D,0x59,
 						0x53,0x53,0x49,0xBE,0x4A,
 						0x50,0x47,0x0D,0x59,0x09,
@@ -435,27 +447,37 @@ byte * genKeystrokes(CString name, int & length, bool genExtraKeystroke )
 	else
 	{
 		fprintf(stdout, "THERE");
+		//set temp and inputs to same address
 	*/	temp = inputs;
 /*	}*/
+
+	//fill temp array with keystrokes up to 22nd keystroke
 	int i = 0;
 	for(i = 0;i < 22; i++)
 		temp[i] = staticContent[i];
 
+	//fill temp array with name starting after keystrokes
 	name.MakeUpper();
 	for(i = 0; i < name.GetLength(); i++)
 	{
 		temp[22 + i] = name.GetAt(i);
 	}
 
-	for(i = 0; i < 3; i++)
+	//fill temp array with remaining keystrokes after name3
+	int remaining = 3;
+	if(genExtraKeystroke)
 	{
-		temp[22 + name.GetLength() + i] = staticContent[22 + i];
+		remaining = 4;
+	}
+	for(i = 0; i < remaining; i++)
+	{
+		temp[22 + nameLength + i] = staticContent[22 + i];
 	}
 
-	if(caps & 0xF000)
+	/*if(caps & 0xF000)
 	{
 		inputs[length-1] = VK_CAPITAL;
-	}
+	}*/
 
 	return inputs;
 
@@ -508,7 +530,9 @@ void CPictureWizardDlg::OnEyeDx()
 void CPictureWizardDlg::OnButton6()
 {
 	CString fileNameHorizontal; 
+	CString initialDir = cur_path+"\\"+ my_roster->GetLabel();
 	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
+	dlg.m_ofn.lpstrInitialDir= initialDir;
 	if (dlg.DoModal() == IDOK)
 	{
      fileNameHorizontal = dlg.GetPathName();
@@ -525,7 +549,10 @@ void CPictureWizardDlg::OnButton6()
 void CPictureWizardDlg::OnButton7()
 {
 	CString fileNameVertical; 
+	CString initialDir = cur_path+"\\"+ my_roster->GetLabel();
 	CFileDialog dlg(TRUE/*Open=TRUE Save=False*/,NULL/*Filename Extension*/,"Directory Selection"/*Initial Filename*/,OFN_ENABLESIZING|OFN_EXPLORER|OFN_FILEMUSTEXIST/*Flags*/,"JPG(*.jpg)|*.jpg||"/*Filetype Filter*/,this/*parent Window*/);
+	dlg.m_ofn.lpstrInitialDir= initialDir;
+	
 	if (dlg.DoModal() == IDOK)
 	{
      fileNameVertical = dlg.GetPathName();

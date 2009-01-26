@@ -91,6 +91,8 @@ CCameraConnect::CCameraConnect()
 	m_fProgramRelease = FALSE;
 	m_fCamTypeEOS = FALSE;
 	m_fMCard = FALSE;
+	hcount = 0;
+	vcount = 0;
 	
 	/* A picture buffer is created. */
 	fRes = CreateDIBBuffer();
