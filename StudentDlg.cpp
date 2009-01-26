@@ -107,10 +107,6 @@ void StudentDlg::OnOK()
 		student->GetPropertyValue("Name").FindOneOf("\\") >= 0 )
 	{
 		MessageBox("The student must have a name to be created.");
-		curselection = 0;
-		m_proplist.SetCurSel(curselection);
-		CString valuetext = student->GetPropertyValue(curselection);
-		m_CPropertyValue.SetWindowText(valuetext);
 		return;
 	}
 	
@@ -161,12 +157,6 @@ void StudentDlg::RefreshList()
 
 void StudentDlg::OnNext() 
 {
-	if (curselection == -1)
-	{
-		MessageBox("Please select a property from above to edit.");
-		return;
-	}
-
 	UpdateData();
 	if (curselection!=-1 && student->GetPropertyName(curselection)!="Photo Timestamp") student->SetPropertyValue(curselection, m_CPropertyValueText);
 	UpdateData(FALSE);
