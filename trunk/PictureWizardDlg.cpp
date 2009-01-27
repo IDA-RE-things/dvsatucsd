@@ -254,26 +254,24 @@ void CPictureWizardDlg::OnButton1()
 	str.Format("%d", my_student->GetNumberOfTimesAnalyzed());
 	
 	// Calling Eyedx
-SHELLEXECUTEINFO sei;
-sei.cbSize = sizeof(SHELLEXECUTEINFO);
-sei.fMask = NULL;
-sei.hwnd = NULL;
-sei.lpVerb = "open";
-//sei.lpFile = "C:\\Program Files\\EyeDx1.5.2\\eyedx.exe";
-//sei.lpFile = "C:\\WINDOWS\\system32\\calc.exe";
-sei.lpFile = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_WI09\\EyeDx1.5.2\\eyedx.EXE";
-sei.lpParameters= NULL;
-sei.nShow = SW_SHOWNORMAL;
-sei.hInstApp = NULL;
-sei.lpIDList = NULL;
-sei.lpClass = NULL;
-sei.hkeyClass = NULL;
-sei.dwHotKey = NULL;
-sei.hIcon = NULL;
-sei.hProcess = NULL;
-sei.lpDirectory = "C:\\Documents and Settings\\Administrator\\Desktop\\DVT_WI09\\EyeDx1.5.2\\";
-//sei.lpDirectory = ".\\EyeDx1.5.2\\";
-int ReturnCode = ::ShellExecuteEx(&sei);
+	CString eyedx_path = cur_path+"\\EyeDx1.5.2";
+	SHELLEXECUTEINFO sei;
+	sei.cbSize = sizeof(SHELLEXECUTEINFO);
+	sei.fMask = NULL;
+	sei.hwnd = NULL;
+	sei.lpVerb = "open";
+	sei.lpFile = "eyedx.EXE";
+	sei.lpParameters= NULL;
+	sei.nShow = SW_SHOWNORMAL;
+	sei.hInstApp = NULL;
+	sei.lpIDList = NULL;
+	sei.lpClass = NULL;
+	sei.hkeyClass = NULL;
+	sei.dwHotKey = NULL;
+	sei.hIcon = NULL;
+	sei.hProcess = NULL;
+	sei.lpDirectory = eyedx_path;
+	int ReturnCode = ::ShellExecuteEx(&sei);
 
 
 //sei.hProcess->SetFocus();
