@@ -67,9 +67,15 @@ BOOL RosterDlg::OnInitDialog()
 
 	//Populate student property list
 	RefreshPropList();
-	
 
-	return TRUE;  // return TRUE unless you set the focus to a control
+	//highlight on roster label input box so user can type immediately
+	m_rosterlabel.SetFocus();
+	m_rosterlabel.SetSel(0,-1,FALSE);
+	CDialog::SetDefID(IDOK);
+
+	// return TRUE unless you set the focus to a control
+	// returning FALSE so that roster label highlighted
+	return FALSE;  
 }
 
 void RosterDlg::OnBAddProperty() 
@@ -139,8 +145,14 @@ void RosterDlg::OnOK()
 	//Update the roster data before closing
 
 	UpdateData();
-	if (m_rosterlabeltext==("Unnamed Roster")){
-		MessageBox("Roster must have a name");
+	if (m_rosterlabeltext==("Unnamed Roster"))
+	{
+		MessageBox("Please enter a roster label.");
+
+		//highlight on roster label input box so user can type immediately
+		m_rosterlabel.SetFocus();
+		m_rosterlabel.SetSel(0,-1,FALSE);
+
 		return;
 	}
 

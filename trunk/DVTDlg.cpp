@@ -161,7 +161,6 @@ BOOL CDVTDlg::OnInitDialog()
 		startscreen.DoModal();
 
 		//Check for which menu option was chosen and perform the selected action.
-	
 		if (result=="New") CDVTDlg::OnUpdateFileRostersettings(NULL);
 		if (result=="Open") CDVTDlg::OnInitOpenroster();
 	}
@@ -170,8 +169,11 @@ BOOL CDVTDlg::OnInitDialog()
 	RosterName->Create("Roster Name", WS_CHILD | WS_VISIBLE,
 		CRect(10,10,400,60), this,90210);
 	RosterName->SetWindowText(roster.GetLabel());
+
+	//set focus to take pictures button
+	CDialog::SetDefID(IDC_BTakePictures);
 		
-	return TRUE;  // return TRUE  unless you set the focus to a control
+	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 
 void CDVTDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -323,6 +325,10 @@ void CDVTDlg::OnInitOpenroster()
 	roster = newroster;
 
 	RefreshStudentList();
+
+	//highlight first student entry
+	m_studentlist.SetCurSel(0);
+	RefreshPropertyList();
 }
 
 void CDVTDlg::OnBRemoveStudent() 
