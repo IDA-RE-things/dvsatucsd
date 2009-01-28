@@ -2,6 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
+
 #include "stdafx.h"
 #include "DVT.h"
 #include "Roster.h"
@@ -10,6 +11,7 @@
 #include "CameraConnect.h"
 #include <fstream.h>
 #include <assert.h>
+#include <direct.h>
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -401,6 +403,7 @@ void Roster::Save(CString path)
 	savestream << label << "\n";
 
 	int numprops = property.size();
+
 	//Output student properties
 	for (int a=0;a<numprops;a++)
 	{
@@ -428,16 +431,57 @@ void Roster::Save(CString path)
 			{
 				savestream << EncryptString(student[a]->GetPropertyValue(b));
 			}
+			else if (property[b].name == "Photo Result")
+			{
+				savestream << GetResult( student[a]->GetPropertyValue(0) );
+			}
 			else savestream << student[a]->GetPropertyValue(b);
 			
-			if (b!=numprops-1) savestream << "\t";
+			if (b!=numprops-1) 
+				savestream << "\t";
 		}
 
-		if (a!=student.size()-1) savestream << "\n";
+		if (a!=student.size()-1) 
+			savestream << "\n";
 	}
 
 	savestream.close();
 }
+
+CString Roster::GetResult(CString studentName)
+{
+	char origpath[32768];
+	getcwd(origpath, 32768);
+
+	chdir("..");
+
+	char curpath[32768];
+	getcwd(curpath, 32768);
+
+	CString cur_path = CString(curpath);
+
+	CString fileName = cur_path + "\\EyeDx1.5.2\\NonSession\\reports\\U_" 
+		+ studentName + ".htm";
+	
+	MessageBox(NULL,fileName,"hello",NULL);
+
+	chdir(origpath);
+
+	if (FileExists ( fileName ))
+		return "yay";
+
+	return "nay";
+}
+
+bool Roster::FileExists(CString fname)
+{
+	CFile f;
+	if (f.Open(fname,CFile::modeRead))
+		return true;
+	else
+		return false;
+}
+
 
 CString Roster::EncryptString(CString str)
 {

@@ -68,8 +68,10 @@ public:
 	
 	//Save the roster to an Excel
 	void Roster::Save(CString path);
+	CString Roster::GetResult(CString s);
 	CString EncryptString(CString str);
 	CString DecryptString(CString str);
+	bool Roster::FileExists( CString filename);
 
 	BOOL Roster::TakePictures(Student *newstudent, void* theCamera);
 
