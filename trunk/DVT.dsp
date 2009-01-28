@@ -118,15 +118,7 @@ SOURCE=.\Pics.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\Pics.h
-# End Source File
-# Begin Source File
-
 SOURCE=.\PictureClass\Picture.cpp
-# End Source File
-# Begin Source File
-
-SOURCE=.\PictureClass\Picture.h
 # End Source File
 # Begin Source File
 
@@ -204,6 +196,14 @@ SOURCE=.\DVTDlg.h
 # Begin Source File
 
 SOURCE=.\MYSTREAM.H
+# End Source File
+# Begin Source File
+
+SOURCE=.\Pics.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\PictureClass\Picture.h
 # End Source File
 # Begin Source File
 
