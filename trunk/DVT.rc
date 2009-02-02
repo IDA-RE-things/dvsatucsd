@@ -114,7 +114,8 @@ BEGIN
     PUSHBUTTON      "OK",IDOK,193,324,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,122,324,50,14
     LISTBOX         IDC_PropList,33,57,184,192,LBS_USETABSTOPS | 
-                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
     LTEXT           "Student Properties: Default Value",IDC_STATIC,41,41,111,
                     10
     PUSHBUTTON      "Add Property",IDC_BAddProperty,22,303,63,14
@@ -167,7 +168,8 @@ BEGIN
     PUSHBUTTON      "OK",IDOK,187,233,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,97,235,50,14,NOT WS_VISIBLE
     LISTBOX         IDC_PropList,21,23,196,177,LBS_USETABSTOPS | 
-                    LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+                    LBS_NOINTEGRALHEIGHT | LBS_WANTKEYBOARDINPUT | 
+                    WS_VSCROLL | WS_TABSTOP
     LTEXT           "Student Properties",IDC_STATIC,41,7,75,10
     LTEXT           "Property Value:",IDC_PropertyValueLabel,23,204,54,10
     DEFPUSHBUTTON   "Next",IDC_Next,135,213,19,15
@@ -394,6 +396,7 @@ BEGIN
         MENUITEM "&New Roster",                 ID_FILE_NEWROSTER
         MENUITEM "&Open Roster",                ID_FILE_OPENROSTER
         MENUITEM "&Save Roster",                ID_FILE_SAVEROSTER
+        MENUITEM "Save Roster &As...",          ID_FILE_SAVEROSTERAS
         MENUITEM "Roster Settings",             ID_FILE_ROSTERSETTINGS
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_FILE_EXIT

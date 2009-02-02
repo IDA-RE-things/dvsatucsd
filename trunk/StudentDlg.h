@@ -56,6 +56,9 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnNext();
 	afx_msg void OnEditchangeCPropertyValue();
+	afx_msg void OnSetfocusPropList();
+	afx_msg void OnKillfocusPropList();
+	afx_msg int OnVKeyToItem(UINT nKey, CListBox* pListBox, UINT nIndex);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };
