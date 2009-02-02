@@ -30,6 +30,7 @@ Roster::Roster()
 Roster::Roster(CString curpath)
 {
 	cur_path = curpath;
+	xsl_path = "";
 	LoadAssociations(true);
 	label = "Unnamed Roster";
 }
@@ -37,8 +38,8 @@ Roster::Roster(CString curpath)
 Roster::Roster(CString curpath, CString path)
 {
 	cur_path = curpath;
+	xsl_path = path;
 
-	
 	// Create a new filestream for input.
 	ifstream loadstream(path, ios::in); 
 	char tempstr[32768]; //The max characters in a database line.

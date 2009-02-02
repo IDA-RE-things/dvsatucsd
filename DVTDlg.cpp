@@ -111,6 +111,7 @@ BEGIN_MESSAGE_MAP(CDVTDlg, CDialog)
 	ON_BN_CLICKED(IDC_BAddStudent, OnBAddStudent)
 	ON_BN_CLICKED(IDC_BEditStudent, OnBEditStudent)
 	ON_COMMAND(ID_FILE_SAVEROSTER, OnFileSaveroster)
+	ON_COMMAND(ID_FILE_SAVEROSTERAS, OnFileSaverosteras)
 	ON_COMMAND(ID_FILE_OPENROSTER, OnFileOpenroster)
 	ON_BN_CLICKED(IDC_BRemoveStudent, OnBRemoveStudent)
 	ON_LBN_SELCHANGE(IDC_StudentList, OnSelchangeStudentList)
@@ -275,6 +276,16 @@ void CDVTDlg::OnBEditStudent()
 
 void CDVTDlg::OnFileSaveroster() 
 {
+	if (roster.xsl_path == "") {
+		CDVTDlg::OnFileSaverosteras();
+	} else {
+		//Save the roster to the chosen path.
+		roster.Save(roster.xsl_path);
+	}
+}
+
+void CDVTDlg::OnFileSaverosteras() 
+{
 	//Set CFileDialog file filters and run it.
 	char strFilter[] = {"XLS Files (*.xls)|*.xls|All Files (*.*)|*.*||" };
 	CFileDialog savedlg(FALSE,".xls",roster.GetLabel(),0,strFilter);
@@ -282,7 +293,7 @@ void CDVTDlg::OnFileSaveroster()
 
 	//Save the roster to the chosen path.
 	roster.Save(savedlg.GetPathName());
-	roster.SetLabel(savedlg.GetFileTitle());
+	// roster.SetLabel(savedlg.GetFileTitle()); should label reflect filename or roster title?
 }
 
 void CDVTDlg::OnFileOpenroster() 
@@ -306,7 +317,7 @@ void CDVTDlg::OnFileOpenroster()
 	//Create a new roster from the file and set it as the project's roster
 	Roster newroster(cur_path, path);
 	roster = newroster;
-
+	RosterName->SetWindowText(roster.GetLabel());
 	RefreshStudentList();
 }
 
@@ -317,13 +328,50 @@ void CDVTDlg::OnInitOpenroster()
 	CFileDialog opendlg(TRUE,".xls",NULL,0,strFilter);
 	opendlg.DoModal();
 
+      CString path = opendlg.GetPathName();
+	  if (path == "") return;
+	  // validate if file is .xls
+      //Create a new roster from the file and set it as the project's roster
+      Roster newroster(cur_path, path);
+      roster = newroster;
 
-	CString path = opendlg.GetPathName();
-	if (path == "") return;
-	//Create a new roster from the file and set it as the project's roster
-	Roster newroster(cur_path, path);
+      RefreshStudentList();
+
+      //highlight first student entry
+      m_studentlist.SetCurSel(0);
+      RefreshPropertyList();
+}
+
+
+void CDVTDlg::OnFileExit() 
+{
+	bool result;
+	YESNODlg yesno(NULL, "Do you wish to save changes to '" + roster.GetLabel() + "'?", &result); // detect if file has been changed since last save?
+	yesno.DoModal();
+	if (result==TRUE) 
+	{
+		OnFileSaveroster();
+	}
+	CDialog::OnOK();
+}
+
+void CDVTDlg::OnFileNewroster() 
+{
+	//Confirm the creation of a new roster
+	bool result;
+	YESNODlg yesno(NULL, "Are you sure you wish to start a new roster?  This will erase any unsaved changes you have made.", &result);
+	yesno.DoModal();
+
+	if (result==FALSE) return;
+
+	//Create a new blank roster and feed it to the roster editor
+	Roster newroster(cur_path);
 	roster = newroster;
 
+	RosterDlg dlgRoster(NULL,&roster);
+	dlgRoster.DoModal();
+
+	RosterName->SetWindowText(roster.GetLabel());
 	RefreshStudentList();
 
 	//highlight first student entry
@@ -444,37 +492,6 @@ void CDVTDlg::RefreshStudentList()
 	if (curselection >= 0 && curselection < m_studentlist.GetCount()) m_studentlist.SetCurSel(curselection);
 
 	RefreshPropertyList();
-}
-
-void CDVTDlg::OnFileExit() 
-{
-	bool result;
-	YESNODlg yesno(NULL, "Do you wish to save changes to '" + roster.GetLabel() + "'?", &result);
-	yesno.DoModal();
-	if (result==TRUE) 
-	{
-		OnFileSaveroster();
-	}
-	CDialog::OnOK();
-}
-
-void CDVTDlg::OnFileNewroster() 
-{
-	//Confirm the creation of a new roster
-	bool result;
-	YESNODlg yesno(NULL, "Are you sure you wish to start a new roster?  This will erase any unsaved changes you have made.", &result);
-	yesno.DoModal();
-
-	if (result==FALSE) return;
-
-	//Create a new blank roster and feed it to the roster editor
-	Roster newroster(cur_path);
-	roster = newroster;
-
-	RosterDlg dlgRoster(NULL,&roster);
-	dlgRoster.DoModal();
-
-	RefreshStudentList();
 }
 
 void CDVTDlg::OnBTakePictures() 
