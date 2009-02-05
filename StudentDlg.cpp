@@ -51,9 +51,6 @@ BEGIN_MESSAGE_MAP(StudentDlg, CDialog)
 	ON_LBN_SELCHANGE(IDC_PropList, OnSelchangePropList)
 	ON_BN_CLICKED(IDC_Next, OnNext)
 	ON_CBN_EDITCHANGE(IDC_CPropertyValue, OnEditchangeCPropertyValue)
-	ON_LBN_SETFOCUS(IDC_PropList, OnSetfocusPropList)
-	ON_LBN_KILLFOCUS(IDC_PropList, OnKillfocusPropList)
-	ON_WM_VKEYTOITEM()
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -65,6 +62,7 @@ BOOL StudentDlg::OnInitDialog()
 
 
 	CDialog::OnInitDialog();
+	
 	//Populate student property list
 	RefreshList();
 
@@ -76,7 +74,7 @@ BOOL StudentDlg::OnInitDialog()
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
 
-void StudentDlg::OnSelchangePropList( )
+void StudentDlg::OnSelchangePropList() 
 {
 	//Change the student properties as you change selection.
 	UpdateData();
@@ -245,34 +243,4 @@ void StudentDlg::OnEditchangeCPropertyValue()
 	//MessageBox("2 prev:[" + prevtext+"] cur:["+curstr+"]");
 
 	m_CPropertyValue.SetEditSel(curlen,-1);
-}
-
-void StudentDlg::OnSetfocusPropList() 
-{
-/*	for (int a=0;a<Controls.size();a++) {
-		if (Controls[a] != StudentDlg) {
-			Controls[a].tabstop = false;
-		}
-	}*/
-}
-
-void StudentDlg::OnKillfocusPropList() 
-{
-/*	for (int a=0;a<Controls.size();a++) {
-		if (Controls[a] != StudentDlg) {
-			Controls[a].tabstop = true;
-		}
-	}*/
-}
-
-int StudentDlg::OnVKeyToItem(UINT nKey, CListBox* pListBox, UINT nIndex)
-{
-	if (nKey == VK_DELETE) { // ListBox must be focus; VK_TAB does not work, overriden by tab order; needed? see ENTER and DOWN
-		if (curselection!=-1 && curselection<m_proplist.GetCount()-1) {
-			curselection++;
-			m_proplist.SetCurSel(curselection);
-		}
-	}
-
-	return -2;
 }

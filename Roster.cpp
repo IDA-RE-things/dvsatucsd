@@ -30,7 +30,6 @@ Roster::Roster()
 Roster::Roster(CString curpath)
 {
 	cur_path = curpath;
-	xsl_path = "";
 	LoadAssociations(true);
 	label = "Unnamed Roster";
 }
@@ -38,8 +37,7 @@ Roster::Roster(CString curpath)
 Roster::Roster(CString curpath, CString path)
 {
 	cur_path = curpath;
-	xsl_path = path;
-
+	
 	// Create a new filestream for input.
 	ifstream loadstream(path, ios::in); 
 	char tempstr[32768]; //The max characters in a database line.
@@ -449,8 +447,17 @@ void Roster::Save(CString path)
 	savestream.close();
 }
 
+/*
+ *  Gets results of EyeDx analysis on student's pictures.
+ *  Also copies report files to roster folder and deletes
+ *  them in the EyeDx folder.  
+ *
+ *  @param studentName Name of student analyzed.
+ *  @return Results of EyeDx analysis: unclear, refer, or pass
+ */
 CString Roster::GetResult(CString studentName)
 {
+	//get path to DVT main folder
 	char origpath[32768];
 	getcwd(origpath, 32768);
 
@@ -459,21 +466,77 @@ CString Roster::GetResult(CString studentName)
 	char curpath[32768];
 	getcwd(curpath, 32768);
 
+	//get path to eyedx folder
 	CString cur_path = CString(curpath);
-
-	CString fileName = cur_path + "\\EyeDx1.5.2\\NonSession\\reports\\U_" 
-		+ studentName + ".htm";
+	CString eyedxDir = cur_path + "\\EyeDx1.5.2\\NonSession";
 	
-	MessageBox(NULL,fileName,"hello",NULL);
+	//MessageBox(NULL,fileNameU,"hello",NULL);
 
 	chdir(origpath);
 
-	if (FileExists ( fileName ))
-		return "yay";
+	//determine EyeDx result
+	CString result;
+	if (FileExists ( eyedxDir+"\\reports\\R_"+ studentName + ".htm" )
+		|| FileExists ( cur_path+"\\"+GetLabel()+"\\reports\\R_"+ studentName + ".htm" ))
+		result = "R";
+	else if (FileExists ( eyedxDir+"\\reports\\U_"+ studentName + ".htm" )
+		|| FileExists ( cur_path+"\\"+GetLabel()+"\\reports\\U_"+ studentName + ".htm" ))
+		result = "U";
+	else if (FileExists ( eyedxDir+"\\reports\\N_"+ studentName + ".htm" )
+		|| FileExists ( cur_path+"\\"+GetLabel()+"\\reports\\N_"+ studentName + ".htm" ))
+		result = "N";
+	else
+		return "N\\A";
 
-	return "nay";
+	//copy report and images from eyedx folders to roster folders
+	CopyFile(eyedxDir+"\\reports\\"+result+"_"+ studentName + ".htm",
+			cur_path+"\\"+GetLabel()+"\\reports\\" + result+ "_"+ studentName + ".htm",false);
+
+	CopyFile(eyedxDir+"\\Simages\\"+ studentName + "siSsc.jpg",
+			cur_path+"\\"+GetLabel()+"\\Simages\\" + studentName + "siSsc.jpg",false);
+	CopyFile(eyedxDir+"\\Simages\\"+ studentName + "upUsc.jpg",
+			cur_path+"\\"+GetLabel()+"\\Simages\\" + studentName + "upUsc.jpg",false);
+
+	CopyFile(eyedxDir+"\\eyes\\"+ studentName + "upUle.jpg",
+			cur_path+"\\"+GetLabel()+"\\eyes\\" + studentName + "upUle.jpg",false);
+	CopyFile(eyedxDir+"\\eyes\\"+ studentName + "upUre.jpg",
+			cur_path+"\\"+GetLabel()+"\\eyes\\" + studentName + "upUre.jpg",false);
+	CopyFile(eyedxDir+"\\eyes\\"+ studentName + "siSle.jpg",
+			cur_path+"\\"+GetLabel()+"\\eyes\\" + studentName + "siSle.jpg",false);
+	CopyFile(eyedxDir+"\\eyes\\"+ studentName + "siSre.jpg",
+			cur_path+"\\"+GetLabel()+"\\eyes\\" + studentName + "siSre.jpg",false);
+
+	CopyFile(eyedxDir+"\\EyeDxLogo.jpg", 
+			cur_path+"\\"+GetLabel()+"\\EyeDxLogo.jpg", false);
+
+	//delete files in eyeDx folder
+	DeleteFile(eyedxDir+"\\reports\\"+result+"_"+ studentName + ".htm");
+	DeleteFile(eyedxDir+"\\Simages\\"+ studentName + "siSsc.jpg");
+	DeleteFile(eyedxDir+"\\Simages\\"+ studentName + "upUsc.jpg");
+	DeleteFile(eyedxDir+"\\eyes\\"+ studentName + "upUle.jpg");
+	DeleteFile(eyedxDir+"\\eyes\\"+ studentName + "upUre.jpg");
+	DeleteFile(eyedxDir+"\\eyes\\"+ studentName + "siSle.jpg");
+	DeleteFile(eyedxDir+"\\eyes\\"+ studentName + "siSre.jpg");
+
+
+	//return results
+	if(result.Compare("R") == 0)
+		return "refer";
+	if(result.Compare("U") == 0)
+		return "unclear";
+	if(result.Compare("N") == 0)
+		return "pass";
+
+	return "N\\A";
 }
 
+/*
+ *  Determines if a file exists at specified
+ *  path.  Used by getResult().
+ *
+ *  @param fname Full path to file.
+ *  @return True if file exists or false otherwise.
+ */
 bool Roster::FileExists(CString fname)
 {
 	CFile f;

@@ -3,6 +3,7 @@
 #include <winuser.h>
 #include <windows.h>
 #include <stdio.h>
+#include <Directory.h>
 
 #include "resource.h"
 #include "stdafx.h"
@@ -120,12 +121,6 @@ BOOL CPictureWizardDlg::OnInitDialog()
 	m_NewFont->CreatePointFont(180, "Times New Roman");
 	m_StudentLabel.SetFont(m_NewFont);
 	m_StudentLabel.SetWindowText(my_student->GetPropertyValue("Name"));
-		
-	/*
-	 * No longer needed because checked for in StudentDlg
-	 if (my_student->GetPropertyValue("Name").Find("\\")>=0) {
-		MessageBox("Invalid student name.");
-	}*/ 
 	
 	/*hcount++;
 	vcount++;
@@ -137,7 +132,12 @@ BOOL CPictureWizardDlg::OnInitDialog()
 	//SFile_nameleft = cur_path+"\\"+my_student->GetPropertyValue("Name")+"H"+ str_hcount + ".jpg";
 	//SFile_nameright = cur_path+"\\"+my_student->GetPropertyValue("Name")+"V"+str_vcount + ".jpg";
 
-	CreateDirectory(my_roster->GetLabel(),NULL);
+	//add roster folder if it does not exist
+	CString dirPath = cur_path+"\\"+my_roster->GetLabel();
+	CreateDirectory(dirPath,NULL);
+	CreateDirectory(dirPath+"\\Simages",NULL);
+	CreateDirectory(dirPath+"\\eyes",NULL);
+	CreateDirectory(dirPath+"\\reports",NULL);
 
 	SPath_name = cur_path+"\\"+ my_roster->GetLabel()+"\\"+my_student->GetPropertyValue("Name");
 
@@ -274,112 +274,80 @@ void CPictureWizardDlg::OnButton1()
 	int ReturnCode = ::ShellExecuteEx(&sei);
 
 
-//sei.hProcess->SetFocus();
-HWND eyeWnd;
-eyeWnd = FindWindowEx(NULL, NULL, NULL, NULL);//EYEWIND);
-if(eyeWnd == NULL)
-{
-printf("Couldn't find solitare's window: %d\n", GetLastError());
-MessageBox("EyeDx not found, bucko!");
-//return -1;
-}
-//else
-//MessageBox("EyeDx was found, good job!");
+	//check that eyeDx window is open
+	//sei.hProcess->SetFocus();
+	HWND eyeWnd;
+	eyeWnd = FindWindowEx(NULL, NULL, NULL, NULL);//EYEWIND);
+	if(eyeWnd == NULL)
+	{
+		printf("Couldn't find solitare's window: %d\n", GetLastError());
+		MessageBox("EyeDx not found, bucko!");
+		//return -1;
+	}
 
+	//restore eyedx window if minimized (i think...?)
+	if(eyeWnd)
+	{
+		// Restore if minimized --->
+		if(::IsIconic(eyeWnd))
+			::OpenIcon(eyeWnd);
+		// Restore if minimized <---
+		::SetForegroundWindow(eyeWnd);
+		::SetFocus(eyeWnd);
+		Sleep(500);
+	}
+	//::SetActiveWindow(eyeWnd);
+	//eyeWnd->SetFocus();
 
-if(eyeWnd)
-{
-	// Restore if minimized --->
-	if(::IsIconic(eyeWnd))
-		::OpenIcon(eyeWnd);
-	// Restore if minimized <---
-	::SetForegroundWindow(eyeWnd);
-	::SetFocus(eyeWnd);
-	Sleep(500);
-}
-//::SetActiveWindow(eyeWnd);
-//eyeWnd->SetFocus();
+	// Sending input to Eyedx
+	INPUT input[2];
+	memset(input, 0, sizeof(input));
+	input[0].type = INPUT_KEYBOARD;
+	input[0].ki.wVk = 0x44;//(00,32); // ASCI value of ALT + 'D'
+	input[0].ki.dwFlags = 0;
+	input[0].ki.time = 0;
+	input[0].ki.dwExtraInfo = 0;
 
-// Sending input to Eyedx
-INPUT input[2];
-memset(input, 0, sizeof(input));
-input[0].type = INPUT_KEYBOARD;
-input[0].ki.wVk = 0x44;//(00,32); // ASCI value of ALT + 'D'
-input[0].ki.dwFlags = 0;
-input[0].ki.time = 0;
-input[0].ki.dwExtraInfo = 0;
+	input[1].type = INPUT_KEYBOARD;
+	input[1].ki.wVk = 0x44;//(00,32); // ASCI value of ALT + 'D'
+	input[1].ki.dwFlags = KEYEVENTF_KEYUP;
+	input[1].ki.time = 0;
+	input[1].ki.dwExtraInfo = 0;
 
-input[1].type = INPUT_KEYBOARD;
-input[1].ki.wVk = 0x44;//(00,32); // ASCI value of ALT + 'D'
-input[1].ki.dwFlags = KEYEVENTF_KEYUP;
-input[1].ki.time = 0;
-input[1].ki.dwExtraInfo = 0;
+	// defined keystrokes
+	const int totalkeys = 30;
+	int length;
+	byte * inputs = genKeystrokes(my_student->GetPropertyValue("Name"), length, genExtraKeystroke);
+	int i;
 
-SendInput(2,input,sizeof(INPUT));
-
-// defined keystrokes
-const int totalkeys = 30;
-/*byte inputs[totalkeys] = {0x44,0x55,0x55,0x50,0xBE,
-					0x4A,0x50,0x47,0x0D,0x59,
-					0x53,0x53,0x49,0xBE,0x4A,
-					0x50,0x47,0x0D,0x59,0x09,
-					0x09,0x09,0x54,0x4D,0x50,
-					0x30,0x09,0x4f,0x0d,0x0d};
-byte inputs[totalkeys] = {'D','U','U','P','.',
-					'J','P','G',0x0D,'Y',
-					'S','S','I','.','J',
-					'P','G',0x0D,'Y',0x09,
-					0x09,0x09,'T','M','P',
-					'0',0x09,'O',0x0d,0x0d};*/
-/*byte inputs[totalkeys] = {0x44,0x55,0x55,0x50,0xBE,
-					0x4A,0x50,0x47,0x0D,0x59,
-					0x53,0x53,0x49,0xBE,0x4A,
-					0x50,0x47,0x0D,0x59,0x09,
-					0x09,0x09,'T','M','P',
-					'0',0x09,0x4f,0x0d,0x0d};*/
-int length;
-byte * inputs = genKeystrokes(my_student->GetPropertyValue("Name"), length, genExtraKeystroke);
-int i;
-
-// copy pictures
-
-CString VerticalFile(((CCameraConnect*) my_theCamera)->GetLastVerticalFile());
-CString HorizontalFile(((CCameraConnect*) my_theCamera)->GetLastHorizontalFile());
-
-CopyFile(HorizontalFile,
+	// copy pictures
+	CString VerticalFile(((CCameraConnect*) my_theCamera)->GetLastVerticalFile());
+	CString HorizontalFile(((CCameraConnect*) my_theCamera)->GetLastHorizontalFile());
+	CopyFile(HorizontalFile,
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\up.jpg",false);
-
-CopyFile(VerticalFile,
+	CopyFile(VerticalFile,
 		 cur_path+"\\EyeDx1.5.2\\NonSession\\Pimages\\si.jpg",false);
 
-/*
-ghWnd = hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	/*What was this supposed to do?
+	ghWnd = hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+	if (!hWnd)
+	{
+		  return FALSE;
+	}
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
-*/
-// send keystrokes here
-//fprintf(stderr, "%d length", &length);
-for(i=0;i<length;i++) {
-	input[0].ki.wVk = input[1].ki.wVk = inputs[i];
-	SendInput(2,input,sizeof(INPUT));
-}
+	ShowWindow(hWnd, nCmdShow);
+	UpdateWindow(hWnd);
+	*/
+	// send keystrokes here
+	//fprintf(stderr, "%d length", &length);
+	for(i=0;i<length;i++) 
+	{
+		input[0].ki.wVk = input[1].ki.wVk = inputs[i];
+		SendInput(2,input,sizeof(INPUT));
+	}
 
-//rename the report
-/*CopyFile(cur_path+"\\EyeDx1.5.2\\NonSession\\reports\\U_tmp0.htm",
-		 cur_path+"\\EyeDx1.5.2\\NonSession\\reports\\U_"+
-		 my_student->GetPropertyValue("Name")+"_report.htm",false);
-
-CopyFile(cur_path+"\\EyeDx1.5.2\\NonSession\\reports\\R_tmp0.htm",
-		 cur_path+"\\EyeDx1.5.2\\NonSession\\reports\\R_"+
-		 my_student->GetPropertyValue("Name")+"_report.htm",false);
-*/
 }
 
 void CPictureWizardDlg::OnCancel() 
@@ -418,7 +386,14 @@ byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtr
 	if (genExtraKeystroke){
 		j=1;
 	}
-		
+	
+	/*Translation of keystrokes
+	byte inputs[totalkeys] = {'D','U','U','P','.',
+					'J','P','G',<enter>,'Y',
+					'S','S','I','.','J',
+					'P','G',<enter>,'Y',0x09,
+					0x09,0x09,'T','M','P',
+					'0',0x09,'O',0x0d,0x0d};*/
 	
 	byte staticContent[26]	= {0x44,0x55,0x55,0x50,0xBE,
 					0x4A,0x50,0x47,0x0D,0x59,

@@ -15,7 +15,7 @@
 #include "cdAPI.h"
 #include "Roster.h"
 
-#define CONNECTERROR "Camera Error!  Please verify that the camera is turned on or that it is plugged in."
+#define CONNECTERROR "Camera Error!  Please verify that the camera is turned on or that it is pluged in."
 #define SELECTERROR "You must have a student selected to take pictures."
 #define CREATEERROR "Error Creating a Student."
 #define SELECTEDITERROR "You must have a student selected to edit."
@@ -67,7 +67,6 @@ protected:
 	afx_msg void OnBAddStudent();
 	afx_msg void OnBEditStudent();
 	afx_msg void OnFileSaveroster();
-	afx_msg void OnFileSaverosteras();
 	afx_msg void OnInitOpenroster();
 	afx_msg void OnFileOpenroster();
 	afx_msg void OnBRemoveStudent();
