@@ -20,9 +20,7 @@ public:
 	Roster();
 	Roster(CString curpath);
 	virtual ~Roster();
-
-	CString xsl_path;
-
+	
 	//Loads a roster from a filepath.
 	Roster::Roster(CString curpath, CString path);
 	
