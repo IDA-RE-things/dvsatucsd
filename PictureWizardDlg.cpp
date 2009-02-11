@@ -24,6 +24,20 @@ static char THIS_FILE[] = __FILE__;
 #endif
 
 
+#define D_KEY 0x44
+#define U_KEY 0x55
+#define P_KEY 0x50
+#define DOT 0xBE
+#define J_KEY 0x4A
+#define G_KEY 0x47
+#define ENTER 0x0d
+#define Y_KEY 0x59
+#define S_KEY 0x53
+#define I_KEY 0x49
+#define TAB 0x09
+#define T_KEY 0x0
+#define O_KEY 0X4f
+
 
 /////////////////////////////////////////////////////////////////////////////
 // CPictureWizardDlg dialog
@@ -387,19 +401,12 @@ byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtr
 		j=1;
 	}
 	
-	/*Translation of keystrokes
-	byte inputs[totalkeys] = {'D','U','U','P','.',
-					'J','P','G',<enter>,'Y',
-					'S','S','I','.','J',
-					'P','G',<enter>,'Y',0x09,
-					0x09,0x09,'T','M','P',
-					'0',0x09,'O',0x0d,0x0d};*/
-	
-	byte staticContent[26]	= {0x44,0x55,0x55,0x50,0xBE,
-					0x4A,0x50,0x47,0x0D,0x59,
-					0x53,0x53,0x49,0xBE,0x4A,
-					0x50,0x47,0x0D,0x59,0x09,
-					0x09,0x09,0x09,0x4f,0x0d,0x0d};
+
+	byte staticContent[26]	= {D_KEY,U_KEY,U_KEY,P_KEY,DOT,
+				J_KEY,P_KEY,G_KEY,ENTER,Y_KEY,
+				S_KEY,S_KEY,I_KEY,DOT,J_KEY,
+				P_KEY,G_KEY,ENTER,Y_KEY,TAB,
+				TAB,TAB,TAB,O_KEY,ENTER,ENTER};
 
 	if (genExtraKeystroke){
 		byte staticContent[28]	= {0x44,0x55,0x55,0x50,0xBE,
