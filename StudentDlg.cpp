@@ -66,9 +66,10 @@ BOOL StudentDlg::OnInitDialog()
 	//Populate student property list
 	RefreshList();
 
-	curselection = -1;
+	curselection = 0;
+	m_proplist.SetCurSel(curselection);
 	prevtext = "-This string will never be typed.";
-
+	
 	
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
@@ -125,7 +126,6 @@ void StudentDlg::RefreshList()
 	//Store the current selection before clearing the list
 	curselection = m_proplist.GetCurSel();
 	
-	
 	UpdateData();
 
 	m_proplist.ResetContent();
@@ -146,19 +146,19 @@ void StudentDlg::RefreshList()
 
 
 	//If it is still available, set the selection where it was
-	if (curselection!=-1) m_proplist.SetCurSel(curselection);
+	m_proplist.SetCurSel(curselection);
 
 	UpdateData(FALSE);
 	
 	//Update the combobox
 	RefreshComboList();
-
 }
 
 void StudentDlg::OnNext() 
 {
 	UpdateData();
-	if (curselection!=-1 && student->GetPropertyName(curselection)!="Photo Timestamp") student->SetPropertyValue(curselection, m_CPropertyValueText);
+	if (curselection!=-1 && student->GetPropertyName(curselection)!="Photo Timestamp")
+		student->SetPropertyValue(curselection, m_CPropertyValueText);
 	UpdateData(FALSE);
 
 	//Update the list
@@ -175,7 +175,10 @@ void StudentDlg::OnNext()
 
 	//Display the new property's value.
 	curselection = m_proplist.GetCurSel();
+
+	
 	CString valuetext = student->GetPropertyValue(curselection);
+	
 	m_CPropertyValue.SetWindowText(valuetext);
 
 	//Set the focus on the property text
