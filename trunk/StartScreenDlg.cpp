@@ -18,7 +18,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-#define CONNECTERROR "Camera Error!  Please verify that the camera is turned on or that it is pluged in."
+#define CONNECTERROR "Camera Error!  Please verify that the camera is turned on or that it is plugged in."
 
 /////////////////////////////////////////////////////////////////////////////
 // StartScreenDlg dialog

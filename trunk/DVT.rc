@@ -394,6 +394,7 @@ BEGIN
         MENUITEM "&New Roster",                 ID_FILE_NEWROSTER
         MENUITEM "&Open Roster",                ID_FILE_OPENROSTER
         MENUITEM "&Save Roster",                ID_FILE_SAVEROSTER
+		MENUITEM "Save Roster &As...",          ID_FILE_SAVEROSTERAS
         MENUITEM "Roster Settings",             ID_FILE_ROSTERSETTINGS
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_FILE_EXIT

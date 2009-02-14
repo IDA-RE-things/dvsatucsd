@@ -111,6 +111,7 @@ BEGIN_MESSAGE_MAP(CDVTDlg, CDialog)
 	ON_BN_CLICKED(IDC_BAddStudent, OnBAddStudent)
 	ON_BN_CLICKED(IDC_BEditStudent, OnBEditStudent)
 	ON_COMMAND(ID_FILE_SAVEROSTER, OnFileSaveroster)
+	ON_COMMAND(ID_FILE_SAVEROSTERAS, OnFileSaverosteras)
 	ON_COMMAND(ID_FILE_OPENROSTER, OnFileOpenroster)
 	ON_BN_CLICKED(IDC_BRemoveStudent, OnBRemoveStudent)
 	ON_LBN_SELCHANGE(IDC_StudentList, OnSelchangeStudentList)
@@ -276,6 +277,16 @@ void CDVTDlg::OnBEditStudent()
 
 void CDVTDlg::OnFileSaveroster() 
 {
+	if (roster.GetPath() == "") {
+		CDVTDlg::OnFileSaverosteras();
+	} else {
+		//Save the roster to the chosen path
+		roster.Save(roster.GetPath());
+	}
+}
+
+void CDVTDlg::OnFileSaverosteras()
+{
 	//Set CFileDialog file filters and run it.
 	char strFilter[] = {"XLS Files (*.xls)|*.xls|All Files (*.*)|*.*||" };
 	CFileDialog savedlg(FALSE,".xls",roster.GetLabel(),0,strFilter);
@@ -283,7 +294,8 @@ void CDVTDlg::OnFileSaveroster()
 
 	//Save the roster to the chosen path.
 	roster.Save(savedlg.GetPathName());
-	roster.SetLabel(savedlg.GetFileTitle());
+	roster.SetPath(savedlg.GetPathName());
+	// roster.SetLabel(savedlg.GetFileTitle()); // should label reflect filename or roster title?
 
 	//MessageBox(savedlg.GetPathName(), NULL, MB_OK);
 }
@@ -310,6 +322,7 @@ void CDVTDlg::OnFileOpenroster()
 	Roster newroster(cur_path, path);
 	roster = newroster;
 
+	RosterName->SetWindowText(roster.GetLabel());
 	RefreshStudentList();
 }
 

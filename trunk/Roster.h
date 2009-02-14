@@ -20,12 +20,14 @@ public:
 	Roster();
 	Roster(CString curpath);
 	virtual ~Roster();
-	
+
 	//Loads a roster from a filepath.
 	Roster::Roster(CString curpath, CString path);
 	
 	CString Roster::GetLabel();
+	CString Roster::GetPath();
 	void Roster::SetLabel(CString newlabel);
+	void Roster::SetPath(CString newpath);
 
 	void Roster::LoadAssociations(bool wprops);
 	
@@ -81,6 +83,7 @@ public:
 
 private:
 	CString label;
+	CString xsl_path; // excel file!
 	CString cur_path; //Project path, not excel file!
 	std::vector<StudentProperty> property;
 	std::vector<Student*> student;	
