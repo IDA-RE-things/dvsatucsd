@@ -189,7 +189,7 @@ STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
 CAPTION "Dialog"
 FONT 8, "MS Sans Serif"
 BEGIN
-    PUSHBUTTON      "New Student",IDCANCEL,442,227,58,16
+    PUSHBUTTON      "Next Student",IDCANCEL,442,227,58,16
     CONTROL         "",IDC_PICTURE_RIGHT,"Static",SS_BLACKFRAME,399,40,97,72
     CONTROL         "",IDC_PICTURE_LEFT,"Static",SS_BLACKFRAME,274,40,101,72
     LISTBOX         IDC_LIST1,399,126,98,88,LBS_NOINTEGRALHEIGHT | 
@@ -394,7 +394,7 @@ BEGIN
         MENUITEM "&New Roster",                 ID_FILE_NEWROSTER
         MENUITEM "&Open Roster",                ID_FILE_OPENROSTER
         MENUITEM "&Save Roster",                ID_FILE_SAVEROSTER
-		MENUITEM "Save Roster &As...",          ID_FILE_SAVEROSTERAS
+        MENUITEM "Save Roster &As...",          ID_FILE_SAVEROSTERAS
         MENUITEM "Roster Settings",             ID_FILE_ROSTERSETTINGS
         MENUITEM SEPARATOR
         MENUITEM "E&xit",                       ID_FILE_EXIT
@@ -417,6 +417,7 @@ END
 //
 
 IDB_CautionPic          BITMAP  DISCARDABLE     "CAUTION.bmp"
+IDB_BITMAP1             BITMAP  DISCARDABLE     "res\\bitmap1.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
