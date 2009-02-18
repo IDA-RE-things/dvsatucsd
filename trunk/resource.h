@@ -23,6 +23,7 @@
 #define IDD_PROGRESS                    142
 #define IDD_PictureWizard               143
 #define IDD_DISPLAYPIC                  150
+#define IDB_BITMAP1                     152
 #define IDC_EDIT1                       1000
 #define IDC_TENewPropName               1000
 #define IDC_VIEWIMG                     1002
@@ -85,7 +86,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        152
+#define _APS_NEXT_RESOURCE_VALUE        153
 #define _APS_NEXT_COMMAND_VALUE         32782
 #define _APS_NEXT_CONTROL_VALUE         1045
 #define _APS_NEXT_SYMED_VALUE           101

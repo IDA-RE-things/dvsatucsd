@@ -401,19 +401,35 @@ byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtr
 		j=1;
 	}
 	
+/*
 
-	byte staticContent[26]	= {D_KEY,U_KEY,U_KEY,P_KEY,DOT,
-				J_KEY,P_KEY,G_KEY,ENTER,Y_KEY,
+#define D_KEY 0x44
+#define U_KEY 0x55
+#define P_KEY 0x50
+#define DOT 0xBE
+#define J_KEY 0x4A
+#define G_KEY 0x47
+#define ENTER 0x0d
+#define Y_KEY 0x59
+#define S_KEY 0x53
+#define I_KEY 0x49
+#define TAB 0x09
+#define T_KEY 0x0
+#define O_KEY 0X4f
+  */
+	byte staticContent[24]	= {D_KEY,U_KEY,U_KEY,P_KEY,DOT,
+				J_KEY,P_KEY,G_KEY,ENTER,
 				S_KEY,S_KEY,I_KEY,DOT,J_KEY,
-				P_KEY,G_KEY,ENTER,Y_KEY,TAB,
+				P_KEY,G_KEY,ENTER,TAB,
 				TAB,TAB,TAB,O_KEY,ENTER,ENTER};
 
 	if (genExtraKeystroke){
-		byte staticContent[28]	= {0x44,0x55,0x55,0x50,0xBE,
-						0x4A,0x50,0x47,0x0D,0x59,
-						0x53,0x53,0x49,0xBE,0x4A,
-						0x50,0x47,0x0D,0x59,0x09,
-						0x09,0x09,0x09,0x4f,0x0d,0x0d, 0x0d};
+		byte staticContent[25]	= 
+		{D_KEY,U_KEY,U_KEY,P_KEY,DOT,
+				J_KEY,P_KEY,G_KEY,ENTER,
+				S_KEY,S_KEY,I_KEY,DOT,J_KEY,
+				P_KEY,G_KEY,ENTER,TAB,
+				TAB,TAB,TAB,O_KEY,ENTER,ENTER, ENTER};
 	}
 	
 
@@ -433,14 +449,14 @@ byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtr
 
 	//fill temp array with keystrokes up to 22nd keystroke
 	int i = 0;
-	for(i = 0;i < 22; i++)
+	for(i = 0;i < 20; i++)
 		temp[i] = staticContent[i];
 
 	//fill temp array with name starting after keystrokes
 	name.MakeUpper();
 	for(i = 0; i < name.GetLength(); i++)
 	{
-		temp[22 + i] = name.GetAt(i);
+		temp[20 + i] = name.GetAt(i);
 	}
 
 	//fill temp array with remaining keystrokes after name3
@@ -451,7 +467,7 @@ byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtr
 	}
 	for(i = 0; i < remaining; i++)
 	{
-		temp[22 + nameLength + i] = staticContent[22 + i];
+		temp[20 + nameLength + i] = staticContent[20 + i];
 	}
 
 	/*if(caps & 0xF000)

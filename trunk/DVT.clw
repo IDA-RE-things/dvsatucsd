@@ -2,7 +2,7 @@
 
 [General Info]
 Version=1
-LastClass=CPictureDlg
+LastClass=CPictureWizardDlg
 LastTemplate=CDialog
 NewFileInclude1=#include "stdafx.h"
 NewFileInclude2=#include "DVT.h"
@@ -13,24 +13,24 @@ Class2=CDVTDlg
 Class3=CAboutDlg
 
 ResourceCount=12
-Resource1=IDD_PictureWizard
+Resource1=IDD_DVT_DIALOG
 Resource2=IDR_MAINFRAME
-Resource3=IDD_StudentDlg
-Resource4=IDD_PROGRESS
-Resource5=IDD_RosterSettings
+Resource3=IDD_PROGRESS
+Resource4=IDD_ABOUTBOX
+Resource5=IDD_StudentDlg
 Class4=RosterDlg
-Resource6=IDD_StartScreen
+Resource6=IDD_DISPLAYPIC
 Class5=StudentDlg
-Resource7=IDD_AddProperty
+Resource7=IDD_StartScreen
 Class6=AddPropertyDlg
-Resource8=IDD_DVT_DIALOG
+Resource8=IDD_YESNO
 Class7=YESNODlg
 Class8=StartScreenDlg
-Resource9=IDD_YESNO
+Resource9=IDD_PictureWizard
 Class9=CPictureDlg
-Resource10=IDD_DISPLAYPIC
+Resource10=IDD_AddProperty
 Class10=CPictureWizardDlg
-Resource11=IDD_ABOUTBOX
+Resource11=IDD_RosterSettings
 Resource12=MainMenu
 
 [CLS:CDVTApp]
@@ -108,12 +108,13 @@ Class=CDVTDlg
 Command1=ID_FILE_NEWROSTER
 Command2=ID_FILE_OPENROSTER
 Command3=ID_FILE_SAVEROSTER
-Command4=ID_FILE_ROSTERSETTINGS
-Command5=ID_FILE_EXIT
-Command6=ID_HELP_ABOUTEYEDXWINDOW
-Command7=ID_HELP_HELP
-Command8=ID_HELP_ABOUT
-CommandCount=8
+Command4=ID_FILE_SAVEROSTERAS
+Command5=ID_FILE_ROSTERSETTINGS
+Command6=ID_FILE_EXIT
+Command7=ID_HELP_ABOUTEYEDXWINDOW
+Command8=ID_HELP_HELP
+Command9=ID_HELP_ABOUT
+CommandCount=9
 
 [CLS:StudentDlg]
 Type=0
@@ -210,7 +211,7 @@ ImplementationFile=PictureWizardDlg.cpp
 BaseClass=CDialog
 Filter=D
 VirtualFilter=dWC
-LastObject=CPictureWizardDlg
+LastObject=IDC_BUTTON1
 
 [DLG:IDD_PictureWizard]
 Type=1
