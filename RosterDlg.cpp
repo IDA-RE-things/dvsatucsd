@@ -161,7 +161,11 @@ void RosterDlg::OnOK()
 	UpdateData(FALSE);
 
 	UpdateData();
-	if (curselection!=-1) roster->SetPropertyDefault(curselection, m_CDefaultValueText);
+	if (curselection!=-1) {
+		//AfxMessageBox(roster->GetPropertyDefault(curselection));
+		roster->SetPropertyDefault(curselection, m_CDefaultValueText);
+		//AfxMessageBox(roster->GetPropertyDefault(curselection));
+	}
 	UpdateData(FALSE);
 	
 	CDialog::OnOK();
@@ -208,7 +212,6 @@ void RosterDlg::RefreshPropList()
 		CString tabs = "";
 		for (int b=0; b<(maxlength/8-roster->GetPropertyName(a).GetLength()/8)+1; b++)
 			tabs += "\t";
-
 		m_proplist.AddString(roster->GetPropertyName(a) + ": " + tabs + roster->GetPropertyDefault(a));
 	}
 

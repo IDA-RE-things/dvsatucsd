@@ -59,8 +59,6 @@ END_MESSAGE_MAP()
 
 BOOL StudentDlg::OnInitDialog() 
 {
-
-
 	CDialog::OnInitDialog();
 	
 	//Populate student property list
@@ -70,7 +68,14 @@ BOOL StudentDlg::OnInitDialog()
 	m_proplist.SetCurSel(curselection);
 	prevtext = "-This string will never be typed.";
 	
+	//Display the new property's value.
+	CString valuetext = student->GetPropertyValue(curselection);
 	
+	m_CPropertyValue.SetWindowText(valuetext);
+
+	//Set the focus on the property text; not focusing - why?
+	m_CPropertyValue.SetFocus();
+
 	return TRUE;  // return TRUE unless you set the focus to a control
 	              // EXCEPTION: OCX Property Pages should return FALSE
 }
@@ -79,7 +84,6 @@ void StudentDlg::OnSelchangePropList()
 {
 	//Change the student properties as you change selection.
 	UpdateData();
-	
 	if (curselection!=-1) student->SetPropertyValue(curselection, m_CPropertyValueText);
 	UpdateData(FALSE);
 
@@ -108,6 +112,12 @@ void StudentDlg::OnOK()
 		student->GetPropertyValue("Name").FindOneOf("\\") >= 0 )
 	{
 		MessageBox("The student must have a name to be created.");
+		curselection = 0;
+		m_proplist.SetCurSel(curselection);
+		CString valuetext = student->GetPropertyValue(curselection);
+		m_CPropertyValue.SetWindowText(valuetext);
+		//Set the focus on the property text
+		m_CPropertyValue.SetFocus();
 		return;
 	}
 	
@@ -176,7 +186,6 @@ void StudentDlg::OnNext()
 	//Display the new property's value.
 	curselection = m_proplist.GetCurSel();
 
-	
 	CString valuetext = student->GetPropertyValue(curselection);
 	
 	m_CPropertyValue.SetWindowText(valuetext);
@@ -188,10 +197,8 @@ void StudentDlg::OnNext()
 void StudentDlg::RefreshComboList()
 {
 	//Clears and repopulates the combolistbox.
-
 	UpdateData();
 	m_CPropertyValue.ResetContent();
-		
 	if (curselection > -1 )
 	{
 		int numa = (*property)[curselection].association.size();

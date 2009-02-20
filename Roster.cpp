@@ -32,6 +32,7 @@ Roster::Roster(CString curpath)
 	cur_path = curpath;
 	xsl_path = "";
 	LoadAssociations(true);
+	LoadRoster(true);
 	label = "Unnamed Roster";
 }
 
@@ -45,13 +46,13 @@ Roster::Roster(CString curpath, CString path)
 	char tempstr[32768]; //The max characters in a database line.
 	CString line;
 
-	//Input roster properties
+	//Input roster name
 	loadstream.getline(tempstr,32768);
 	line = tempstr;
 	line.Remove('\t');
 	label = line;
 
-	//Input student properties
+	//Input student property names
 	loadstream.getline(tempstr,32768);
 	line = tempstr;
 	int delim = 0;
@@ -73,8 +74,31 @@ Roster::Roster(CString curpath, CString path)
 		
 	}
 
-	//Input student data
+	LoadAssociations(false);
+	LoadRoster(false); // important: distinguish between global defaults from ini files, overwritten by saved defaults in xsl file
+
+	//Input default values
+	loadstream.getline(tempstr,32768);
+	line = tempstr;
+	delim = 0;
 	int index = 0;
+	while(delim!=-1)
+	{
+		delim = line.Find('\t');
+		if (delim!=-1)
+		{
+			property[index].value = line.Left(delim);
+			line = line.Right(line.GetLength()-(delim+1));
+		}
+		else
+		{
+			property[index].value = line;
+		}
+		if (property[index].value == "") property[index].value = property[index].defaultvalue;
+		index++;
+	}
+
+	//Input student data
 	while(loadstream.getline(tempstr,32768))
 	{
 		Student *newstudent = CreateStudent();
@@ -106,9 +130,6 @@ Roster::Roster(CString curpath, CString path)
 
 	//Close the filestream.
 	loadstream.close();
-
-  
-	LoadAssociations(false);
 }
 
 Roster::~Roster()
@@ -124,6 +145,7 @@ void Roster::LoadAssociations(bool wprops)
 	CString line;
 	CString cur_property;
 	CString def;
+	int index = 0;
  
 	//Input roster properties
 	while(instream.getline(tempstr,32768))
@@ -133,8 +155,10 @@ void Roster::LoadAssociations(bool wprops)
 		def = tempstr;
 				
 		if (wprops) AddProperty(cur_property, def);
-		else if (GetPropertyIndex(cur_property)!=-1) 
-			SetPropertyDefault(cur_property, def);
+		else {
+			index = GetPropertyIndex(cur_property);
+			if (index != -1) property[index].defaultvalue = def;
+		}
 
 		instream.getline(tempstr,32768);
 		line = tempstr;
@@ -143,8 +167,7 @@ void Roster::LoadAssociations(bool wprops)
 		while (line!="")
 		{
 			if (wprops) AddPropertyAssociation(property.size()-1, line);
-			else if (GetPropertyIndex(cur_property)!=-1) 
-				AddPropertyAssociation(cur_property, line);
+			else if (index != -1) AddPropertyAssociation(cur_property, line);
 
 			instream.getline(tempstr,32768);
 			line = tempstr;
@@ -155,6 +178,49 @@ void Roster::LoadAssociations(bool wprops)
 	instream.close();
 
 }
+
+void Roster::LoadRoster(bool wprops)
+{
+	//Load the student properties.ini file for property lists and associations
+	ifstream instream(cur_path + "\\Roster Properties.ini", ios::in);
+	char tempstr[32768]; //The max characters in a database line.
+	CString line;
+	CString cur_property;
+	CString def;
+	int index = 0;
+ 
+	//Input roster properties
+	while(instream.getline(tempstr,32768))
+	{
+		cur_property = tempstr;
+		instream.getline(tempstr,32768);
+		def = tempstr;
+				
+		if (wprops) AddProperty(cur_property, def);
+		else {
+			index = GetPropertyIndex(cur_property);
+			if (index != -1) property[index].defaultvalue = def;
+		}
+
+		instream.getline(tempstr,32768);
+		line = tempstr;
+
+		//Load associations
+		while (line!="")
+		{
+			if (wprops) AddPropertyAssociation(property.size()-1, line);
+			else if (index != -1) AddPropertyAssociation(cur_property, line);
+
+			instream.getline(tempstr,32768);
+			line = tempstr;
+		}
+	}
+
+	//Close the filestream
+	instream.close();
+
+}
+
 
 CString Roster::GetLabel()
 {
@@ -202,9 +268,9 @@ void Roster::EditStudent(Student *newstudent, bool *addanother)
 
 	//Create the dialog box and run it
 	StudentDlg dlgStudent(NULL, newstudent, addanother, &property);
-	
+
 	dlgStudent.DoModal();
-	
+
 	//Check for name duplication and fix it if necessary
 	bool repeat = false;
 	bool skippedself = false;
@@ -326,13 +392,12 @@ int Roster::GetPropertyIndex(CString pname)
 
 CString Roster::GetPropertyDefault(int index)
 {
-	return property[index].defaultvalue;
+	return property[index].value;
 }
 
 void Roster::SetPropertyDefault(int index, CString newval)
 {
-	//Checks the roster for a property with the given index and sets the default value
-	property[index].defaultvalue = newval;
+	//Checks the roster for a property with the given index and sets the default value; note: roster value (default in ini) displayed in settings becomes default student value
 	property[index].value = newval;
 
 	for (int a=0;a<student.size();a++)
@@ -423,15 +488,14 @@ void Roster::Save(CString path)
 	}
 	savestream << "\n";
 
-	/*
+
 	//Output default properties
 	for (a=0;a<numprops;a++)
 	{
-		savestream << property[a].defaultvalue;
+		savestream << property[a].value;
 		if (a!=numprops-1) savestream << "\t";
 	}
 	savestream << "\n";
-	*/
 
 	//Output student propvalues
 	for (a=0;a<student.size();a++)
