@@ -24,9 +24,17 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// CAboutDlg dialog used for App About
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function:
+// Parameters:
+// Returns:
+// Description:
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 class CAboutDlg : public CDialog
 {
 public:
@@ -52,12 +60,32 @@ protected:
 
 };
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function:
+// Parameters:
+// Returns:
+// Description:
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
 	//{{AFX_DATA_INIT(CAboutDlg)
 	//}}AFX_DATA_INIT
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function:
+// Parameters:
+// Returns:
+// Description:
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -71,9 +99,18 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
-/////////////////////////////////////////////////////////////////////////////
-// CDVTDlg dialog
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg(CWnd* pParent) : CDialog(CDVTDlg::IDD, pParent)
+// Parameters: CWnd* pParent - NULL
+//			   CDialog(CDVTDlg::IDD,pParent) - FILL IN
+// Returns: None
+// Description:  Defines what a CDVTDlg is and what parameters it takes.
+//               Creates a Roster and stores it, and initiliazes theCamera to
+//               NULL
+//
+///////////////////////////////////////////////////////////////////////////////
 CDVTDlg::CDVTDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CDVTDlg::IDD, pParent)
 {
@@ -92,6 +129,16 @@ CDVTDlg::CDVTDlg(CWnd* pParent /*=NULL*/)
 	theCamera = NULL;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::DoDataExchange(CDataExchange* pDX)
+// Parameters: CDataExchange * pDX - FILL IN
+// Returns: none
+// Description: FILL IN
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -124,9 +171,17 @@ BEGIN_MESSAGE_MAP(CDVTDlg, CDialog)
 END_MESSAGE_MAP()
 
 
-/////////////////////////////////////////////////////////////////////////////
-// CDVTDlg message handlers
-
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnInitDialog()
+// Parameters: None
+// Returns:  FALSE - if no focus to control is set
+//           TRUE - if focus to control is set
+// Description:  Initialized the CDVTDlg.  Creates a CDialog. Creates 
+//               StartScreenDlg and waits for roster name to be set.  Once
+//               Roster name is set, Roster is created with that name.
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CDVTDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -178,6 +233,17 @@ BOOL CDVTDlg::OnInitDialog()
 	return FALSE;  // return TRUE  unless you set the focus to a control
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnSysCommand(UINT nID, LPARAM lParam)
+// Parameters: UINT nID - FILL IN 
+//             LPARAM lParam - FILL IN
+// Returns: None
+// Description: FILL IN
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
 	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
@@ -192,9 +258,19 @@ void CDVTDlg::OnSysCommand(UINT nID, LPARAM lParam)
 	}
 }
 
-// If you add a minimize button to your dialog, you will need the code below
-//  to draw the icon.  For MFC applications using the document/view model,
-//  this is automatically done for you by the framework.
+
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnPaint()
+// Parameters: None
+// Returns: None
+// Description: If you add a minimize button to your dialog, you will need
+//              the code below to draw the icon.  For MFC applications using 
+//              the document/view model, this is automatically done for you
+//              by the framework.
+//
+///////////////////////////////////////////////////////////////////////////////
 
 void CDVTDlg::OnPaint() 
 {
@@ -221,6 +297,18 @@ void CDVTDlg::OnPaint()
 	}
 }
 
+
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnQueryDragIcon()
+// Parameters: None
+// Returns: HCURSOR - FILL IN
+// Description: The system calls this to obtain the cursor to display 
+//              while the user drags the minimized window.
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 // The system calls this to obtain the cursor to display while the user drags
 //  the minimized window.
 HCURSOR CDVTDlg::OnQueryDragIcon()
@@ -228,13 +316,30 @@ HCURSOR CDVTDlg::OnQueryDragIcon()
 	return (HCURSOR) m_hIcon;
 }
 
-
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnUpdateFileRostersettings(CCmdUI* pCmdUI) 
+// Parameters: CCmDUI * pCmdUI - FILL IN
+// Returns: None
+// Description: Updates File Roster Settings.
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnUpdateFileRostersettings(CCmdUI* pCmdUI) 
 {
 	RosterDlg dlgRoster(NULL,&roster);
 	dlgRoster.DoModal();	
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnBAddStudent() 
+// Parameters: None
+// Returns: None
+// Description: Creates a new student and launches the student editor
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnBAddStudent() 
 {
 	//Create a new student and launch the student editor
@@ -255,6 +360,16 @@ void CDVTDlg::OnBAddStudent()
 	if (addanother == true) CDVTDlg::OnBAddStudent();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnBEditStudent() 
+// Parameters: None
+// Returns: None
+// Description: Checks if student name has been selected.  If student has been
+//              selected, gets student name and calls roster.EditStudent to
+//              allow user to edit Student.
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnBEditStudent() 
 {
 	//Check to make sure a student is selected
@@ -275,6 +390,16 @@ void CDVTDlg::OnBEditStudent()
 	RefreshStudentList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnFileSaveroster() 
+// Parameters: None
+// Returns: None
+// Description:  Saves the roster.
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnFileSaveroster() 
 {
 	if (roster.GetPath() == "") {
@@ -285,6 +410,15 @@ void CDVTDlg::OnFileSaveroster()
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function:  CDVTDlg::OnFileSaverosteras()
+// Parameters: None
+// Returns: None
+// Description: Opens Save Dialog to allow user to save dialog to XLS file.
+//              Then saves XLS to that location
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnFileSaverosteras()
 {
 	//Set CFileDialog file filters and run it.
@@ -300,11 +434,20 @@ void CDVTDlg::OnFileSaverosteras()
 	//MessageBox(savedlg.GetPathName(), NULL, MB_OK);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnFileOpenroster() 
+// Parameters: None
+// Returns: None
+// Description:  Allows user to open a roster.  
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnFileOpenroster() 
 {
 	//Checks to see if current roster is saved
 	bool result;
-	YESNODlg yesno(NULL, "Would you like to save '" + roster.GetLabel() + "' before opening a different roster?", &result);
+	YESNODlg yesno(NULL, "Would you like to save '" + 
+		roster.GetLabel() + "' before opening a different roster?", &result);
 	yesno.DoModal();
 
 	if (result==TRUE) OnFileSaveroster();
@@ -326,6 +469,15 @@ void CDVTDlg::OnFileOpenroster()
 	RefreshStudentList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnInitOpenroster() 
+// Parameters: None
+// Returns: None
+// Description: Loads opened roster into program, and refreshes student list
+//              to reflect data from opened roster.
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnInitOpenroster() 
 {
 	//Set CFileDialog file filters and run it.
@@ -347,6 +499,14 @@ void CDVTDlg::OnInitOpenroster()
 	RefreshPropertyList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnBRemoveStudent() 
+// Parameters: None
+// Returns: None
+// Description: Removes student from Roster.
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnBRemoveStudent() 
 {
 	//Make sure a student is selected
@@ -363,7 +523,11 @@ void CDVTDlg::OnBRemoveStudent()
 
 	//Confirm erasure
 	bool result;
-	YESNODlg yesno(NULL, "Are you sure you wish to remove the student " + stuname + " from the roster?  This will erase all data associated with this student on this roster.", &result);
+	YESNODlg yesno(NULL, "Are you sure you wish to remove the student " 
+		+ stuname + 
+		" from the roster?" + 
+		" This will erase all data associated with this student on this roster.", 
+		&result);
 	yesno.DoModal();
 
 	if (result==FALSE) return;
@@ -373,11 +537,29 @@ void CDVTDlg::OnBRemoveStudent()
 	RefreshStudentList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnSelchangeStudentList() 
+// Parameters: None
+// Returns: None
+// Description: FILL IN
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnSelchangeStudentList() 
 {
 	RefreshPropertyList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::RefreshPropertyList()
+// Parameters: None
+// Returns: None
+// Description: Refreshes the Roster property list.
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::RefreshPropertyList()
 {
 	//Store the current selection index before clearing the list
@@ -402,7 +584,8 @@ void CDVTDlg::RefreshPropertyList()
 	//Find the longest string in the list
 	int maxlength = 0;
 	for (int a=0; a<roster.NumProperties(); a++)
-		if (roster.GetPropertyName(a).GetLength()>maxlength) maxlength = roster.GetPropertyName(a).GetLength();
+		if (roster.GetPropertyName(a).GetLength()>maxlength) 
+			maxlength = roster.GetPropertyName(a).GetLength();
 	
 	for (a=0; a<roster.NumProperties(); a++)
 	{
@@ -411,13 +594,22 @@ void CDVTDlg::RefreshPropertyList()
 		for (int b=0; b<(maxlength/8-roster.GetPropertyName(a).GetLength()/8)+1; b++)
 			tabs += "\t";
 
-		m_studentview.AddString(roster.GetPropertyName(a) + ": " + tabs + roster.GetStudentPropertyValue(stuname, a));
+		m_studentview.AddString(roster.GetPropertyName(a) + ": "
+			+ tabs + roster.GetStudentPropertyValue(stuname, a));
 	}
 	
 
 	UpdateData(FALSE);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::RefreshStudentList()
+// Parameters: None
+// Returns: None
+// Description:  Refreshes the list of students in the DVTDlg.
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::RefreshStudentList()
 {
 	//Store the current selection index before clearing the list
@@ -431,7 +623,8 @@ void CDVTDlg::RefreshStudentList()
 	//Find the longest string in the list
 	int maxlength = 0;
 	for (int a=0; a<roster.NumStudents(); a++)
-		if (roster.GetStudentName(a).GetLength()>maxlength) maxlength = roster.GetStudentName(a).GetLength();
+		if (roster.GetStudentName(a).GetLength()>maxlength) 
+			maxlength = roster.GetStudentName(a).GetLength();
 
 	for (a=0;a<roster.NumStudents();a++)
 	{
@@ -457,15 +650,28 @@ void CDVTDlg::RefreshStudentList()
 	UpdateData(FALSE);
 
 	//If it is still available, set the selection where it was
-	if (curselection >= 0 && curselection < m_studentlist.GetCount()) m_studentlist.SetCurSel(curselection);
+	if (curselection >= 0 && curselection < m_studentlist.GetCount())
+		m_studentlist.SetCurSel(curselection);
 
 	RefreshPropertyList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnFileExit() 
+// Parameters: None
+// Returns: None
+// Description: Prompts user to save changes to Roster currently being worked
+//              on.  Saves if user says to then exits.
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnFileExit() 
 {
 	bool result;
-	YESNODlg yesno(NULL, "Do you wish to save changes to '" + roster.GetLabel() + "'?", &result);
+	YESNODlg yesno(NULL, "Do you wish to save changes to '" 
+		+ roster.GetLabel() + "'?", &result);
 	yesno.DoModal();
 	if (result==TRUE) 
 	{
@@ -474,11 +680,23 @@ void CDVTDlg::OnFileExit()
 	CDialog::OnOK();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnFileNewroster() 
+// Parameters:  None
+// Returns:  None
+// Description:   Prompts user to start a new roster.  If user agrees, new 
+//                roster is created.
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnFileNewroster() 
 {
 	//Confirm the creation of a new roster
 	bool result;
-	YESNODlg yesno(NULL, "Are you sure you wish to start a new roster?  This will erase any unsaved changes you have made.", &result);
+	YESNODlg yesno(NULL, "Are you sure you wish to start a new roster?" + "
+		This will erase any unsaved changes you have made.", &result);
 	yesno.DoModal();
 
 	if (result==FALSE) return;
@@ -493,6 +711,15 @@ void CDVTDlg::OnFileNewroster()
 	RefreshStudentList();
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnBTakePictures() 
+// Parameters: None
+// Returns: None
+// Description: Checks if student has been selected, then starts Camera and
+//              calls functions to take pictures of student
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnBTakePictures() 
 {
 	//Make sure a student is selected
@@ -516,12 +743,29 @@ void CDVTDlg::OnBTakePictures()
 	
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnSortResult() 
+// Parameters: None
+// Returns: None
+// Description: Refreshes Student list
+//
+//
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnSortResult() 
 {
 	RefreshStudentList();
-	//if (m_SortResultChecked)
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CDVTDlg::OnClose() 
+// Parameters: None
+// Returns: None
+// Description: Closes the Camera and closes the Dialog
+//
+///////////////////////////////////////////////////////////////////////////////
 void CDVTDlg::OnClose() 
 {
 	// TODO: Add your message handler code here and/or call default

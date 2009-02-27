@@ -15,6 +15,15 @@ static char THIS_FILE[] = __FILE__;
 // AddPropertyDlg dialog
 
 
+
+/**
+ * Function: AddPropertyDlg(CWnd* pParent, CString *tnewpropname)
+ * Parameters: pParent - NULL
+ *             tnewpropname - name of new property   
+ * Returns: none
+ * Description: Functions for IDD_AddProperty which is used to add
+ *              properties to a roster
+ */
 AddPropertyDlg::AddPropertyDlg(CWnd* pParent /*=NULL*/, CString *tnewpropname)
 	: CDialog(AddPropertyDlg::IDD, pParent)
 {
@@ -25,7 +34,12 @@ AddPropertyDlg::AddPropertyDlg(CWnd* pParent /*=NULL*/, CString *tnewpropname)
 	//}}AFX_DATA_INIT
 }
 
-
+/**
+ * Function: AddPropertyDlg::DoDataExchange(CDataExchange* pDX)
+ * Parameters: pDX - FILL IN
+ * Returns: none
+ * Description: FILL IN
+ */
 void AddPropertyDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
@@ -43,6 +57,13 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // AddPropertyDlg message handlers
 
+
+/**
+ * Function: AddPropertyDlg::OnOK() 
+ * Parameters: none
+ * Returns: none
+ * Description: Updates properties of a roster to include new property added
+ */
 void AddPropertyDlg::OnOK() 
 {
 	UpdateData();
