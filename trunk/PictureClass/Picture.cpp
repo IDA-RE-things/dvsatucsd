@@ -27,9 +27,16 @@ CPicture::~CPicture()
 {
 }
 
-//////////////////
-// Load from resource. Looks for "IMAGE" type.
+
+///////////////////////////////////////////////////////////////////////////////
 //
+// Function: CPicture::Load(UINT nIDRes)
+// Parameters:  UINT nIDRes - FILL IN
+// Returns: TRUE - if Pictures loads correctly
+//          FALSE - otherwise
+// Description: Loads from resource, looks for "IMAGE" type
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CPicture::Load(UINT nIDRes)
 {
 	// find resource in resource file
@@ -57,6 +64,15 @@ BOOL CPicture::Load(UINT nIDRes)
 //////////////////
 // Load from path name.
 //
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function:  CPicture::Load(LPCTSTR pszPathName)
+// Parameters:  LPCTSTR pszPathName - path to Picture
+// Returns: TRUE - if load succeeds
+//          FALSE - otherwise
+// Description: Loads a picture from a path name
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CPicture::Load(LPCTSTR pszPathName)
 {
 	CFile file;
@@ -67,18 +83,30 @@ BOOL CPicture::Load(LPCTSTR pszPathName)
 	return bRet;
 }
 
-//////////////////
-// Load from CFile
+
+///////////////////////////////////////////////////////////////////////////////
 //
+// Function: CPicture::Load(CFile& file)
+// Parameters:  CFile & file - CFile object to load
+// Returns: FILL IN
+// Description: Loads picture from CFILE object
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CPicture::Load(CFile& file)
 {
 	CArchive ar(&file, CArchive::load | CArchive::bNoFlushOnDelete);
 	return Load(ar);
 }
 
-//////////////////
-// Load from archive--create stream and load from stream.
+///////////////////////////////////////////////////////////////////////////////
 //
+// Function:  CPicture::Load(CArchive& ar)
+// Parameters:  CArchive & ar - CArchive object to load
+// Returns: FILL IN
+// Description: Loads picture from CArchive object.  Creates a stream and 
+//              loads from stream
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CPicture::Load(CArchive& ar)
 {
 	CArchiveStream arcstream(&ar);
@@ -89,6 +117,15 @@ BOOL CPicture::Load(CArchive& ar)
 // Load from stream (IStream). This is the one that really does it: call
 // OleLoadPicture to do the work.
 //
+///////////////////////////////////////////////////////////////////////////////
+//
+// Function: CPicture::Load(IStream* pstm)
+// Parameters:  IStream * pstm - Istream to load picture from
+// Returns: TRUE in all cases
+// Description: Load from stream (IStream). This is the one that really does it: 
+//              call OleLoadPicture to do the work.
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CPicture::Load(IStream* pstm)
 {
 	Free();
@@ -98,9 +135,18 @@ BOOL CPicture::Load(IStream* pstm)
 	return TRUE;
 }
 
-//////////////////
-// Render to device context. Covert to HIMETRIC for IPicture.
+
+///////////////////////////////////////////////////////////////////////////////
 //
+// Function: CPicture::Render(CDC* pDC, CRect rc, LPCRECT prcMFBounds)
+// Parameters:  CDC* pDC - FILL IN
+//			    CRect rc - FILL IN
+//			    LPCRECT prcMFBounds - FILL IN
+// Returns: TRUE in all cases
+// Description: Renders a picture to the screen I THINK.  Converts HIMETRIC
+//              for IPICTURE
+//
+///////////////////////////////////////////////////////////////////////////////
 BOOL CPicture::Render(CDC* pDC, CRect rc, LPCRECT prcMFBounds) const
 {
 	ASSERT(pDC);
@@ -118,9 +164,15 @@ BOOL CPicture::Render(CDC* pDC, CRect rc, LPCRECT prcMFBounds) const
 	return TRUE;
 }
 
-//////////////////
-// Get image size in pixels. Converts from HIMETRIC to device coords.
+///////////////////////////////////////////////////////////////////////////////
 //
+// Function: CPicture::GetImageSize(CDC* pDC) const
+// Parameters:  CDC* pDC - FILL IN
+// Returns:  CSize - size of image in pixels
+// Description: Get image size in pixels. Converts from 
+//              HIMETRIC to device coords.
+//
+///////////////////////////////////////////////////////////////////////////////
 CSize CPicture::GetImageSize(CDC* pDC) const
 {
 	if (!m_spIPicture)
