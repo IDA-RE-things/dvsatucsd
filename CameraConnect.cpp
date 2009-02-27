@@ -1401,29 +1401,37 @@ void CCameraConnect::PictureDoneSignal(BOOL done)
 
 //////////////////////////////////////////////////////////////////////////
 // 
-//  Function Name:  SetPathAndFileName
-//  Description:    Sets the full path and filename (with extension) 
-//                  of the two images to be stored    
-//  Parameters:     char *PicNameLeft - the left image (horizontal)
-//                  char *PicNameRight - the right image (vertical)               
+//  Function Name:  SetPathName
+//  Description:    Sets the full path for the images to be stored.    
+//  Parameters:     CSrting NewPathName - Path of directory where images
+//                  will be stored              
 //  Returns:        BOOL - might need some error checking in here.  
-//  Summary:        The PictureWizardDlg will generate the file and path 
-//                  names, and pass them to this function so we can later pass
+//  Summary:        The PictureWizardDlg will generate the ath 
+//                  name, and pass it to this function so we can later pass
 //                  them to the CProgress dialog (which is where the image is 
 //                  stored)
-//  Author:         CannonSDK
 //                           
 ///////////////////////////////////////////////////////////////////////////
 BOOL CCameraConnect::SetPathName(CString NewPathName )
 {
-
-
 	PathName = NewPathName;
-	
-
 	return TRUE;
 }
 
+
+///////////////////////////////////////////////////////////////////////////
+//
+// Function: CCameraConnect::SetFileName(BOOL horizontal)
+// Parameters: BOOL horizontal - if the image being taken is a horizontal
+//             image will be true, else false
+// Returns: TRUE - if setting file name succeeds
+// Description: Gets horizontal which tells function which photo is being taken
+//              Based on this creates filename of photo which was just taken.  Also
+//              increments the counter of the photo (horizontal or vertical) to keep
+//              track of how many of each photo has been taken to account for
+//              multiple photos for one student.
+//
+////////////////////////////////////////////////////////////////////////////
 BOOL CCameraConnect::SetFileName(BOOL horizontal){
 
 	//add the count
@@ -1435,44 +1443,72 @@ BOOL CCameraConnect::SetFileName(BOOL horizontal){
 		str_hcount.Format("%d", hcount);
 		strcpy(FileName, (char*)(LPCTSTR)(PathName + "H"+ str_hcount + ".jpg") );
 		strcpy(FileNameHorizontal, FileName);
-		//FileName = *(char*)(LPCTSTR)(PathName + "H"+ str_hcount + ".jpg");
 	}
 	else{
 		vcount++;
 		str_vcount.Format("%d", vcount);
 		strcpy(FileName, (char*)(LPCTSTR)(PathName + "V"+ str_vcount + ".jpg") );
 		strcpy(FileNameVertical, FileName);
-		//FileName = *(char*)(LPCTSTR)(PathName + "V"+str_vcount + ".jpg");
-		;
-
 	}
-	//PathName = cur_path+"\\"+my_student->GetPropertyValue("Name");//+"H"+ str_hcount + ".jpg";
-	//PathNameRight = cur_path+"\\"+my_student->GetPropertyValue("Name");//+"V"+str_vcount + ".jpg";
-	
 
-
-	//strcpy(FilePathLeft, PicNameLeft);
-	//strcpy(FilePathRight, PicNameRight);
 	return TRUE;
 
 
 }
 
-
+///////////////////////////////////////////////////////////////////////////
+//
+// Function: CCameraConnect::GetLastVerticalFile ()
+// Parameters: None
+// Returns: Full path to where next vertical image should be stored
+// Description: Returns the path to where the next vertical image
+//              should be stored
+//
+////////////////////////////////////////////////////////////////////////////
 char* CCameraConnect::GetLastVerticalFile ()
 {
 	return FileNameVertical;
 }
+
+///////////////////////////////////////////////////////////////////////////
+//
+// Function: CCameraConnect::GetLastHorizontalFile ()
+// Parameters: None
+// Returns: Full path to where next horizontal image should be stored
+// Description: Returns the path to where the next horizontal image
+//              should be stored
+//
+////////////////////////////////////////////////////////////////////////////
 char * CCameraConnect::GetLastHorizontalFile()
 {
 	return FileNameHorizontal;
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+// Function: CCameraConnect::SetLastVerticalFile(char* lastVerticalFile)
+// Parameters: char* lastVerticalFile - Full path to where next vertical
+//             file should be stored
+// Returns: none
+// Description: Sets full path to where next vertical
+//              file should be stored
+//
+////////////////////////////////////////////////////////////////////////////
 void CCameraConnect::SetLastVerticalFile(char* lastVerticalFile)
 {
 	strcpy(FileNameVertical, lastVerticalFile);
 }
 
+///////////////////////////////////////////////////////////////////////////
+//
+// Function: CCameraConnect::SetLastHorizontalalFile(char* lastHorizontalFile)
+// Parameters: char* lastHorizontalFile - Full path to where next horizontal
+//             file should be stored
+// Returns: none
+// Description: Sets full path to where next horizontal
+//              file should be stored
+//
+////////////////////////////////////////////////////////////////////////////
 void CCameraConnect::SetLastHorizontalFile(char* lastHorizontalFile)
 {
 	strcpy(FileNameHorizontal, lastHorizontalFile);
