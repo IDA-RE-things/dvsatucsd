@@ -73,14 +73,14 @@ void CPictureWizardDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CPictureWizardDlg, CDialog)
 	//{{AFX_MSG_MAP(CPictureWizardDlg)
-	ON_BN_CLICKED(IDC_BUTTON2, OnButton2)
+	ON_BN_CLICKED(IDC_HORIZONTAL, OnHorizontal)
 	ON_BN_CLICKED(IDC_BUTTON4, OnButton4)
-	ON_BN_CLICKED(IDC_BUTTON1, OnButton1)
+	ON_BN_CLICKED(IDC_ANALYZE, OnAnalyze)
 	ON_WM_LBUTTONUP()
-	ON_BN_CLICKED(IDC_BUTTON3, OnButton3)
+	ON_BN_CLICKED(IDC_VERTICAL, OnVertical)
 	ON_BN_CLICKED(IDC_BUTTON5, OnEyeDx)
-	ON_BN_CLICKED(IDC_BUTTON6, OnButton6)
-	ON_BN_CLICKED(IDC_BUTTON7, OnButton7)
+	ON_BN_CLICKED(IDC_HSELECT, OnHSelect)
+	ON_BN_CLICKED(IDC_VSELECT, OnVSelect)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -211,7 +211,7 @@ BOOL CPictureWizardDlg::OnCamera()
 		return FALSE;
 }
 
-void CPictureWizardDlg::OnButton2() 
+void CPictureWizardDlg::OnHorizontal() 
 {
 	horizontal = true;
 	MessageBox("Please Take the Horizontal Picture Now",NULL,MB_OK);
@@ -249,7 +249,7 @@ void CPictureWizardDlg::OnButton4()
 }
 
 
-void CPictureWizardDlg::OnButton1() 
+void CPictureWizardDlg::OnAnalyze() 
 {
 	// TODO: Add your control notification handler code here
 
@@ -486,7 +486,7 @@ void CPictureWizardDlg::OnLButtonUp(UINT nFlags, CPoint point)
 	CDialog::OnLButtonUp(nFlags, point);
 }
 
-void CPictureWizardDlg::OnButton3() 
+void CPictureWizardDlg::OnVertical() 
 {
 	horizontal = false;
 	MessageBox("Please Take the Vertical Picture Now");
@@ -523,7 +523,7 @@ void CPictureWizardDlg::OnEyeDx()
 
 
 
-void CPictureWizardDlg::OnButton6()
+void CPictureWizardDlg::OnHSelect()
 {
 	CString fileNameHorizontal; 
 	CString initialDir = cur_path+"\\"+ my_roster->GetLabel();
@@ -542,7 +542,7 @@ void CPictureWizardDlg::OnButton6()
 	((CCameraConnect*) my_theCamera)->SetLastHorizontalFile((char*)(LPCTSTR) fileNameHorizontal);
 }
 
-void CPictureWizardDlg::OnButton7()
+void CPictureWizardDlg::OnVSelect()
 {
 	CString fileNameVertical; 
 	CString initialDir = cur_path+"\\"+ my_roster->GetLabel();

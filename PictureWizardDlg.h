@@ -49,17 +49,17 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(CPictureWizardDlg)
 	virtual BOOL OnInitDialog();
-	afx_msg void OnButton2();
+	afx_msg void OnHorizontal();
 	afx_msg void OnButton4();
-	afx_msg void OnButton1();
+	afx_msg void OnAnalyze();
 	virtual void OnCancel();
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
-	afx_msg void OnButton3();
+	afx_msg void OnVertical();
 	afx_msg void OnEyeDx();
 	afx_msg void LoadPictureFile(LPCTSTR szFile);
 	afx_msg void WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance, LPSTR lpCmdLine,int nCmdShow);
-	afx_msg void OnButton7();
-	afx_msg void OnButton6();
+	afx_msg void OnVSelect();
+	afx_msg void OnHSelect();
 	afx_msg byte * genKeystrokes (CString name, int & length, bool genExtraKeystroke);
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
