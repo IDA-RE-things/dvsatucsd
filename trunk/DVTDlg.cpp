@@ -695,8 +695,7 @@ void CDVTDlg::OnFileNewroster()
 {
 	//Confirm the creation of a new roster
 	bool result;
-	YESNODlg yesno(NULL, "Are you sure you wish to start a new roster?" + "
-		This will erase any unsaved changes you have made.", &result);
+	YESNODlg yesno(NULL, "Are you sure you wish to start a new roster? This will erase any unsaved changes you have made.", &result);
 	yesno.DoModal();
 
 	if (result==FALSE) return;
