@@ -162,9 +162,7 @@ void RosterDlg::OnOK()
 
 	UpdateData();
 	if (curselection!=-1) {
-		//AfxMessageBox(roster->GetPropertyDefault(curselection));
 		roster->SetPropertyDefault(curselection, m_CDefaultValueText);
-		//AfxMessageBox(roster->GetPropertyDefault(curselection));
 	}
 	UpdateData(FALSE);
 	

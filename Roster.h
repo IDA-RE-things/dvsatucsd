@@ -30,7 +30,6 @@ public:
 	void Roster::SetPath(CString newpath);
 
 	void Roster::LoadAssociations(bool wprops);
-	void Roster::LoadRoster(bool wprops);
 
 	//Add a property to the roster and all contained students.
 	void Roster::AddProperty(CString iname, CString tdefaultvalue);
