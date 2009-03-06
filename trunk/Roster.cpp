@@ -32,7 +32,6 @@ Roster::Roster(CString curpath)
 	cur_path = curpath;
 	xsl_path = "";
 	LoadAssociations(true);
-	LoadRoster(true);
 	label = "Unnamed Roster";
 }
 
@@ -74,8 +73,7 @@ Roster::Roster(CString curpath, CString path)
 		
 	}
 
-	LoadAssociations(false);
-	LoadRoster(false); // important: distinguish between global defaults from ini files, overwritten by saved defaults in xsl file
+	LoadAssociations(false); // global defaults from .ini files, overwritten by saved defaults in .xsl file
 
 	//Input default values
 	loadstream.getline(tempstr,32768);
@@ -141,48 +139,6 @@ void Roster::LoadAssociations(bool wprops)
 {
 	//Load the student properties.ini file for property lists and associations
 	ifstream instream(cur_path + "\\Student Properties.ini", ios::in);
-	char tempstr[32768]; //The max characters in a database line.
-	CString line;
-	CString cur_property;
-	CString def;
-	int index = 0;
- 
-	//Input roster properties
-	while(instream.getline(tempstr,32768))
-	{
-		cur_property = tempstr;
-		instream.getline(tempstr,32768);
-		def = tempstr;
-				
-		if (wprops) AddProperty(cur_property, def);
-		else {
-			index = GetPropertyIndex(cur_property);
-			if (index != -1) property[index].defaultvalue = def;
-		}
-
-		instream.getline(tempstr,32768);
-		line = tempstr;
-
-		//Load associations
-		while (line!="")
-		{
-			if (wprops) AddPropertyAssociation(property.size()-1, line);
-			else if (index != -1) AddPropertyAssociation(cur_property, line);
-
-			instream.getline(tempstr,32768);
-			line = tempstr;
-		}
-	}
-
-	//Close the filestream
-	instream.close();
-
-}
-
-void Roster::LoadRoster(bool wprops)
-{
-	//Load the student properties.ini file for property lists and associations
-	ifstream instream(cur_path + "\\Roster Properties.ini", ios::in);
 	char tempstr[32768]; //The max characters in a database line.
 	CString line;
 	CString cur_property;
@@ -475,7 +431,7 @@ void Roster::Save(CString path)
 {
 	ofstream savestream(path, ios::out);
 
-	//Output roster properties
+	//Output roster name
 	savestream << label << "\n";
 
 	int numprops = property.size();
@@ -489,15 +445,15 @@ void Roster::Save(CString path)
 	savestream << "\n";
 
 
-	//Output default properties
+	//Output default properties (roster settings)
 	for (a=0;a<numprops;a++)
 	{
-		savestream << property[a].value;
+		savestream << property[a].value; // override student name roster setting (not saved for the sake of spreadsheet readability)? (a == 0 ? "Default Student" : property[a].value)
 		if (a!=numprops-1) savestream << "\t";
 	}
 	savestream << "\n";
 
-	//Output student propvalues
+	//Output student property values
 	for (a=0;a<student.size();a++)
 	{
 		for (int b=0;b<numprops;b++)
