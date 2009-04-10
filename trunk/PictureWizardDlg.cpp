@@ -78,7 +78,8 @@ BEGIN_MESSAGE_MAP(CPictureWizardDlg, CDialog)
 	ON_BN_CLICKED(IDC_ANALYZE, OnAnalyze)
 	ON_WM_LBUTTONUP()
 	ON_BN_CLICKED(IDC_VERTICAL, OnVertical)
-	ON_BN_CLICKED(IDC_BUTTON5, OnEyeDx)
+	
+	ON_BN_CLICKED(IDC_BUTTON5, OnButton5)
 	ON_BN_CLICKED(IDC_HSELECT, OnHSelect)
 	ON_BN_CLICKED(IDC_VSELECT, OnVSelect)
 	//}}AFX_MSG_MAP
@@ -128,6 +129,10 @@ BOOL CPictureWizardDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	CString SPath_name;
+
+	//zoom in to max
+	for(int i = 0; i < 7; i++)
+		((CCameraConnect*) my_theCamera)->ZoomIn();
 
 	
 	
@@ -243,11 +248,17 @@ void CPictureWizardDlg::OnHorizontal()
 
 void CPictureWizardDlg::OnButton4() 
 {
-	// TODO: Add your control notification handler code here
+	// THE ZOOM IN FEATURE
 	//((CCameraConnect*) my_theCamera)->StartRelease("C:\\Documents and Settings\\Administrator\\Desktop\\DVT\\testpics");
-   /* ((CCameraConnect*) my_theCamera)->WindowProc(message, wParam, lParam, cpBuffer)*/
+   ((CCameraConnect*) my_theCamera)->ZoomIn();
 }
 
+void CPictureWizardDlg::OnButton5() 
+{
+	// TTHE ZOOMOUT FEATURE
+	//((CCameraConnect*) my_theCamera)->StartRelease("C:\\Documents and Settings\\Administrator\\Desktop\\DVT\\testpics");
+   ((CCameraConnect*) my_theCamera)->ZoomOut();
+}
 
 void CPictureWizardDlg::OnAnalyze() 
 {
@@ -356,6 +367,8 @@ void CPictureWizardDlg::OnAnalyze()
 	*/
 	// send keystrokes here
 	//fprintf(stderr, "%d length", &length);
+	//fflush(stdout);
+	//fflush(stderr);
 	for(i=0;i<length;i++) 
 	{
 		input[0].ki.wVk = input[1].ki.wVk = inputs[i];
@@ -460,10 +473,10 @@ byte * CPictureWizardDlg::genKeystrokes(CString name, int & length, bool genExtr
 	}
 
 	//fill temp array with remaining keystrokes after name3
-	int remaining = 3;
+	int remaining = 4;
 	if(genExtraKeystroke)
 	{
-		remaining = 4;
+		remaining = 5;
 	}
 	for(i = 0; i < remaining; i++)
 	{

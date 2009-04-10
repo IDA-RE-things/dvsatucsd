@@ -51,6 +51,7 @@ protected:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnHorizontal();
 	afx_msg void OnButton4();
+	afx_msg void OnButton5();
 	afx_msg void OnAnalyze();
 	virtual void OnCancel();
 	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);

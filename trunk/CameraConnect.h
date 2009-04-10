@@ -30,6 +30,7 @@ class CCameraConnect
 public:
 	void PictureDoneSignal(BOOL done);
 	BOOL SetPathName( CString NewPathName );
+	bool FileExists(CString fname);
 	BOOL SetFileName( BOOL horizontal );
 
 	char * GetLastVerticalFile ();
@@ -40,6 +41,10 @@ public:
 	BOOL bPictDone;
 	BOOL PictureDoneWait();
 	BOOL EndCamera();
+
+	void ZoomIn();
+	void ZoomOut();
+
 	void CameraError(cdError err);
 	cdError GetCameraSource(cdSourceInfo* pSourceInfo);
 	BOOL WindowProc(UINT message, WPARAM wParam, LPARAM lParam, char* cpBuffer);
