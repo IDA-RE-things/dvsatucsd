@@ -45,6 +45,7 @@ UINT			g_ReleaseCompleteMessage=0;	/* A message when photography is completed
 UINT			g_AbortPCEVF=0;
 
 
+cdUInt32 currentPos = 5;
 CString PathName;
 
 
@@ -1439,21 +1440,43 @@ BOOL CCameraConnect::SetFileName(BOOL horizontal){
 
 	if ( horizontal )
 	{
-		hcount++;
-		str_hcount.Format("%d", hcount);
-		strcpy(FileName, (char*)(LPCTSTR)(PathName + "H"+ str_hcount + ".jpg") );
-		strcpy(FileNameHorizontal, FileName);
+		do
+		{
+			hcount++;
+			str_hcount.Format("%d", hcount);
+			strcpy(FileName, (char*)(LPCTSTR)(PathName + "H"+ str_hcount + ".jpg") );
+			strcpy(FileNameHorizontal, FileName);
+		}while(FileExists(FileNameHorizontal));
 	}
 	else{
-		vcount++;
-		str_vcount.Format("%d", vcount);
-		strcpy(FileName, (char*)(LPCTSTR)(PathName + "V"+ str_vcount + ".jpg") );
-		strcpy(FileNameVertical, FileName);
+		do
+		{
+			vcount++;
+			str_vcount.Format("%d", vcount);
+			strcpy(FileName, (char*)(LPCTSTR)(PathName + "V"+ str_vcount + ".jpg") );
+			strcpy(FileNameVertical, FileName);
+		}while(FileExists(FileNameVertical));
 	}
 
 	return TRUE;
 
 
+}
+
+/*
+ *  Determines if a file exists at specified
+ *  path.  Used by getResult().
+ *
+ *  @param fname Full path to file.
+ *  @return True if file exists or false otherwise.
+ */
+bool CCameraConnect::FileExists(CString fname)
+{
+	CFile f;
+	if (f.Open(fname,CFile::modeRead))
+		return true;
+	else
+		return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -1512,4 +1535,45 @@ void CCameraConnect::SetLastVerticalFile(char* lastVerticalFile)
 void CCameraConnect::SetLastHorizontalFile(char* lastHorizontalFile)
 {
 	strcpy(FileNameHorizontal, lastHorizontalFile);
+}
+
+void CCameraConnect::ZoomIn()
+{
+	
+	currentPos++;
+
+	CString errorMsg;
+
+	if (currentPos > 12)
+	{
+	
+		errorMsg.Format("Cannot Zoom In Any Further, Current Position Would Be %d",currentPos); 
+
+		MessageBox(NULL, errorMsg, "Note", MB_OK);
+
+		currentPos--;
+
+	}
+
+	else CDSetZoomPos( m_hSource, currentPos );
+
+}
+
+void CCameraConnect::ZoomOut()
+{	
+	currentPos--;
+
+	CString errorMsg;
+	
+	if (currentPos < 1 )
+	{
+		  
+		errorMsg.Format("Cannot Zoom Out Any Further, Current Position Would Be %d",currentPos); 
+
+		MessageBox(NULL, errorMsg, "Note", MB_OK);
+
+		currentPos++;
+	}
+	else CDSetZoomPos( m_hSource, currentPos );
+
 }
