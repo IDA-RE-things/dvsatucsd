@@ -238,6 +238,7 @@ cdUInt32 cdSTDCALL	CCameraConnect::RelCallBackFunc(	cdReleaseEventID	EventID,
 			break;
 		case cdRELEASE_EVENT_RELEASE_START:
 			break;
+
 		case cdRESEASE_EVENT_RELEASE_COMPLETE:
 			dwpCount = (cdUInt32*)pData;
 			//CpThis->pDVTDlg->PostMessage( g_ReleaseCompleteMessage, (WPARAM)*dwpCount );
@@ -246,8 +247,8 @@ cdUInt32 cdSTDCALL	CCameraConnect::RelCallBackFunc(	cdReleaseEventID	EventID,
 		case cdRELEASE_EVENT_CAM_RELEASE_ON:
 			//CpThis->pDVTDlg->PostMessage( g_ReleaseOnMessage );
 			CpThis->PostMessage( g_ReleaseOnMessage );
-			
 			break;
+
 		case cdRELEASE_EVENT_ABORT_PC_EVF:
 			//CpThis->pDVTDlg->PostMessage( g_AbortPCEVF );
 			break;
@@ -609,6 +610,8 @@ BOOL CCameraConnect::ConnectCamera(CPictureWizardDlg* pCPictureWizardDlg, CStati
 			break;
 	}
 
+	//set resolution of saved image (1600x1200)
+	pSize = cdIMAGE_SIZE_MEDIUM3;
 	CDSetImageFormatAttribute(m_hSource, pQuality, pSize);
 	
 	err = CDEnumImageFormatAttributeRelease(phEnum);
