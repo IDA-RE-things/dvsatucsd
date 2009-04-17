@@ -220,30 +220,6 @@ void CPictureWizardDlg::OnHorizontal()
 {
 	horizontal = true;
 	MessageBox("Please Take the Horizontal Picture Now",NULL,MB_OK);
-	
-
-	//failed attempt to draw. have fun with this next quarter!
-	/*PAINTSTRUCT paintstruct;
-
-	CDC * hdc = BeginPaint((LPPAINTSTRUCT)&paintstruct);
-	HDC t = hdc->m_hDC;
-	
-
-	HDC hImageDC = CreateCompatibleDC(t);
-	HANDLE hImage;
-	hImage = LoadImage(NULL, "test.jpg", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
-//	hImage = 0;
-	BITMAP Bitmap;
-
-	SIZE ImageSize;
-
-	GetObject(hImage, sizeof(BITMAP), &Bitmap);
-	ImageSize.cx = Bitmap.bmWidth;
-	ImageSize.cy = Bitmap.bmHeight;
-
-	SelectObject(hImageDC, hImage);
-	hdc->BitBlt(t, 0, 0, ImageSize.cx, ImageSize.cy, hImageDC, 0,0, SRCCOPY);
-	EndPaint((LPPAINTSTRUCT)&paintstruct);*/
 }
 
 void CPictureWizardDlg::OnButton4() 
