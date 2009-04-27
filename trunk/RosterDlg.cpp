@@ -61,7 +61,7 @@ BOOL RosterDlg::OnInitDialog()
 
 	curselection = -1;
 	prevtext = "-This string will never be typed.";
-	
+	/// Clone student property list before changes are made
 	//Populate roster properties
 	m_rosterlabel.SetWindowText(roster->GetLabel());
 
@@ -86,6 +86,12 @@ void RosterDlg::OnBAddProperty()
 	apdlg.DoModal();	
 
 	UpdateData();
+
+	if (newpropname == "Name")
+	{
+		MessageBox("A property must have a name to be created.");
+		return;
+	}
 
 	//Add Property to roster
 	roster->AddProperty(newpropname, "N\\A");
@@ -138,6 +144,9 @@ void RosterDlg::OnBRemoveProperty()
 
 	//Remove the property from the roster
 	roster->RemoveProperty(selindex);
+
+	//Display the next selection
+	OnNext();
 }
 
 void RosterDlg::OnOK() 
@@ -165,7 +174,8 @@ void RosterDlg::OnOK()
 		roster->SetPropertyDefault(curselection, m_CDefaultValueText);
 	}
 	UpdateData(FALSE);
-	
+	RefreshPropList();
+
 	CDialog::OnOK();
 }
 
@@ -236,7 +246,7 @@ void RosterDlg::OnNext()
 	{
 		curselection++;
 		m_proplist.SetCurSel(curselection);
-	}	
+	}
 
 	//Display the current selection
 	CString valuetext = roster->GetPropertyDefault(curselection);
@@ -304,7 +314,8 @@ void RosterDlg::OnEditchangeCDefaultValue()
 
 void RosterDlg::OnCancel() 
 {
-	// TODO: Add extra cleanup here
+	/// Override default property list w/ original
+	/// RefreshList w/ original default property list
 	
 	CDialog::OnCancel();
 }

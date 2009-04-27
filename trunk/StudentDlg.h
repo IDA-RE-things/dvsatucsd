@@ -40,12 +40,14 @@ public:
 	private:
 		void StudentDlg::RefreshList();
 		void StudentDlg::RefreshComboList();
+
 		Student *student;
 		int curselection;
 
 		CString prevtext;
 		bool *addanother;
 		std::vector<StudentProperty> *property;
+		std::vector<StudentProperty> OriginalList;
 // Implementation
 protected:
 
@@ -56,6 +58,7 @@ protected:
 	virtual void OnOK();
 	afx_msg void OnNext();
 	afx_msg void OnEditchangeCPropertyValue();
+	virtual void OnCancel();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

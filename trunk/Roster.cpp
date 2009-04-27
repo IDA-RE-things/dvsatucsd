@@ -73,7 +73,7 @@ Roster::Roster(CString curpath, CString path)
 		
 	}
 
-	LoadAssociations(false); // global defaults from .ini files, overwritten by saved defaults in .xsl file
+	LoadAssociations(false); // global defaults from .ini files, overwritten by saved defaults in first row of .xsl file
 
 	//Input default values
 	loadstream.getline(tempstr,32768);
@@ -124,6 +124,7 @@ Roster::Roster(CString curpath, CString path)
 			}
 			index++;
 		}
+		student.push_back(newstudent);
 	}
 
 	//Close the filestream.
@@ -214,61 +215,57 @@ Student* Roster::CreateStudent()
 	for (int a=0;a<property.size();a++)
 		temp->AddProperty(property[a]);
 
-	student.push_back(temp);
-
 	return temp;
 }
 
-void Roster::EditStudent(Student *newstudent, bool *addanother)
+void Roster::EditStudent(Student *editstudent, bool *addanother, bool newstudent)
 {
-
-	//Create the dialog box and run it
-	StudentDlg dlgStudent(NULL, newstudent, addanother, &property);
-
-	dlgStudent.DoModal();
+	INT_PTR ret = -1;
 
 	//Check for name duplication and fix it if necessary
 	bool repeat = false;
 	bool skippedself = false;
 	bool callmsg = false;
-	for (int a=0; a<student.size(); a++)
-		if (newstudent->GetPropertyValue("Name") == student[a]->GetPropertyValue("Name"))
-			if (skippedself == true)
-			{
-				repeat = true;
-				callmsg = true;
-			}
-			else skippedself = true;
+	
+	//Create the dialog box and run it
+	StudentDlg dlgStudent(NULL, editstudent, addanother, &property);
 
-	while (repeat == true)
-	{
-		repeat = false;
-		skippedself = false;
+	ret = dlgStudent.DoModal();
 
-		CString n1 = newstudent->GetPropertyValue("Name");
-		CString n2 = student[0]->GetPropertyValue("Name");
-		CString n3 = student[1]->GetPropertyValue("Name");
-			
-		newstudent->SetPropertyValue("Name", newstudent->GetPropertyValue("Name") + "$");
-
-		n1 = newstudent->GetPropertyValue("Name");
-		n2 = student[0]->GetPropertyValue("Name");
-		n3 = student[1]->GetPropertyValue("Name");
-
+	if (ret == IDOK) {
 		for (int a=0; a<student.size(); a++)
-		{
-			if (newstudent->GetPropertyValue("Name") == student[a]->GetPropertyValue("Name"))
-			{
-				if (skippedself == true) repeat = true;
+			if (editstudent->GetPropertyValue("Name") == student[a]->GetPropertyValue("Name")) {
+				if (newstudent == true || skippedself == true)
+				{
+					repeat = true;
+					callmsg = true;
+				}
 				else skippedself = true;
 			}
+
+		// check for name$, name$$, etc. until free namespace found
+		while (repeat == true)
+		{
+			repeat = false;
+			skippedself = false;
+			
+			editstudent->SetPropertyValue("Name", editstudent->GetPropertyValue("Name") + "$");
+
+			for (int a=0; a<student.size(); a++)
+			{
+				if (editstudent->GetPropertyValue("Name") == student[a]->GetPropertyValue("Name"))
+				{
+					if (newstudent == true || skippedself == true) repeat = true;
+					else skippedself = true;
+				}
+			}
 		}
+		
+		if (newstudent == true) student.push_back(editstudent);
+
+		//Alert the user of the changed name
+		if (callmsg == true) dlgStudent.MessageBox("A student has been added with an identical name to a previous student.  The new student's name has been changed to: " + editstudent->GetPropertyValue("Name"));
 	}
-	
-	//Alert the user of the changed name
-	if (callmsg == true) dlgStudent.MessageBox("A student has been added with an identical name to a previous student.  The new student's name has been changed to: " + newstudent->GetPropertyValue("Name"));
-
-
 }
 
 BOOL Roster::TakePictures(Student *newstudent, void* theCamera)

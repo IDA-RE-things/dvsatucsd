@@ -352,7 +352,7 @@ void CDVTDlg::OnBAddStudent()
 		MessageBox(CREATEERROR);
 
 	}else{
-		roster.EditStudent(entry, &addanother);
+		roster.EditStudent(entry, &addanother, TRUE);
 	}
 
 	RefreshStudentList();
@@ -385,7 +385,7 @@ void CDVTDlg::OnBEditStudent()
 	if (stuname.Find('\t')!=-1) stuname = stuname.Left(stuname.Find('\t'));
 
 	//Use the student's name to get the student and pass it to the student editor
-	roster.EditStudent(roster.GetStudent(stuname), NULL);
+	roster.EditStudent(roster.GetStudent(stuname), NULL, FALSE);
 
 	RefreshStudentList();
 }
@@ -484,7 +484,6 @@ void CDVTDlg::OnInitOpenroster()
 	char strFilter[] = {"XLS Files (*.xls)|*.xls|All Files (*.*)|*.*||" };
 	CFileDialog opendlg(TRUE,".xls",NULL,0,strFilter);
 	opendlg.DoModal();
-
 
 	CString path = opendlg.GetPathName();
 	if (path == "") return;
@@ -615,7 +614,6 @@ void CDVTDlg::RefreshStudentList()
 	//Store the current selection index before clearing the list
 	curselection = m_studentlist.GetCurSel();
 
-	
 	UpdateData();
 	
 	m_studentlist.ResetContent();
