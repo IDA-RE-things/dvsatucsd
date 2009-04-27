@@ -81,6 +81,18 @@ void Student::SetPropertyValue(CString pname, CString tvalue)
 		if (my_property[a].name == pname) my_property[a].value = tvalue;
 }
 
+std::vector<StudentProperty> Student::ClonePropList()
+{
+	std::vector<StudentProperty> list;
+	list.assign(my_property.begin(), my_property.end());
+	return list;
+}
+
+void Student::OverridePropList(std::vector<StudentProperty> list)
+{
+	my_property.assign(list.begin(), list.end());
+}
+
 void Student::AddVertPicture(CString path, CString timestamp)
 {
 	Pics newpicture(path, timestamp);

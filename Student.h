@@ -31,6 +31,8 @@ public:
 	void Student::SetPropertyDefault(int index, CString tvalue);
 	void Student::RemoveProperty(int index);
 	void Student::RemoveProperty(CString pname);
+	std::vector<StudentProperty> Student::ClonePropList();
+	void Student::OverridePropList(std::vector<StudentProperty> list);
 
 	void Student::AddVertPicture(CString path, CString timestamp);
 	void Student::AddHorizPicture(CString path, CString timestamp);

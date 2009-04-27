@@ -61,7 +61,7 @@ public:
 	//Create a new student and return the reference to it.
 	Student* Roster::CreateStudent();
 	
-	void Roster::EditStudent(Student *newstudent, bool *addanother);
+	void Roster::EditStudent(Student *editstudent, bool *addanother, bool newstudent);
 	void Roster::RemoveStudent(CString sname);
 	
 	//Calls the student editor

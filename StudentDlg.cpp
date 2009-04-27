@@ -31,6 +31,8 @@ StudentDlg::StudentDlg(CWnd* pParent, Student *tstudent, bool *taddanother, std:
 	student = tstudent;
 	addanother = taddanother;
 	property = tproperty;
+	/// Clone student property list before changes are made
+	OriginalList = student->ClonePropList();
 }
 
 
@@ -60,10 +62,10 @@ END_MESSAGE_MAP()
 BOOL StudentDlg::OnInitDialog() 
 {
 	CDialog::OnInitDialog();
-	
+
 	//Populate student property list
 	RefreshList();
-
+	
 	curselection = 0;
 	m_proplist.SetCurSel(curselection);
 	prevtext = "-This string will never be typed.";
@@ -101,8 +103,6 @@ void StudentDlg::OnSelchangePropList()
 
 void StudentDlg::OnOK() 
 {
-	//TODO!!: Implement a proper cancel function!
-
 	//Update the currently changed data
 	UpdateData();
 	if (curselection!=-1) student->SetPropertyValue(curselection, m_CPropertyValueText);
@@ -120,14 +120,13 @@ void StudentDlg::OnOK()
 		m_CPropertyValue.SetFocus();
 		return;
 	}
-	
+
 	//Ask if the user would like to add another student
 	if (addanother != NULL) 
 	{
 		YESNODlg yesno(NULL, "Do you wish to add another student at this time?", addanother);
 		yesno.DoModal();
 	}
-	
 	CDialog::OnOK();
 }
 
@@ -153,7 +152,6 @@ void StudentDlg::RefreshList()
 			tabs += "\t";
 		m_proplist.AddString(student->GetPropertyName(a) + ": " + tabs + student->GetPropertyValue(a));
 	}
-
 
 	//If it is still available, set the selection where it was
 	m_proplist.SetCurSel(curselection);
@@ -253,4 +251,15 @@ void StudentDlg::OnEditchangeCPropertyValue()
 	//MessageBox("2 prev:[" + prevtext+"] cur:["+curstr+"]");
 
 	m_CPropertyValue.SetEditSel(curlen,-1);
+}
+
+void StudentDlg::OnCancel() 
+{
+	/// Override student property list w/ original
+	student->OverridePropList(OriginalList);
+
+	/// RefreshList w/ original student property list
+	RefreshList();
+
+	CDialog::OnCancel();
 }
