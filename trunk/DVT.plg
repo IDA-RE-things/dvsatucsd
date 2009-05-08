@@ -6,15 +6,15 @@
 --------------------Configuration: DVT - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E2.tmp" with contents
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2AC.tmp" with contents
 [
 /nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /FR"Debug/" /Fp"Debug/DVT.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /EHsc /c 
 "C:\Documents and Settings\Administrator\Desktop\DVT_Release\CameraConnect.cpp"
 ]
-Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E2.tmp" 
-Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E3.tmp" with contents
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2AC.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2AD.tmp" with contents
 [
-/nologo /subsystem:windows /incremental:yes /pdb:"Debug/DVT.pdb" /debug /machine:I386 /out:"Debug/DVT.exe" /pdbtype:sept 
+libusb.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/DVT.pdb" /debug /machine:I386 /out:"Debug/DVT.exe" /pdbtype:sept 
 ".\Debug\AddPropertyDlg.obj"
 ".\Debug\CameraConnect.obj"
 ".\Debug\DVT.obj"
@@ -37,18 +37,20 @@ Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E3.tmp" with con
 ".\Debug\DVT.res"
 ".\CDSDK\lib\CDSDK.lib"
 ]
-Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP1E3.tmp"
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP2AD.tmp"
 <h3>Output Window</h3>
 Compiling...
 CameraConnect.cpp
 push, _CD_TYPE_H_PACK_, 1
 pop, _CD_TYPE_H_PACK_
 Linking...
+LINK : fatal error LNK1104: cannot open file "libusb.lib"
+Error executing link.exe.
 
 
 
 <h3>Results</h3>
-DVT.exe - 0 error(s), 0 warning(s)
+DVT.exe - 1 error(s), 0 warning(s)
 </pre>
 </body>
 </html>

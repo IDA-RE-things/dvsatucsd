@@ -230,7 +230,7 @@ BOOL CDVTDlg::OnInitDialog()
 	//set focus to take pictures button
 	CDialog::SetDefID(IDC_BTakePictures);
 		
-	return FALSE;  // return TRUE  unless you set the focus to a control
+	return FALSE;  // return TRUE  unless you set the button focus to a control
 }
 
 ///////////////////////////////////////////////////////////////////////////////
