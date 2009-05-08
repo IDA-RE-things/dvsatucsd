@@ -611,7 +611,7 @@ BOOL CCameraConnect::ConnectCamera(CPictureWizardDlg* pCPictureWizardDlg, CStati
 	}
 
 	//set resolution of saved image (1600x1200)
-	pSize = cdIMAGE_SIZE_MEDIUM3;
+	pSize = cdIMAGE_SIZE_MEDIUM2;
 	CDSetImageFormatAttribute(m_hSource, pQuality, pSize);
 	
 	err = CDEnumImageFormatAttributeRelease(phEnum);

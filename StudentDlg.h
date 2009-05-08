@@ -57,6 +57,7 @@ protected:
 	afx_msg void OnSelchangePropList();
 	virtual void OnOK();
 	afx_msg void OnNext();
+	afx_msg void OnClose();
 	afx_msg void OnEditchangeCPropertyValue();
 	virtual void OnCancel();
 	//}}AFX_MSG
