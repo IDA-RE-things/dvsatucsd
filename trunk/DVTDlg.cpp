@@ -99,6 +99,11 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
+void CDVTDlg::OnHelpAbout() 
+{
+	CAboutDlg aboutdlg;
+	aboutdlg.DoModal();
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //
@@ -167,6 +172,7 @@ BEGIN_MESSAGE_MAP(CDVTDlg, CDialog)
 	ON_BN_CLICKED(IDC_BTakePictures, OnBTakePictures)
 	ON_BN_CLICKED(IDC_SortResult, OnSortResult)
 	ON_WM_CLOSE()
+	ON_COMMAND(ID_HELP_ABOUT, OnHelpAbout)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -329,7 +335,8 @@ HCURSOR CDVTDlg::OnQueryDragIcon()
 void CDVTDlg::OnUpdateFileRostersettings(CCmdUI* pCmdUI) 
 {
 	RosterDlg dlgRoster(NULL,&roster);
-	dlgRoster.DoModal();	
+	dlgRoster.DoModal();
+	RefreshStudentList();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -62,14 +62,13 @@ Roster::Roster(CString curpath, CString path)
 		if (delim!=-1)
 		{
 			newprop.name = line.Left(delim);
-			property.push_back(newprop);
 			line = line.Right(line.GetLength()-(delim+1));
 		}
 		else
 		{
 			newprop.name = line;
-			property.push_back(newprop);
 		}
+		property.push_back(newprop);
 		
 	}
 
@@ -221,16 +220,16 @@ Student* Roster::CreateStudent()
 void Roster::EditStudent(Student *editstudent, bool *addanother, bool newstudent)
 {
 	INT_PTR ret = -1;
-
-	//Check for name duplication and fix it if necessary
-	bool repeat = false;
-	bool skippedself = false;
-	bool callmsg = false;
 	
 	//Create the dialog box and run it
 	StudentDlg dlgStudent(NULL, editstudent, addanother, &property);
 
 	ret = dlgStudent.DoModal();
+
+	//Check for name duplication and fix it if necessary
+	bool repeat = false;
+	bool skippedself = false;
+	bool callmsg = false;
 
 	if (ret == IDOK) {
 		for (int a=0; a<student.size(); a++)
@@ -264,7 +263,7 @@ void Roster::EditStudent(Student *editstudent, bool *addanother, bool newstudent
 		if (newstudent == true) student.push_back(editstudent);
 
 		//Alert the user of the changed name
-		if (callmsg == true) dlgStudent.MessageBox("A student has been added with an identical name to a previous student.  The new student's name has been changed to: " + editstudent->GetPropertyValue("Name"));
+		if (callmsg == true) dlgStudent.MessageBox("A student has been added with an identical name to a previous student. The new student's name has been changed to: " + editstudent->GetPropertyValue("Name"));
 	}
 }
 
@@ -296,6 +295,16 @@ void Roster::AddProperty(CString iname, CString tdefaultvalue)
 	//Adds the new property to all of the existing students.
 	for (int a=0; a<student.size(); a++)
 		student[a]->AddProperty(tprop);
+}
+
+void Roster::EditProperty(int index, CString iname)
+{
+	//Adds a new property to the roster list.
+	property[index].name = iname;
+
+	//Adds the new property to all of the existing students.
+	for (int a=0; a<student.size(); a++)
+		student[a]->SetPropertyName(index, iname);
 }
 
 void Roster::AddPropertyAssociation(int pindex, CString tassociation)
@@ -362,6 +371,13 @@ void Roster::SetPropertyDefault(CString pname, CString newval)
 	SetPropertyDefault(GetPropertyIndex(pname), newval);
 }
 
+void Roster::SetPropertyOverride(int index, CString newval)
+{
+	// Override student values of property with roster property value
+	for (int a=0;a<student.size();a++)
+		student[a]->SetPropertyValue(index, newval);
+}
+
 Student* Roster::GetStudent(CString sname)
 {
 	for (int a=0;a<student.size();a++)
@@ -410,10 +426,16 @@ int Roster::NumStudents()
 
 void Roster::RemoveProperty(int index)
 {
-	//Remove property from roster
-	property.erase(property.begin()+index);
+	//Remove property from roster (memory bu when removing last element?)
+	if (index == property.size() - 1) property.pop_back();
+	else property.erase(property.begin()+index);
+	// property.erase(remove_if(property.begin(), property.end(), property.begin()+index), property.end());
 
-	//Remove property from all of the students
+	//Assumes function will only be used in Roster Dialog (Will remove property from students OnOK of Roster Dialog with RemovePropertyFromStudents)
+}
+
+void Roster::RemovePropertyFromStudents(int index)
+{
 	for (int a=0; a<student.size(); a++)
 		student[a]->RemoveProperty(index);
 }
@@ -602,4 +624,16 @@ void Roster::SortByProperty(CString pname)
 void Roster::SetCurPath(CString curpath)
 {
 	cur_path = curpath;
+}
+
+std::vector<StudentProperty> Roster::ClonePropList()
+{
+	std::vector<StudentProperty> list;
+	list.assign(property.begin(), property.end());
+	return list;
+}
+
+void Roster::OverridePropList(std::vector<StudentProperty> list)
+{
+	property.assign(list.begin(), list.end());
 }

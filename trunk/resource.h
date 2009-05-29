@@ -15,6 +15,7 @@
 #define IDD_RosterSettings              131
 #define IDD_StudentEditor               132
 #define IDD_StudentDlg                  132
+#define IDD_AddPropertyDlg              133
 #define IDD_AddProperty                 133
 #define IDD_YESNO                       134
 #define IDD_StartScreen                 135
@@ -26,6 +27,7 @@
 #define IDB_BITMAP1                     152
 #define IDC_EDIT1                       1000
 #define IDC_TENewPropName               1000
+#define IDC_TEPropName                  1000
 #define IDC_VIEWIMG                     1002
 #define IDC_BAddStudent                 1003
 #define IDC_PropList                    1004
@@ -60,8 +62,10 @@
 #define IDC_LIST3                       1030
 #define IDC_BUTTON1                     1031
 #define IDC_ANALYZE                     1031
+#define IDC_BEditProperty               1031
 #define IDC_BUTTON2                     1032
 #define IDC_HORIZONTAL                  1032
+#define IDC_Apply                       1032
 #define IDC_BUTTON3                     1033
 #define IDC_BTakePictures               1033
 #define IDC_VERTICAL                    1033
@@ -91,9 +95,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        153
+#define _APS_NEXT_RESOURCE_VALUE        154
 #define _APS_NEXT_COMMAND_VALUE         32782
-#define _APS_NEXT_CONTROL_VALUE         1045
+#define _APS_NEXT_CONTROL_VALUE         1052
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

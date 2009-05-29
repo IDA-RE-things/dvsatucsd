@@ -31,6 +31,7 @@ StudentDlg::StudentDlg(CWnd* pParent, Student *tstudent, bool *taddanother, std:
 	student = tstudent;
 	addanother = taddanother;
 	property = tproperty;
+
 	/// Clone student property list before changes are made
 	OriginalList = student->ClonePropList();
 }
@@ -257,9 +258,6 @@ void StudentDlg::OnCancel()
 {
 	/// Override student property list w/ original
 	student->OverridePropList(OriginalList);
-
-	/// RefreshList w/ original student property list
-	RefreshList();
 
 	CDialog::OnCancel();
 }

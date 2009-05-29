@@ -33,7 +33,8 @@ public:
 
 	//Add a property to the roster and all contained students.
 	void Roster::AddProperty(CString iname, CString tdefaultvalue);
-	
+	void Roster::EditProperty(int index, CString iname);
+
 	void Roster::AddPropertyAssociation(int pindex, CString tassociation);
 	void Roster::AddPropertyAssociation(CString pname, CString tassociation);
 	int Roster::GetNumPropertyAssociations(int pindex);
@@ -46,7 +47,9 @@ public:
 	int GetPropertyIndex(CString pname);
 	void Roster::SetPropertyDefault(int index, CString newval);
 	void Roster::SetPropertyDefault(CString pname, CString newval);
+	void Roster::SetPropertyOverride(int index, CString newval);
 	void Roster::RemoveProperty(int index);
+	void Roster::RemovePropertyFromStudents(int index);
 	int Roster::NumProperties();
 
 	//Student Relations
@@ -78,14 +81,15 @@ public:
 
 	void SetCurPath(CString curpath);
 
-
+	std::vector<StudentProperty> Roster::ClonePropList();
+	void Roster::OverridePropList(std::vector<StudentProperty> list);
 
 private:
 	CString label;
 	CString xsl_path; // excel file!
 	CString cur_path; //Project path, not excel file!
 	std::vector<StudentProperty> property;
-	std::vector<Student*> student;	
+	std::vector<Student*> student;
 };
 
 #endif // !defined(AFX_ROSTER_H__F88E7B56_5ADD_4213_ABC7_7830110DC69E__INCLUDED_)
