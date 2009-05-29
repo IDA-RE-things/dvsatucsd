@@ -428,8 +428,6 @@ void Roster::RemoveProperty(int index)
 {
 	//Remove property from roster
 	property.erase(property.begin()+index);
-
-	//Assumes function will only be used in Roster Dialog (Will remove property from students OnOK of Roster Dialog with RemovePropertyFromStudents)
 }
 
 void Roster::RemovePropertyFromStudents(int index)

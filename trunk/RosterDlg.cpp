@@ -26,6 +26,9 @@ RosterDlg::RosterDlg(CWnd* pParent /*=NULL*/,Roster *iroster): CDialog(RosterDlg
 	//}}AFX_DATA_INIT
 
 	roster = iroster;
+
+	// Clone student property list before changes are made
+	OriginalList = roster->ClonePropList();
 }
 
 
@@ -49,6 +52,8 @@ BEGIN_MESSAGE_MAP(RosterDlg, CDialog)
 	ON_LBN_SELCHANGE(IDC_PropList, OnSelchangePropList)
 	ON_BN_CLICKED(IDC_Next, OnNext)
 	ON_CBN_EDITCHANGE(IDC_CDefaultValue, OnEditchangeCDefaultValue)
+	ON_BN_CLICKED(IDC_BEditProperty, OnBEditProperty)
+	ON_BN_CLICKED(IDC_Apply, OnApply)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -62,7 +67,7 @@ BOOL RosterDlg::OnInitDialog()
 	curselection = -1;
 	prevtext = "-This string will never be typed.";
 	/// Clone student property list before changes are made
-	//Populate roster properties
+	// Populate roster properties
 	m_rosterlabel.SetWindowText(roster->GetLabel());
 
 	//Populate student property list
@@ -87,14 +92,76 @@ void RosterDlg::OnBAddProperty()
 
 	UpdateData();
 
-	if (newpropname == "Name")
+	if (newpropname == "")
 	{
 		MessageBox("A property must have a name to be created.");
 		return;
 	}
 
+	//Alert the user about protected property types
+	if (newpropname == "Name")
+	{
+		MessageBox("The \"Name\" property is used as a unique student ID and cannot be duplicated.");
+		return;
+	}
+	if (newpropname == "Photo Timestamp")
+	{
+		MessageBox("The \"Photo Timestamp\" property is used as a unique identifier and cannot be duplicated.");
+		return;
+	}
+
 	//Add Property to roster
 	roster->AddProperty(newpropname, "N\\A");
+
+	//Update the roster listbox
+	RefreshPropList();
+
+	UpdateData(FALSE);
+
+	//Refresh the property list
+	RefreshPropList();
+}
+
+void RosterDlg::OnBEditProperty() 
+{
+	//Make sure a propery is selected
+	int selindex = m_proplist.GetCurSel();
+	if (selindex == -1)	
+	{
+		MessageBox("A property must be selected for editing.");
+		return;
+	}
+
+	//Extract the property's name
+	CString propname;
+	m_proplist.GetText(m_proplist.GetCurSel(), propname);
+	propname = propname.Left(propname.Find(':'));
+
+	//Alert the user about protected property types
+	if (propname == "Name")
+	{
+		MessageBox("The \"Name\" property is used as a unique student ID and cannot be edited.");
+		return;
+	}
+	if (propname == "Photo Timestamp")
+	{
+		MessageBox("The \"Photo Timestamp\" property is used as a unique identifier and cannot be edited.");
+		return;
+	}
+
+	AddPropertyDlg apdlg(NULL,&propname);
+	apdlg.DoModal();
+
+	UpdateData();
+
+	if (propname == "")
+	{
+		MessageBox("A property must have a name to exist.");
+		return;
+	}
+
+	//Edit Property of roster
+	roster->EditProperty(selindex, propname);
 
 	//Update the roster listbox
 	RefreshPropList();
@@ -128,7 +195,7 @@ void RosterDlg::OnBRemoveProperty()
 	}
 	if (propname == "Photo Timestamp")
 	{
-		MessageBox("The \"Photo Timestamp\" property cannot be removed.");
+		MessageBox("The \"Photo Timestamp\" property is used as a unique identifier and cannot be removed.");
 		return;
 	}
 
@@ -139,15 +206,13 @@ void RosterDlg::OnBRemoveProperty()
 
 	if (result==FALSE) return;
 
-	//Remove the property from the list
-	m_proplist.DeleteString(selindex);
-
 	//Remove the property from the roster
 	roster->RemoveProperty(selindex);
 
+	RefreshPropList();
+
 	//Display the next selection
-	// m_proplist.SetCurSel(curselection); // must not go above property list length
-	OnNext(); // does not work?
+	OnNext();
 }
 
 void RosterDlg::OnOK() 
@@ -165,13 +230,12 @@ void RosterDlg::OnOK()
 
 		return;
 	}
-
 	
 	roster->SetLabel(m_rosterlabeltext);
 	UpdateData(FALSE);
 
 	UpdateData();
-	if (curselection!=-1) {
+	if (curselection>=0 && curselection < roster->NumProperties()) {
 		roster->SetPropertyDefault(curselection, m_CDefaultValueText);
 	}
 	UpdateData(FALSE);
@@ -187,20 +251,20 @@ void RosterDlg::OnSelchangePropList()
 		UpdateData();
 		if (curselection!=-1) roster->SetPropertyDefault(curselection, m_CDefaultValueText);
 		UpdateData(FALSE);
+	}
 
-		curselection = m_proplist.GetCurSel();
+	curselection = m_proplist.GetCurSel();
 
-		//Display the current selection
-		CString valuetext = roster->GetPropertyDefault(curselection);
-		m_CDefaultValue.SetWindowText(valuetext);
+	//Display the current selection
+	CString valuetext = roster->GetPropertyDefault(curselection);
+	m_CDefaultValue.SetWindowText(valuetext);
 
-		//Refresh default value list
-		RefreshPropList();
-		RefreshComboList();
+	//Refresh default value list
+	RefreshPropList();
+	RefreshComboList();
 
-		//Set the focus on the default text
-		m_CDefaultValue.SetFocus();
-	} return;
+	//Set the focus on the default text
+	m_CDefaultValue.SetFocus();
 }
 
 void RosterDlg::RefreshPropList()
@@ -242,23 +306,70 @@ void RosterDlg::OnNext()
 
 		//Update the list
 		RefreshPropList();
+	}
 
-		//Advance the selection
-		if (curselection<m_proplist.GetCount()-1) 
-		{
-			curselection++;
-			m_proplist.SetCurSel(curselection);
-		}
+	//Advance the selection
+	if (curselection<m_proplist.GetCount()-1) 
+	{
+		curselection++;
+		m_proplist.SetCurSel(curselection);
+	}
 
-		//Display the current selection
-		CString valuetext = roster->GetPropertyDefault(curselection);
-		m_CDefaultValue.SetWindowText(valuetext);
+	//Display the current selection
+	CString valuetext = roster->GetPropertyDefault(curselection);
+	m_CDefaultValue.SetWindowText(valuetext);
 
-		RefreshComboList();
+	RefreshComboList();
 
-		//Set the focus on the property text
-		m_CDefaultValue.SetFocus();
-	} else return;
+	//Set the focus on the property text
+	m_CDefaultValue.SetFocus();
+}
+
+void RosterDlg::OnApply() 
+{
+	//Make sure a propery is selected
+	int selindex = m_proplist.GetCurSel();
+	if (selindex == -1)	
+	{
+		MessageBox("A property must be selected for overriding.");
+		return;
+	}
+
+	UpdateData();
+
+	//Extract the property's name
+	CString propname;
+	CString propvalue = m_CDefaultValueText;
+	m_proplist.GetText(m_proplist.GetCurSel(), propname);
+	propname = propname.Left(propname.Find(':'));
+
+	//Alert the user about protected property types
+	if (propname == "Name")
+	{
+		MessageBox("The \"Name\" property is used as a unique student ID and cannot be overriden.");
+		return;
+	}
+	if (propname == "Photo Timestamp")
+	{
+		MessageBox("The \"Photo Timestamp\" property is used as a unique identifier and cannot be overriden.");
+		return;
+	}
+
+	//Confirm the removal of the property
+	bool result;
+	YESNODlg yesno(NULL, "Are you sure you wish to override the " + propname + " of all students with the value " + propvalue + "?  You cannot undo this action.", &result);
+	yesno.DoModal();
+
+	if (result==FALSE) return;
+
+	//Set default value to text box value
+	roster->SetPropertyDefault(curselection, propvalue);
+	UpdateData(FALSE);
+
+	//Override the property immediately
+	roster->SetPropertyOverride(selindex, propvalue);
+	
+	RefreshPropList();
 }
 
 void RosterDlg::RefreshComboList()
@@ -280,6 +391,8 @@ void RosterDlg::RefreshComboList()
 
 void RosterDlg::OnEditchangeCDefaultValue() 
 {
+	if (curselection == -1) return;
+
 	int numass = roster->GetNumPropertyAssociations(curselection);
 	
 	UpdateData();
@@ -315,8 +428,11 @@ void RosterDlg::OnEditchangeCDefaultValue()
 
 void RosterDlg::OnCancel() 
 {
-	/// Override default property list w/ original
-	/// RefreshList w/ original default property list
+	// Override default property list w/ original
+	roster->OverridePropList(OriginalList);
+
+	// RefreshList w/ original default property list
+
 	
 	CDialog::OnCancel();
 }
