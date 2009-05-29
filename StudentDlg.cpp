@@ -32,7 +32,7 @@ StudentDlg::StudentDlg(CWnd* pParent, Student *tstudent, bool *taddanother, std:
 	addanother = taddanother;
 	property = tproperty;
 
-	/// Clone student property list before changes are made
+	// Clone student property list before changes are made
 	OriginalList = student->ClonePropList();
 }
 
