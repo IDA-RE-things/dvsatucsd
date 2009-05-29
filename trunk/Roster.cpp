@@ -426,10 +426,8 @@ int Roster::NumStudents()
 
 void Roster::RemoveProperty(int index)
 {
-	//Remove property from roster (memory bu when removing last element?)
-	if (index == property.size() - 1) property.pop_back();
-	else property.erase(property.begin()+index);
-	// property.erase(remove_if(property.begin(), property.end(), property.begin()+index), property.end());
+	//Remove property from roster
+	property.erase(property.begin()+index);
 
 	//Assumes function will only be used in Roster Dialog (Will remove property from students OnOK of Roster Dialog with RemovePropertyFromStudents)
 }

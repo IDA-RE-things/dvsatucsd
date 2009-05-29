@@ -146,7 +146,8 @@ void RosterDlg::OnBRemoveProperty()
 	roster->RemoveProperty(selindex);
 
 	//Display the next selection
-	OnNext();
+	// m_proplist.SetCurSel(curselection); // must not go above property list length
+	OnNext(); // does not work?
 }
 
 void RosterDlg::OnOK() 
@@ -181,23 +182,25 @@ void RosterDlg::OnOK()
 
 void RosterDlg::OnSelchangePropList() 
 {
-	//Change the student properties as you change selection.
-	UpdateData();
-	if (curselection!=-1) roster->SetPropertyDefault(curselection, m_CDefaultValueText);
-	UpdateData(FALSE);
+	if (curselection>=0 && curselection < roster->NumProperties()) {
+		//Change the student properties as you change selection.
+		UpdateData();
+		if (curselection!=-1) roster->SetPropertyDefault(curselection, m_CDefaultValueText);
+		UpdateData(FALSE);
 
-	curselection = m_proplist.GetCurSel();
+		curselection = m_proplist.GetCurSel();
 
-	//Display the current selection
-	CString valuetext = roster->GetPropertyDefault(curselection);
-	m_CDefaultValue.SetWindowText(valuetext);
+		//Display the current selection
+		CString valuetext = roster->GetPropertyDefault(curselection);
+		m_CDefaultValue.SetWindowText(valuetext);
 
-	//Refresh default value list
-	RefreshPropList();
-	RefreshComboList();
+		//Refresh default value list
+		RefreshPropList();
+		RefreshComboList();
 
-	//Set the focus on the default text
-	m_CDefaultValue.SetFocus();
+		//Set the focus on the default text
+		m_CDefaultValue.SetFocus();
+	} return;
 }
 
 void RosterDlg::RefreshPropList()
@@ -226,36 +229,36 @@ void RosterDlg::RefreshPropList()
 	UpdateData(FALSE);
 
 	//If it is still available, set the selection where it was
-	if (curselection>=0 && curselection<roster->NumProperties()) m_proplist.SetCurSel(curselection);
+	if (curselection>=0 && curselection < roster->NumProperties()) m_proplist.SetCurSel(curselection);
 }
 
 void RosterDlg::OnNext() 
 {
-	if (curselection == -1) return;
+	if (curselection>=0 && curselection < roster->NumProperties()) {
+		//Update the database
+		UpdateData();
+		if (roster->GetPropertyName(curselection)!="Photo Timestamp") roster->SetPropertyDefault(curselection, m_CDefaultValueText);
+		UpdateData(FALSE);
 
-	//Update the database
-	UpdateData();
-	if (roster->GetPropertyName(curselection)!="Photo Timestamp") roster->SetPropertyDefault(curselection, m_CDefaultValueText);
-	UpdateData(FALSE);
+		//Update the list
+		RefreshPropList();
 
-	//Update the list
-	RefreshPropList();
+		//Advance the selection
+		if (curselection<m_proplist.GetCount()-1) 
+		{
+			curselection++;
+			m_proplist.SetCurSel(curselection);
+		}
 
-	//Advance the selection
-	if (curselection<m_proplist.GetCount()-1) 
-	{
-		curselection++;
-		m_proplist.SetCurSel(curselection);
-	}
+		//Display the current selection
+		CString valuetext = roster->GetPropertyDefault(curselection);
+		m_CDefaultValue.SetWindowText(valuetext);
 
-	//Display the current selection
-	CString valuetext = roster->GetPropertyDefault(curselection);
-	m_CDefaultValue.SetWindowText(valuetext);
+		RefreshComboList();
 
-	RefreshComboList();
-
-	//Set the focus on the property text
-	m_CDefaultValue.SetFocus();
+		//Set the focus on the property text
+		m_CDefaultValue.SetFocus();
+	} else return;
 }
 
 void RosterDlg::RefreshComboList()
@@ -277,8 +280,6 @@ void RosterDlg::RefreshComboList()
 
 void RosterDlg::OnEditchangeCDefaultValue() 
 {
-	if (curselection == -1) return;
-
 	int numass = roster->GetNumPropertyAssociations(curselection);
 	
 	UpdateData();
