@@ -14,12 +14,14 @@ class AddPropertyDlg : public CDialog
 {
 // Construction
 public:
-	AddPropertyDlg(CWnd* pParent = NULL, CString *tnewpropname = NULL);   // standard constructor
+	AddPropertyDlg(CWnd* pParent = NULL, CString *tpropname = NULL);   // standard constructor
 
 // Dialog Data
 	//{{AFX_DATA(AddPropertyDlg)
 	enum { IDD = IDD_AddProperty };
-	CString	m_TENewPropNameText;
+	CEdit	m_TEPropName;
+	CString	m_TEPropNameText;
+	CString	m_TEPropAssociationsText;
 	//}}AFX_DATA
 
 
@@ -36,10 +38,11 @@ protected:
 	// Generated message map functions
 	//{{AFX_MSG(AddPropertyDlg)
 	virtual void OnOK();
+	virtual BOOL OnInitDialog();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
-	CString *newpropname;
+	CString *propname;
 };
 
 //{{AFX_INSERT_LOCATION}}

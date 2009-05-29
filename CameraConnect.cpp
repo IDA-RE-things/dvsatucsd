@@ -1,7 +1,6 @@
 // CameraConnect.cpp: implementation of the CCameraConnect class.
 //
 //////////////////////////////////////////////////////////////////////
-
 #include "stdafx.h"
 #include <vfw.h>
 #include <afxmt.h>

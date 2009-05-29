@@ -43,6 +43,9 @@ public:
 		CString prevtext;
 		void RosterDlg::RefreshPropList();
 		void RosterDlg::RefreshComboList();
+		std::vector<StudentProperty> OriginalList;
+		std::vector<int> toRemoveFromStudents;
+		
 protected:
 
 	// Generated message map functions
@@ -55,6 +58,9 @@ protected:
 	afx_msg void OnNext();
 	afx_msg void OnEditchangeCDefaultValue();
 	virtual void OnCancel();
+	afx_msg void OnEditProperty();
+	afx_msg void OnBEditProperty();
+	afx_msg void OnApply();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 };

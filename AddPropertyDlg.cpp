@@ -24,13 +24,14 @@ static char THIS_FILE[] = __FILE__;
  * Description: Functions for IDD_AddProperty which is used to add
  *              properties to a roster
  */
-AddPropertyDlg::AddPropertyDlg(CWnd* pParent /*=NULL*/, CString *tnewpropname)
+AddPropertyDlg::AddPropertyDlg(CWnd* pParent /*=NULL*/, CString *tpropname)
 	: CDialog(AddPropertyDlg::IDD, pParent)
 {
-	newpropname = tnewpropname;
+	propname = tpropname;
 
 	//{{AFX_DATA_INIT(AddPropertyDlg)
-	m_TENewPropNameText = _T("");
+	m_TEPropNameText = _T("");
+	m_TEPropAssociationsText = _T("");
 	//}}AFX_DATA_INIT
 }
 
@@ -44,7 +45,8 @@ void AddPropertyDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(AddPropertyDlg)
-	DDX_Text(pDX, IDC_TENewPropName, m_TENewPropNameText);
+	DDX_Control(pDX, IDC_TEPropName, m_TEPropName);
+	DDX_Text(pDX, IDC_TEPropName, m_TEPropNameText);
 	//}}AFX_DATA_MAP
 }
 
@@ -57,6 +59,19 @@ END_MESSAGE_MAP()
 /////////////////////////////////////////////////////////////////////////////
 // AddPropertyDlg message handlers
 
+/**
+ * Function: AddPropertyDlg::OnInitDialog() 
+ * Parameters: none
+ * Returns: none
+ * Description: Sets value of text box to name of property being edited
+ */
+BOOL AddPropertyDlg::OnInitDialog() 
+{
+	CDialog::OnInitDialog();
+	m_TEPropName.SetWindowText(*propname);
+
+	return TRUE;
+}
 
 /**
  * Function: AddPropertyDlg::OnOK() 
@@ -67,7 +82,7 @@ END_MESSAGE_MAP()
 void AddPropertyDlg::OnOK() 
 {
 	UpdateData();
-	*newpropname = m_TENewPropNameText;
+	*propname = m_TEPropNameText;
 	UpdateData(FALSE);
 
 	CDialog::OnOK();

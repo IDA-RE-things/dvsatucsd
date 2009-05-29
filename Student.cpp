@@ -65,6 +65,11 @@ CString Student::GetPropertyValue(CString pname)
 	return "Error: Student property not found.";
 }
 
+void Student::SetPropertyName(int index, CString pname)
+{
+	my_property[index].name = pname;
+}
+
 void Student::SetPropertyDefault(int index, CString tvalue)
 {
 	my_property[index].defaultvalue = tvalue;

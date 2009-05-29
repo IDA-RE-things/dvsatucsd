@@ -91,19 +91,19 @@ CAPTION "Digital Vision Screening v.alpha"
 MENU MainMenu
 FONT 8, "MS Sans Serif", 0, 0, 0x1
 BEGIN
-    PUSHBUTTON      "Add Student",IDC_BAddStudent,15,245,50,14
-    LISTBOX         IDC_StudentList,14,43,135,197,LBS_SORT | LBS_USETABSTOPS | 
+    PUSHBUTTON      "Add Student",IDC_BAddStudent,15,248,50,14
+    LISTBOX         IDC_StudentList,14,43,127,198,LBS_SORT | LBS_USETABSTOPS | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "Edit Student",IDC_BEditStudent,69,245,50,14
-    PUSHBUTTON      "Remove Student",IDC_BRemoveStudent,153,243,58,14
-    LISTBOX         IDC_StudentView,153,42,131,198,LBS_USETABSTOPS | 
+    PUSHBUTTON      "Edit Student",IDC_BEditStudent,69,248,50,14
+    PUSHBUTTON      "Remove Student",IDC_BRemoveStudent,123,248,58,14
+    LISTBOX         IDC_StudentView,144,43,199,197,LBS_USETABSTOPS | 
                     LBS_NOINTEGRALHEIGHT | LBS_NOSEL | WS_VSCROLL
     CONTROL         "Room #",IDC_SortRoom,"Button",BS_AUTOCHECKBOX | NOT 
                     WS_VISIBLE | WS_TABSTOP,16,30,41,10
     CTEXT           "Sort Options:",IDC_SortLabel,13,21,48,8,NOT WS_VISIBLE
     CONTROL         "Photo Result",IDC_SortResult,"Button",BS_AUTOCHECKBOX | 
                     NOT WS_VISIBLE | WS_TABSTOP,69,29,57,10
-    PUSHBUTTON      "Take Pictures!",IDC_BTakePictures,291,231,54,25
+    PUSHBUTTON      "Take Pictures!",IDC_BTakePictures,289,242,54,25
 END
 
 IDD_RosterSettings DIALOG DISCARDABLE  0, 0, 266, 356
@@ -111,31 +111,33 @@ STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Roster Settings"
 FONT 8, "MS Sans Serif"
 BEGIN
-    PUSHBUTTON      "OK",IDOK,193,324,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,122,324,50,14
+    PUSHBUTTON      "OK",IDOK,193,327,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,122,327,50,14
     LISTBOX         IDC_PropList,33,57,184,192,LBS_USETABSTOPS | 
                     LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Student Properties: Default Value",IDC_STATIC,41,41,111,
                     10
-    PUSHBUTTON      "Add Property",IDC_BAddProperty,22,303,63,14
-    PUSHBUTTON      "Remove Property",IDC_BRemoveProperty,22,321,63,14
+    PUSHBUTTON      "Add Property",IDC_BAddProperty,21,293,63,14
+    PUSHBUTTON      "Remove Property",IDC_BRemoveProperty,21,327,63,14
     EDITTEXT        IDC_TERosterLabel,65,15,107,13,ES_AUTOHSCROLL
     LTEXT           "Roster Label:",IDC_RosterName,16,17,42,10
     LTEXT           "Default Value",IDC_DefaultValue,37,257,68,11
-    DEFPUSHBUTTON   "Next",IDC_Next,141,271,20,14
+    DEFPUSHBUTTON   "Next",IDC_Next,138,271,25,14
     COMBOBOX        IDC_CDefaultValue,38,270,93,86,CBS_DROPDOWN | WS_VSCROLL | 
                     WS_TABSTOP
+    PUSHBUTTON      "Edit Property",IDC_BEditProperty,21,310,64,15
+    PUSHBUTTON      "Apply to All Students",IDC_Apply,170,270,73,15
 END
 
-IDD_AddProperty DIALOG DISCARDABLE  0, 0, 180, 78
+IDD_AddProperty DIALOG DISCARDABLE  0, 0, 180, 71
 STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Add Property"
+CAPTION "Property Editor"
 FONT 8, "MS Sans Serif"
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,33,50,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,101,50,50,14
-    EDITTEXT        IDC_TENewPropName,39,24,110,16,ES_AUTOHSCROLL
-    LTEXT           "New Property Name:",IDC_STATIC,39,13,73,10
+    DEFPUSHBUTTON   "OK",IDOK,34,45,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,102,45,50,14
+    EDITTEXT        IDC_TEPropName,35,24,110,16,ES_AUTOHSCROLL
+    LTEXT           "Property Name:",IDC_STATIC,35,13,73,10
 END
 
 IDD_YESNO DIALOG DISCARDABLE  0, 0, 252, 124
@@ -298,7 +300,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 173
         TOPMARGIN, 7
-        BOTTOMMARGIN, 71
+        BOTTOMMARGIN, 64
     END
 
     IDD_YESNO, DIALOG

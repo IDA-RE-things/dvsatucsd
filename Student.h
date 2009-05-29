@@ -26,6 +26,7 @@ public:
 	CString Student::GetPropertyName(int index);
 	CString Student::GetPropertyValue(int index);
 	CString Student::GetPropertyValue(CString pname);
+	void Student::SetPropertyName(int index, CString pname);
 	void Student::SetPropertyValue(int index, CString tvalue);
 	void Student::SetPropertyValue(CString pname, CString tvalue);
 	void Student::SetPropertyDefault(int index, CString tvalue);

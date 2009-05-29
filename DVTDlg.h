@@ -77,6 +77,7 @@ protected:
 	afx_msg void OnBTakePictures();
 	afx_msg void OnSortResult();
 	afx_msg void OnClose();
+	afx_msg void OnHelpAbout();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:
