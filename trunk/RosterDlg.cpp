@@ -92,6 +92,7 @@ void RosterDlg::OnBAddProperty()
 
 	UpdateData();
 
+	// Alert about property requiring name
 	if (newpropname == "")
 	{
 		MessageBox("A property must have a name to be created.");
@@ -149,11 +150,13 @@ void RosterDlg::OnBEditProperty()
 		return;
 	}
 
+	// Open property editor
 	AddPropertyDlg apdlg(NULL,&propname);
 	apdlg.DoModal();
 
 	UpdateData();
 
+	// Alert about property requiring name
 	if (propname == "")
 	{
 		MessageBox("A property must have a name to exist.");
@@ -209,10 +212,23 @@ void RosterDlg::OnBRemoveProperty()
 	//Remove the property from the roster
 	roster->RemoveProperty(selindex);
 
+	// Update the property list
 	RefreshPropList();
 
-	//Display the next selection
-	OnNext();
+	// Current selection already shifted to next property but shift to first property if no next property exists
+	if (curselection > roster->NumProperties()-1) {
+		curselection = 0;
+		m_proplist.SetCurSel(curselection);
+	}
+
+	//Display the current selection
+	CString valuetext = roster->GetPropertyDefault(curselection);
+	m_CDefaultValue.SetWindowText(valuetext);
+
+	RefreshComboList();
+
+	//Set the focus on the property text
+	m_CDefaultValue.SetFocus();
 }
 
 void RosterDlg::OnOK() 
@@ -234,6 +250,7 @@ void RosterDlg::OnOK()
 	roster->SetLabel(m_rosterlabeltext);
 	UpdateData(FALSE);
 
+	// Apply value in combo box that may or may not have been logged yet
 	UpdateData();
 	if (curselection>=0 && curselection < roster->NumProperties()) {
 		roster->SetPropertyDefault(curselection, m_CDefaultValueText);
@@ -249,7 +266,7 @@ void RosterDlg::OnSelchangePropList()
 	if (curselection>=0 && curselection < roster->NumProperties()) {
 		//Change the student properties as you change selection.
 		UpdateData();
-		if (curselection!=-1) roster->SetPropertyDefault(curselection, m_CDefaultValueText);
+		if (roster->GetPropertyName(curselection)!="Photo Timestamp") roster->SetPropertyDefault(curselection, m_CDefaultValueText);
 		UpdateData(FALSE);
 	}
 

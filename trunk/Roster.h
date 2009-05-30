@@ -49,7 +49,6 @@ public:
 	void Roster::SetPropertyDefault(CString pname, CString newval);
 	void Roster::SetPropertyOverride(int index, CString newval);
 	void Roster::RemoveProperty(int index);
-	void Roster::RemovePropertyFromStudents(int index);
 	int Roster::NumProperties();
 
 	//Student Relations

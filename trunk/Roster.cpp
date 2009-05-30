@@ -428,13 +428,10 @@ void Roster::RemoveProperty(int index)
 {
 	//Remove property from roster
 	property.erase(property.begin()+index);
-}
-
-void Roster::RemovePropertyFromStudents(int index)
-{
 	for (int a=0; a<student.size(); a++)
 		student[a]->RemoveProperty(index);
 }
+
 
 void Roster::RemoveStudent(CString sname)
 {
