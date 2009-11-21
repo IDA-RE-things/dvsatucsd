@@ -126,7 +126,7 @@ CDVTDlg::CDVTDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
 	char tempstr[32768];
-	getcwd(tempstr, 32768);
+	_getcwd(tempstr, 32768);
 	cur_path = tempstr;
 
 	Roster newroster(cur_path);
@@ -593,7 +593,7 @@ void CDVTDlg::RefreshPropertyList()
 		if (roster.GetPropertyName(a).GetLength()>maxlength) 
 			maxlength = roster.GetPropertyName(a).GetLength();
 	
-	for (a=0; a<roster.NumProperties(); a++)
+	for (int a=0; a<roster.NumProperties(); a++)
 	{
 		//Use the longest string in the list to add tabs to the list for even columns
 		CString tabs = "";
@@ -631,7 +631,7 @@ void CDVTDlg::RefreshStudentList()
 		if (roster.GetStudentName(a).GetLength()>maxlength) 
 			maxlength = roster.GetStudentName(a).GetLength();
 
-	for (a=0;a<roster.NumStudents();a++)
+	for (int a=0;a<roster.NumStudents();a++)
 	{
 		//Use the longest string in the list to add tabs to the list for even columns
 		CString tabs = "";
