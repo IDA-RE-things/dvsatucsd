@@ -38,7 +38,7 @@ void Student::RemoveProperty(int index)
 
 void Student::RemoveProperty(CString pname)
 {
-	for (int a=0;a<my_property.size();a++)
+	for (size_t a=0;a<my_property.size();a++)
 		if (my_property[a].name==pname) RemoveProperty(a);
 }
 
@@ -59,7 +59,7 @@ CString Student::GetPropertyValue(int index)
 
 CString Student::GetPropertyValue(CString pname)
 {
-	for (int a=0;a<my_property.size();a++)
+	for (size_t a=0;a<my_property.size();a++)
 		if (my_property[a].name == pname) return my_property[a].value;
 	
 	return "Error: Student property not found.";
@@ -82,7 +82,7 @@ void Student::SetPropertyValue(int index, CString tvalue)
 
 void Student::SetPropertyValue(CString pname, CString tvalue)
 {
-	for (int a=0;a<my_property.size();a++)
+	for (size_t a=0;a<my_property.size();a++)
 		if (my_property[a].name == pname) my_property[a].value = tvalue;
 }
 
