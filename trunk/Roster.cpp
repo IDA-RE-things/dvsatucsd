@@ -448,21 +448,22 @@ void Roster::Save(CString path)
 	savestream << label << "\n";
 
 	int numprops = property.size();
+	int index;
 
 	//Output student properties
-	for (int a=0;a<numprops;a++)
+	for (index=0;index<numprops;index++)
 	{
-		savestream << property[a].name;
-		if (a!=numprops-1) savestream << "\t";
+		savestream << property[index].name;
+		if (index!=numprops-1) savestream << "\t";
 	}
 	savestream << "\n";
 
 
 	//Output default properties (roster settings)
-	for (int a=0;a<numprops;a++)
+	for (index=0;index<numprops;index++)
 	{
-		savestream << property[a].value; // override student name roster setting (not saved for the sake of spreadsheet readability)? (a == 0 ? "Default Student" : property[a].value)
-		if (a!=numprops-1) savestream << "\t";
+		savestream << property[index].value; // override student name roster setting (not saved for the sake of spreadsheet readability)? (index == 0 ? "Default Student" : property[index].value)
+		if (index!=numprops-1) savestream << "\t";
 	}
 	savestream << "\n";
 

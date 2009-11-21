@@ -295,10 +295,12 @@ void RosterDlg::RefreshPropList()
 	
 	//Find the longest string in the list
 	int maxlength = 0;
-	for (int a=0; a<roster->NumProperties(); a++)
+	int a;
+
+	for (a=0; a<roster->NumProperties(); a++)
 		if (roster->GetPropertyName(a).GetLength()>maxlength) maxlength = roster->GetPropertyName(a).GetLength();
 	
-	for (int a=0; a<roster->NumProperties(); a++)
+	for (a=0; a<roster->NumProperties(); a++)
 	{
 		//Use the longest string in the list to add tabs to the list for even columns
 		CString tabs = "";

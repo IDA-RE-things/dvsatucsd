@@ -142,10 +142,12 @@ void StudentDlg::RefreshList()
 
 	//Find the longest string in the list
 	int maxlength = 0;
-	for (int a=0; a<student->NumProperties(); a++)
+	int a;
+
+	for (a=0; a<student->NumProperties(); a++)
 		if (student->GetPropertyName(a).GetLength()>maxlength) maxlength = student->GetPropertyName(a).GetLength();
 
-	for (int a=0; a< student->NumProperties(); a++)
+	for (a=0; a< student->NumProperties(); a++)
 	{
 		//Use the longest string in the list to add tabs to the list for even columns
 		CString tabs = "";
