@@ -1,0 +1,39 @@
+Common Sources\
+
+fit-circle-pts.c
+finds a least-squares fit of a circle to a set of points
+
+globals.h
+defines a set of commonly used variables... NOTE: this file accomodates macs and pcs differently!
+
+num-recipies.c
+defines a few useful mathematical operations (ie. pow, log, matrix math)
+
+
+PC Sources\
+
+CMFCRunFromDiskWin.cpp
+locates the image files, loads them and checks for quality and aspect ratio.  On OK, this sends the info to the parent to do analysis.
+
+CMFCAnalysisWin.cpp	
+Creates the runfromdisk window!  Checks the images and sends them to analysis!  EyeDx(
+
+main.c
+Also calls EyeDx(
+
+globals.h
+void EyeDx( CEyeDxImage						*const theUpImage,
+		 	CEyeDxImage						*const theSideImage,	
+		 	int 							SideOrientation,			/* 0 means left, otherwise right */
+			CEyeDxBooleanType				FULL_FLAG,					/* flag on outputing full-size annotated images */
+			CEyeDxBooleanType				AdjustReportName,
+			AnalysisResults					*const theAnalysisResults,
+			CEyeDxWindowType				*const theWindow,
+			CEyeDxViewType					*const theViewObject,
+			CEyeDxProgressType				*const theThermometer,
+			CEyeDxCaptionType				*const theCaption,
+			EyeDxReportFormat				theReportFormat,
+			CEyeDxVariableList				*const theVariableList,
+			const char						**const theOptionalReportText,
+			const long						*const theOptionalReportTextSize,
+			long							theNumOptionalReportText);
