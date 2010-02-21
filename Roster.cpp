@@ -9,10 +9,9 @@
 #include "StudentDlg.h"
 #include "PictureWizardDlg.h"
 #include "CameraConnect.h"
-#include <fstream>
+#include <fstream.h>
 #include <assert.h>
 #include <direct.h>
-using namespace std;
 
 #ifdef _DEBUG
 #undef THIS_FILE
@@ -212,7 +211,7 @@ Student* Roster::CreateStudent()
 	//Student temp;
 	Student *temp = new Student;
 
-	for (size_t a=0;a<property.size();a++)
+	for (int a=0;a<property.size();a++)
 		temp->AddProperty(property[a]);
 
 	return temp;
@@ -233,7 +232,7 @@ void Roster::EditStudent(Student *editstudent, bool *addanother, bool newstudent
 	bool callmsg = false;
 
 	if (ret == IDOK) {
-		for (size_t a=0; a<student.size(); a++)
+		for (int a=0; a<student.size(); a++)
 			if (editstudent->GetPropertyValue("Name") == student[a]->GetPropertyValue("Name")) {
 				if (newstudent == true || skippedself == true)
 				{
@@ -251,7 +250,7 @@ void Roster::EditStudent(Student *editstudent, bool *addanother, bool newstudent
 			
 			editstudent->SetPropertyValue("Name", editstudent->GetPropertyValue("Name") + "$");
 
-			for (size_t a=0; a<student.size(); a++)
+			for (int a=0; a<student.size(); a++)
 			{
 				if (editstudent->GetPropertyValue("Name") == student[a]->GetPropertyValue("Name"))
 				{
@@ -294,7 +293,7 @@ void Roster::AddProperty(CString iname, CString tdefaultvalue)
 	property.push_back(tprop);
 
 	//Adds the new property to all of the existing students.
-	for (size_t a=0; a<student.size(); a++)
+	for (int a=0; a<student.size(); a++)
 		student[a]->AddProperty(tprop);
 }
 
@@ -304,7 +303,7 @@ void Roster::EditProperty(int index, CString iname)
 	property[index].name = iname;
 
 	//Adds the new property to all of the existing students.
-	for (size_t a=0; a<student.size(); a++)
+	for (int a=0; a<student.size(); a++)
 		student[a]->SetPropertyName(index, iname);
 }
 
@@ -334,7 +333,7 @@ std::vector<CString> Roster::GetPropertyNames()
 {
 	std::vector<CString> propnames;
 
-	for (size_t a=0; a<property.size(); a++)
+	for (int a=0; a<property.size(); a++)
 		propnames.push_back(property[a].name);
 
 	return propnames;
@@ -347,7 +346,7 @@ CString Roster::GetPropertyName(int index)
 
 int Roster::GetPropertyIndex(CString pname)
 {
-	for (size_t a=0;a<property.size();a++)
+	for (int a=0;a<property.size();a++)
 		if (property[a].name == pname) return a;
 
 	return -1;
@@ -363,7 +362,7 @@ void Roster::SetPropertyDefault(int index, CString newval)
 	//Checks the roster for a property with the given index and sets the default value; note: roster value (default in ini) displayed in settings becomes default student value
 	property[index].value = newval;
 
-	for (size_t a=0;a<student.size();a++)
+	for (int a=0;a<student.size();a++)
 		student[a]->SetPropertyDefault(index, newval);
 }
 
@@ -375,13 +374,13 @@ void Roster::SetPropertyDefault(CString pname, CString newval)
 void Roster::SetPropertyOverride(int index, CString newval)
 {
 	// Override student values of property with roster property value
-	for (size_t a=0;a<student.size();a++)
+	for (int a=0;a<student.size();a++)
 		student[a]->SetPropertyValue(index, newval);
 }
 
 Student* Roster::GetStudent(CString sname)
 {
-	for (size_t a=0;a<student.size();a++)
+	for (int a=0;a<student.size();a++)
 		if (student[a]->GetPropertyValue("Name")==sname) return student[a];
 
 	return NULL;
@@ -394,7 +393,7 @@ CString Roster::GetStudentName(int index)
 
 int Roster::GetStudentPropertyIndex(CString pname)
 {
-	for (size_t a=0;a<property.size();a++)
+	for (int a=0;a<property.size();a++)
 		if (property[a].name == pname) return a;
 
 	return -1;
@@ -402,7 +401,7 @@ int Roster::GetStudentPropertyIndex(CString pname)
 
 CString Roster::GetStudentPropertyValue(CString sname, int pindex)
 {
-	for (size_t a=0;a<student.size();a++)
+	for (int a=0;a<student.size();a++)
 		if (student[a]->GetPropertyValue("Name")==sname) return student[a]->GetPropertyValue(pindex);
 
 	return "Error: Student property value not found.";
@@ -429,14 +428,14 @@ void Roster::RemoveProperty(int index)
 {
 	//Remove property from roster
 	property.erase(property.begin()+index);
-	for (size_t a=0; a<student.size(); a++)
+	for (int a=0; a<student.size(); a++)
 		student[a]->RemoveProperty(index);
 }
 
 
 void Roster::RemoveStudent(CString sname)
 {
-	for (size_t a=0;a<student.size();a++)
+	for (int a=0;a<student.size();a++)
 		if (student[a]->GetPropertyValue("Name")==sname) student.erase(student.begin()+a);
 }
 
@@ -448,27 +447,26 @@ void Roster::Save(CString path)
 	savestream << label << "\n";
 
 	int numprops = property.size();
-	int index;
 
 	//Output student properties
-	for (index=0;index<numprops;index++)
+	for (int a=0;a<numprops;a++)
 	{
-		savestream << property[index].name;
-		if (index!=numprops-1) savestream << "\t";
+		savestream << property[a].name;
+		if (a!=numprops-1) savestream << "\t";
 	}
 	savestream << "\n";
 
 
 	//Output default properties (roster settings)
-	for (index=0;index<numprops;index++)
+	for (a=0;a<numprops;a++)
 	{
-		savestream << property[index].value; // override student name roster setting (not saved for the sake of spreadsheet readability)? (index == 0 ? "Default Student" : property[index].value)
-		if (index!=numprops-1) savestream << "\t";
+		savestream << property[a].value; // override student name roster setting (not saved for the sake of spreadsheet readability)? (a == 0 ? "Default Student" : property[a].value)
+		if (a!=numprops-1) savestream << "\t";
 	}
 	savestream << "\n";
 
 	//Output student property values
-	for (size_t a=0;a<student.size();a++)
+	for (a=0;a<student.size();a++)
 	{
 		for (int b=0;b<numprops;b++)
 		{
@@ -505,12 +503,12 @@ CString Roster::GetResult(CString studentName)
 {
 	//get path to DVT main folder
 	char origpath[32768];
-	_getcwd(origpath, 32768);
+	getcwd(origpath, 32768);
 
-	_chdir("..");
+	chdir("..");
 
 	char curpath[32768];
-	_getcwd(curpath, 32768);
+	getcwd(curpath, 32768);
 
 	//get path to eyedx folder
 	CString cur_path = CString(curpath);
@@ -518,7 +516,7 @@ CString Roster::GetResult(CString studentName)
 	
 	//MessageBox(NULL,fileNameU,"hello",NULL);
 
-	_chdir(origpath);
+	chdir(origpath);
 
 	//determine EyeDx result
 	CString result;
@@ -597,7 +595,7 @@ CString Roster::EncryptString(CString str)
 {
 	CString encrypted_string;
 	for (int a=0;a<str.GetLength();a++)
-		encrypted_string += (char)(str[a]+a/2+1);
+		encrypted_string += str[a]+a/2+1;
 
 	return encrypted_string;
 }
@@ -606,7 +604,7 @@ CString Roster::DecryptString(CString str)
 {
 	CString decrypted_string;
 	for (int a=0;a<str.GetLength();a++)
-		decrypted_string += (char)(str[a]-a/2-1);
+		decrypted_string += str[a]-a/2-1;
 
 	return decrypted_string;
 }

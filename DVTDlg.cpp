@@ -126,7 +126,7 @@ CDVTDlg::CDVTDlg(CWnd* pParent /*=NULL*/)
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 
 	char tempstr[32768];
-	_getcwd(tempstr, 32768);
+	getcwd(tempstr, 32768);
 	cur_path = tempstr;
 
 	Roster newroster(cur_path);
@@ -589,8 +589,7 @@ void CDVTDlg::RefreshPropertyList()
 	
 	//Find the longest string in the list
 	int maxlength = 0;
-	int a;
-	for (a=0; a<roster.NumProperties(); a++)
+	for (int a=0; a<roster.NumProperties(); a++)
 		if (roster.GetPropertyName(a).GetLength()>maxlength) 
 			maxlength = roster.GetPropertyName(a).GetLength();
 	
@@ -628,8 +627,7 @@ void CDVTDlg::RefreshStudentList()
 	
 	//Find the longest string in the list
 	int maxlength = 0;
-	int a;
-	for (a=0; a<roster.NumStudents(); a++)
+	for (int a=0; a<roster.NumStudents(); a++)
 		if (roster.GetStudentName(a).GetLength()>maxlength) 
 			maxlength = roster.GetStudentName(a).GetLength();
 

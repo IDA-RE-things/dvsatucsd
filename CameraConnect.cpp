@@ -556,7 +556,7 @@ BOOL CCameraConnect::ConnectCamera(CPictureWizardDlg* pCPictureWizardDlg, CStati
 	cdUInt32 pCount;
 	cdCompQuality pQuality;
 	cdImageSize pSize;
-	size_t index;
+	int index;
 	
 	// Prepare enumeration of image sizes
 	err = CDEnumSupportedImageSizeReset(m_hSource, Option, &phEnum);

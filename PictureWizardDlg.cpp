@@ -1,12 +1,12 @@
 // PictureWizardDlg.cpp : implementation file
 //
-//#include <winuser.h>
-//#include <windows.h>
-//#include <stdio.h>
-//#include <Directory.h>
-#include "stdafx.h"
+#include <winuser.h>
+#include <windows.h>
+#include <stdio.h>
+#include <Directory.h>
 
 #include "resource.h"
+#include "stdafx.h"
 #include "DVT.h"
 #include "PictureWizardDlg.h"
 #include "CameraConnect.h"
@@ -278,7 +278,7 @@ void CPictureWizardDlg::OnAnalyze()
 	//check that eyeDx window is open
 	//sei.hProcess->SetFocus();
 	HWND eyeWnd;
-	eyeWnd = (HWND)FindWindowEx(NULL, NULL, NULL, NULL);//EYEWIND);
+	eyeWnd = FindWindowEx(NULL, NULL, NULL, NULL);//EYEWIND);
 	if(eyeWnd == NULL)
 	{
 		printf("Couldn't find solitare's window: %d\n", GetLastError());
