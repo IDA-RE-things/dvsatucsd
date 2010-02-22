@@ -336,6 +336,8 @@ void CDVTDlg::OnUpdateFileRostersettings(CCmdUI* pCmdUI)
 {
 	RosterDlg dlgRoster(NULL,&roster);
 	dlgRoster.DoModal();
+
+	RosterName->SetWindowText(roster.GetLabel());
 	RefreshStudentList();
 }
 
@@ -714,6 +716,7 @@ void CDVTDlg::OnFileNewroster()
 	RosterDlg dlgRoster(NULL,&roster);
 	dlgRoster.DoModal();
 
+	RosterName->SetWindowText(roster.GetLabel());
 	RefreshStudentList();
 }
 
