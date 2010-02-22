@@ -100,6 +100,10 @@ SOURCE=.\CameraConnect.cpp
 # End Source File
 # Begin Source File
 
+SOURCE=.\CameraConnect2.cpp
+# End Source File
+# Begin Source File
+
 SOURCE=.\DVT.cpp
 # End Source File
 # Begin Source File
@@ -190,6 +194,10 @@ SOURCE=.\AddPropertyDlg.h
 # Begin Source File
 
 SOURCE=.\CameraConnect.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\CameraConnect2.h
 # End Source File
 # Begin Source File
 
