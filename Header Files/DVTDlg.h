@@ -80,6 +80,7 @@ protected:
 	afx_msg void OnClose();
 	afx_msg void OnHelpAbout();
 	afx_msg void OnCameraConnect();
+	afx_msg void OnCameraSettings();
 	//}}AFX_MSG
 	DECLARE_MESSAGE_MAP()
 private:

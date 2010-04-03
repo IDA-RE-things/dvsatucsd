@@ -727,11 +727,11 @@ WiaGetImage(
 
 //////////////////////////////////////////////////////////////////////////
 //
-// WiaTakeImage
+// WiaGetCapabilities
 //
 
 HRESULT 
-WiaTakeImage(
+WiaGetCapabilities(
     HWND                 hWndParent,
     LONG                 lDeviceType,
     LONG                 lFlags,
@@ -827,265 +827,75 @@ WiaTakeImage(
          AfxMessageBox(str);
       }
    }
+}
 
+//////////////////////////////////////////////////////////////////////////
+//
+// WiaTakeImage
+//
 
-// When I try to take a picture:
-   GUID command;
+HRESULT 
+WiaTakeImage(
+    HWND                 hWndParent,
+    LONG                 lDeviceType,
+    LONG                 lFlags,
+    LONG                 lIntent,
+    IWiaDevMgr          *pSuppliedWiaDevMgr,
+    IWiaItem            *pSuppliedItemRoot,
+    PFNPROGRESSCALLBACK  pfnProgressCallback,
+    PVOID                pProgressCallbackParam,
+    GUID                *pguidFormat,
+    LONG                *plCount,
+    IStream             ***pppStream
+)
+{
+    HRESULT hr;
 
-   command = WIA_CMD_TAKE_PICTURE;
+    // Validate and initialize output parameters
 
-    CComPtrArray<IWiaItem> ppIWiaItem;
-
-    hr = pItemRoot->DeviceCommand(
-        0,
-		&command,
-        ppIWiaItem
-    );
-
-    if (FAILED(hr) || hr == S_FALSE)
+    if (plCount == NULL)
     {
-        return hr;
+        return E_POINTER;
     }
 
-    // For ADF scanners, the common dialog explicitly sets the page count to one.
-    // So in order to transfer multiple images, set the page count to ALL_PAGES
-    // if the WIA_DEVICE_DIALOG_SINGLE_IMAGE flag is not specified, 
-
-    if (!(lFlags & WIA_DEVICE_DIALOG_SINGLE_IMAGE))
+    if (pppStream == NULL)
     {
-        // Get the property storage interface pointer for the root item
-
-        CComQIPtr<IWiaPropertyStorage> pWiaRootPropertyStorage(pItemRoot);
-
-        if (pWiaRootPropertyStorage == NULL)
-        {
-            return E_NOINTERFACE;
-        }
-
-        // Determine if the selected device is a scanner or not
-
-        PROPSPEC specDevType;
-
-        specDevType.ulKind = PRSPEC_PROPID;
-        specDevType.propid = WIA_DIP_DEV_TYPE;
-
-        LONG nDevType;
-
-        hr = ReadPropertyLong(
-            pWiaRootPropertyStorage, 
-            &specDevType, 
-            &nDevType
-        );
-
-        if (SUCCEEDED(hr) && (GET_STIDEVICE_TYPE(nDevType) == StiDeviceTypeScanner))
-        {
-            // Determine if the document feeder is selected or not
-
-            PROPSPEC specDocumentHandlingSelect;
-
-            specDocumentHandlingSelect.ulKind = PRSPEC_PROPID;
-            specDocumentHandlingSelect.propid = WIA_DPS_DOCUMENT_HANDLING_SELECT;
-
-            LONG nDocumentHandlingSelect;
-
-            hr = ReadPropertyLong(
-                pWiaRootPropertyStorage, 
-                &specDocumentHandlingSelect, 
-                &nDocumentHandlingSelect
-            );
-
-            if (SUCCEEDED(hr) && (nDocumentHandlingSelect & FEEDER))
-            {
-                PROPSPEC specPages;
-
-                specPages.ulKind = PRSPEC_PROPID;
-                specPages.propid = WIA_DPS_PAGES;
-
-                PROPVARIANT varPages;
-                    
-                varPages.vt = VT_I4;
-                varPages.lVal = ALL_PAGES;
-
-                pWiaRootPropertyStorage->WriteMultiple(
-                    1,
-                    &specPages,
-                    &varPages,
-                    WIA_DPS_FIRST
-                );
-                
-                PropVariantClear(&varPages);
-            }
-        }
+        return E_POINTER;
     }
 
-    // If a status callback function is not supplied, use the default.
-    // The default displays a simple dialog with a progress bar and cancel button.
+    *plCount = 0;
+    *pppStream = NULL;
 
-    CComPtr<CProgressDlg> pProgressDlg;
+    // Initialize the local root item variable with the supplied value.
+    // If no value is supplied, display the device selection common dialog.
 
-    if (pfnProgressCallback == NULL)
+    CComPtr<IWiaItem> pItemRoot = pSuppliedItemRoot;
+
+    if (pItemRoot == NULL)
     {
-        pfnProgressCallback = DefaultProgressCallback;
+        // Initialize the device manager pointer with the supplied value
+        // If no value is supplied, connect to the local device manager
 
-        pProgressDlg = new CProgressDlg(hWndParent);
+        CComPtr<IWiaDevMgr> pWiaDevMgr = pSuppliedWiaDevMgr;
 
-        pProgressCallbackParam = (CProgressDlg *) pProgressDlg;
-    }
-
-    // Create the data callback interface
-
-    CComPtr<CDataCallback> pDataCallback = new CDataCallback(
-        pfnProgressCallback,
-        pProgressCallbackParam,
-        plCount, 
-        pppStream
-    );
-
-    if (pDataCallback == NULL)
-    {
-        return E_OUTOFMEMORY;
-    }
-
-    // Start the transfer of the selected items
-
-    for (int i = 0; i < ppIWiaItem.Count(); ++i)
-    {
-        // Get the interface pointers
-
-        CComQIPtr<IWiaPropertyStorage> pWiaPropertyStorage(ppIWiaItem[i]);
-
-        if (pWiaPropertyStorage == NULL)
+        if (pWiaDevMgr == NULL)
         {
-            return E_NOINTERFACE;
-        }
-
-        CComQIPtr<IWiaDataTransfer> pIWiaDataTransfer(ppIWiaItem[i]);
-
-        if (pIWiaDataTransfer == NULL)
-        {
-            return E_NOINTERFACE;
-        }
-
-        // Set the transfer type
-
-        PROPSPEC specTymed;
-
-        specTymed.ulKind = PRSPEC_PROPID;
-        specTymed.propid = WIA_IPA_TYMED;
-
-        PROPVARIANT varTymed;
-
-        varTymed.vt = VT_I4;
-        varTymed.lVal = TYMED_CALLBACK;
-
-        hr = pWiaPropertyStorage->WriteMultiple(
-            1,
-            &specTymed,
-            &varTymed,
-            WIA_IPA_FIRST
-        );
-
-        PropVariantClear(&varTymed);
-
-        if (FAILED(hr))
-        {
-            return hr;
-        }
-
-        // If there is no transfer format specified, use the device default
-
-        GUID guidFormat = GUID_NULL;
-
-        if (pguidFormat == NULL)
-        {
-            pguidFormat = &guidFormat;
-        }
-
-        if (*pguidFormat == GUID_NULL)
-        {
-            PROPSPEC specPreferredFormat;
-
-            specPreferredFormat.ulKind = PRSPEC_PROPID;
-            specPreferredFormat.propid = WIA_IPA_PREFERRED_FORMAT;
-
-            hr = ReadPropertyGuid(
-                pWiaPropertyStorage,
-                &specPreferredFormat,
-                pguidFormat
-            );
+            hr = pWiaDevMgr.CoCreateInstance(CLSID_WiaDevMgr);
 
             if (FAILED(hr))
             {
                 return hr;
             }
         }
+    
+        // Display the device selection common dialog
 
-        // Set the transfer format
-
-        PROPSPEC specFormat;
-
-        specFormat.ulKind = PRSPEC_PROPID;
-        specFormat.propid = WIA_IPA_FORMAT;
-
-        PROPVARIANT varFormat;
-
-        varFormat.vt = VT_CLSID;
-        varFormat.puuid = (CLSID *) CoTaskMemAlloc(sizeof(CLSID));
-
-        if (varFormat.puuid == NULL)
-        {
-            return E_OUTOFMEMORY;
-        }
-
-        *varFormat.puuid = *pguidFormat;
-
-        hr = pWiaPropertyStorage->WriteMultiple(
-            1,
-            &specFormat,
-            &varFormat,
-            WIA_IPA_FIRST
-        );
-
-        PropVariantClear(&varFormat);
-
-        if (FAILED(hr))
-        {
-            return hr;
-        }
-
-        // Read the transfer buffer size from the device, default to 64K
-
-        PROPSPEC specBufferSize;
-
-        specBufferSize.ulKind = PRSPEC_PROPID;
-        specBufferSize.propid = WIA_IPA_BUFFER_SIZE;
-
-        LONG nBufferSize;
-
-        hr = ReadPropertyLong(
-            pWiaPropertyStorage, 
-            &specBufferSize, 
-            &nBufferSize
-        );
-
-        if (FAILED(hr))
-        {
-            nBufferSize = 64 * 1024;
-        }
-
-        // Choose double buffered transfer for better performance
-
-        WIA_DATA_TRANSFER_INFO WiaDataTransferInfo = { 0 };
-
-        WiaDataTransferInfo.ulSize        = sizeof(WIA_DATA_TRANSFER_INFO);
-        WiaDataTransferInfo.ulBufferSize  = 2 * nBufferSize;
-        WiaDataTransferInfo.bDoubleBuffer = TRUE;
-
-        // Start the transfer
-
-        hr = pIWiaDataTransfer->idtGetBandedData(
-            &WiaDataTransferInfo,
-            pDataCallback
+        hr = pWiaDevMgr->SelectDeviceDlg(
+            hWndParent,
+            lDeviceType,
+            lFlags,
+            0,
+            &pItemRoot
         );
 
         if (FAILED(hr) || hr == S_FALSE)
@@ -1094,7 +904,36 @@ WiaTakeImage(
         }
     }
 
-    return S_OK;
+// When I try to take a picture:
+   GUID command;
+   CString str;
+
+   command = WIA_CMD_TAKE_PICTURE;
+
+    IWiaItem * ppIWiaItem=NULL;
+
+    hr = pItemRoot->DeviceCommand(
+        0,
+		&command,
+        &ppIWiaItem
+    );
+
+	if(hr == S_OK)
+   {
+
+	         str = "Remote capture successful!";
+         AfxMessageBox(str);
+   }
+	
+
+    if (FAILED(hr) || hr == S_FALSE)
+    {
+
+		
+	         str = "Error.";
+         AfxMessageBox(str);
+        return hr;
+    }
 }
 
 

@@ -194,6 +194,44 @@ void CDVTDlg::OnCameraConnect()
 
 ///////////////////////////////////////////////////////////////////////////////
 //
+// Function: CDVTDlg::OnCameraConnect()
+// Parameters: none
+// Returns: none
+// Description: Determines whether a WIA-compatible camera is connected. If so,
+//				alerts the camera capabilities accessible through WIA.
+//
+//
+///////////////////////////////////////////////////////////////////////////////
+void CDVTDlg::OnCameraSettings()
+{
+
+    HRESULT hr;
+
+    m_bDisplayWaitCursor = TRUE;
+
+    // Launch the get image dialog
+
+    WiaWrap::CComPtrArray<IStream> ppStream;
+
+    hr = WiaWrap::WiaGetCapabilities(
+        m_hMDIClient,
+        StiDeviceTypeDefault,
+        0,
+        WIA_INTENT_NONE,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        &ppStream.Count(),
+        &ppStream
+    );
+
+    m_bDisplayWaitCursor = FALSE;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//
 // Function: CDVTDlg(CWnd* pParent) : CDialog(CDVTDlg::IDD, pParent)
 // Parameters: CWnd* pParent - NULL
 //			   CDialog(CDVTDlg::IDD,pParent) - FILL IN
@@ -273,6 +311,7 @@ BEGIN_MESSAGE_MAP(CDVTDlg, CDialog)
 	ON_BN_CLICKED(IDC_SortResult, OnSortResult)
 	ON_WM_CLOSE()
 	ON_COMMAND(ID_CAMERA_CONNECT, OnCameraConnect)
+	ON_COMMAND(ID_CAMERA_SETTINGS, OnCameraSettings)
 	ON_COMMAND(ID_HELP_ABOUT, OnHelpAbout)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()

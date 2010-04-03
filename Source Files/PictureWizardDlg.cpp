@@ -255,7 +255,7 @@ void CPictureWizardDlg::OnHorizontal()
 	horizontal = true;
 	MessageBox("Taking the horizontal picture now...",NULL,MB_OK);
 
-	    HRESULT hr;
+	HRESULT hr;
 
     m_bDisplayWaitCursor = TRUE;
 
@@ -263,7 +263,7 @@ void CPictureWizardDlg::OnHorizontal()
 
     WiaWrap::CComPtrArray<IStream> ppStream;
 /// should be WiaTakeImage but that leads to an "identifier not found" error
-    hr = WiaWrap::WiaGetImage(
+    hr = WiaWrap::WiaTakeImage(
         m_hMDIClient,
         StiDeviceTypeDefault,
         0,

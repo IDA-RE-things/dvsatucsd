@@ -834,5 +834,9 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="Source Files\DVT.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

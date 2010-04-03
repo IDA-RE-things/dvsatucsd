@@ -247,6 +247,21 @@ WiaTakeImage(
     IStream             ***pppStream
 );
 
+HRESULT 
+WiaGetCapabilities(
+    HWND                 hWndParent,
+    LONG                 lDeviceType,
+    LONG                 lFlags,
+    LONG                 lIntent,
+    IWiaDevMgr          *pSuppliedWiaDevMgr,
+    IWiaItem            *pSuppliedItemRoot,
+    PFNPROGRESSCALLBACK  pfnProgressCallback,
+    PVOID                pProgressCallbackParam,
+    GUID                *pguidFormat,
+    LONG                *plCount,
+    IStream             ***pppStream
+);
+
 //////////////////////////////////////////////////////////////////////////
 //
 // WiaGetNumDevices
